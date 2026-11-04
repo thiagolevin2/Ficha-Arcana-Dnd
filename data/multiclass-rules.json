@@ -1,0 +1,3194 @@
+{
+  "schemaVersion": 1,
+  "primarySource": {
+    "title": "Livro do Jogador 2024",
+    "path": "/workspace/scratch/553e7fcdb637/upload/dampd-5e---livro-do-jogador-2024.pdf",
+    "physicalPages": 397,
+    "printedToPdfOffset": 6
+  },
+  "arrayConventions": {
+    "spellProgression": "preparedByLevel e cantripsByLevel têm 20 entradas, índice level-1.",
+    "sharedSlots": "slotsByEffectiveCasterLevel tem 21 entradas, índice igual ao nível efetivo; índice 0 é [].",
+    "channelDivinity": "Arrays de 20 entradas, índice classLevel-1."
+  },
+  "rules": [
+    {
+      "id": "eligibility",
+      "title": "Pré-requisitos de multiclasse",
+      "summary": "Para entrar em uma classe nova, cumprir valor 13 nos atributos primários da classe nova e de todas as classes atuais. A primeira classe de um personagem de nível 1 não recebe essa exigência de multiclasse.",
+      "evidence": [
+        {
+          "source": "phb2024",
+          "printedPage": 44,
+          "pdfPage": 50,
+          "label": null,
+          "originalText": "Pré-requisitos\nPara se qualificar para uma nova classe, você deve ter \num valor de pelo menos 13 no atributo primário da \nnova classe e nas suas classes atuais. Por exemplo, um \nBárbaro que decide fazer multiclasse com Druida deve \nter valores de Força e Sabedoria de 13 ou mais, já que \nForça é o atributo primário dos Bárbaros e Sabedoria é \no dos Druidas."
+        }
+      ],
+      "abilityThreshold": 13,
+      "checkAllExistingClasses": true,
+      "applyWhenEnteringNewClass": true,
+      "startingClassExempt": true
+    },
+    {
+      "id": "level-xp-proficiency",
+      "title": "Nível total, XP e Bônus de Proficiência",
+      "summary": "Nível de personagem é a soma dos níveis de classe. XP e Bônus de Proficiência usam o total; os recursos, subclasses, reservas e requisitos que nomeiam uma classe usam somente níveis nessa classe.",
+      "evidence": [
+        {
+          "source": "phb2024",
+          "printedPage": 44,
+          "pdfPage": 50,
+          "label": null,
+          "originalText": "Pontos de Experiência\nO custo em Pontos de Experiência para avançar de ní-\nvel é baseado no seu nível total de personagem, não no \nnível de uma classe específica, conforme mostrado na \ntabela Evolução do Personagem. Por exemplo, se você \né um Clérigo de nível 6 / Guerreiro de nível 1, deve \nadquirir XP suficiente para alcançar o nível 8 antes de \npoder avançar para o segundo nível como Guerreiro ou \npara o sétimo nível como Clérigo."
+        },
+        {
+          "source": "phb2024",
+          "printedPage": 44,
+          "pdfPage": 50,
+          "label": null,
+          "originalText": "Bônus de Proficiência\nSeu Bônus de Proficiência é baseado no seu nível total \nde personagem, não no nível de uma classe específica, \nconforme mostrado na tabela Evolução do Persona-\ngem. Por exemplo, se você é um Guerreiro de nível 3 / \nLadino de nível 2, tem o Bônus de Proficiência de um \npersonagem de nível 5, que é +3."
+        }
+      ],
+      "proficiencyFormula": "2 + floor((totalCharacterLevel - 1) / 4)",
+      "maxNormalCharacterLevel": 20,
+      "xpThresholds": [
+        0,
+        300,
+        900,
+        2700,
+        6500,
+        14000,
+        23000,
+        34000,
+        48000,
+        64000,
+        85000,
+        100000,
+        120000,
+        140000,
+        165000,
+        195000,
+        225000,
+        265000,
+        305000,
+        355000
+      ],
+      "proficiencyByCharacterLevel": [
+        2,
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        5,
+        5,
+        5,
+        5,
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    {
+      "id": "hit-points-hit-dice",
+      "title": "Pontos de Vida e Dados de Vida",
+      "summary": "Somente o nível total 1 usa o dado máximo da classe inicial. Todo nível posterior, inclusive o primeiro nível de uma classe nova, soma a rolagem ou valor fixo da classe adquirida + Constituição, mínimo 1. Cada nível acrescenta um Dado de Vida da classe; agrupar por tamanho de dado.",
+      "evidence": [
+        {
+          "source": "phb2024",
+          "printedPage": 44,
+          "pdfPage": 50,
+          "label": null,
+          "originalText": "Pontos de Vida e Dados  \nde Pontos de Vida\nVocê recebe os Pontos de Vida da nova classe confor-\nme descrito para níveis acima de 1. Os Pontos de Vida \ndo nível 1 de uma classe são obtidos apenas quando seu \nnível total de personagem é 1.\nSome os Dados de Vida concedidos por todas as \nsuas classes para formar sua reserva de Dados de \nVida. Se esses dados forem do mesmo tipo, você pode \ncombiná-los. Por exemplo, tanto o Guerreiro quanto o \nPaladino têm um dado de vida d10, então, se você for \num Guerreiro de nível 5 / Paladino de nível 5, tem dez \ndados d10. Se suas classes fornecerem dados de tipos \ndiferentes, mantenha-os separados. Por exemplo, um \nClérigo de nível 5 / Paladino de nível 5 terá cinco dados \nd8 e cinco dados d10."
+        },
+        {
+          "source": "phb2024",
+          "printedPage": 42,
+          "pdfPage": 48,
+          "label": null,
+          "originalText": "2: Ajuste os Pontos de Vida e os Dados de Pontos \nde Vida. Some os Dados de Pontos de Vida con-\ncedidos por todas as suas classes para formar sua \nreserva de Dados de Ponto de Vida. Jogue esse dado, \nadicione seu modificador de Constituição ao resul-\ntado e some o total (mínimo de 1) ao seus Pontos de \nVida máximos. Em vez de jogar, você pode usar o \nvalor fixo mostrado na tabela Pontos de Vida Fixos \npor Classe.\nPontos de Vida Fixos por Classe\nClasse\nPontos de Vida por Nível\nBárbaro\n7 + mod. de Constituição\nGuardião, Guerreiro, Paladino\n6 + mod. de Constituição\nBardo, Bruxo, Clérigo, Druida, \nLadino ou Monge\n5 + mod. de Constituição\nFeiticeiro ou Mago\n4 + mod. de Constituição"
+        }
+      ],
+      "firstCharacterLevelFormula": "firstClassHitDie + constitutionModifier",
+      "laterLevelFormula": "max(1, rolledHitDieOrFixedAverageOfAcquiredClass + constitutionModifier)",
+      "fixedAverageByHitDie": {
+        "6": 4,
+        "8": 5,
+        "10": 6,
+        "12": 7
+      },
+      "hitDicePoolFormula": "sum class levels grouped by that class hit die"
+    },
+    {
+      "id": "constitution-retroactivity",
+      "title": "Mudança do modificador de Constituição",
+      "summary": "Cada +1 no modificador de Constituição aumenta retroativamente os PV máximos em 1 por nível total, além do ganho do nível atual. Não aplicar essa correção uma vez para cada classe.",
+      "evidence": [
+        {
+          "source": "phb2024",
+          "printedPage": 42,
+          "pdfPage": 48,
+          "label": null,
+          "originalText": "5: Ajuste os Modificadores de Atributo. Se você \nescolher um talento que aumenta um ou mais dos \nseus valores de atributo, seu modificador de atributo \ntambém muda se o novo valor for um número par. \nNesse caso, ajuste todos os números na sua ficha de \npersonagem que utilizam esse modificador. Quando \nseu modificador de Constituição aumenta em 1, seus \nPontos de Vida máximos aumentam em 1 para cada \nnível que você atingiu. Por exemplo, se um persona-\ngem atinge o nível 8 e aumenta o valor de Consti-\ntuição de 17 para 18, o modificador de Constituição \naumenta para +4. Os Pontos de Vida máximos do \npersonagem, então, aumentam em 8, além dos Pon-\ntos de Vida recebidos ao atingir o nível 8."
+        }
+      ],
+      "hpCorrectionFormula": "(newConModifier - previousConModifier) * totalCharacterLevel",
+      "levelGainImplementationNote": "Evitar contar a mudança de Constituição duas vezes no nível novo: se o PV desse nível já foi calculado com o novo modificador, aplicar o ajuste retroativo somente aos níveis anteriores. A fórmula por nível total presume que o ganho do nível atual ainda usou o modificador anterior, como na sequência do exemplo da página 42.",
+      "note": "O parágrafo exemplifica aumento. Aplicação simétrica a reduções é a consequência do mesmo modificador por nível; não é um exemplo explícito desse parágrafo."
+    },
+    {
+      "id": "multiclass-proficiencies",
+      "title": "Proficiências ao entrar em outra classe",
+      "summary": "Conceder somente os traços da seção Como um Personagem Multiclasse, além dos recursos de nível 1 da nova classe. Não conceder proficiências iniciais de salvaguarda, todas as perícias iniciais ou equipamento inicial novamente. Proficiências vindas de recursos posteriores ou escolhas de nível 1 continuam válidas.",
+      "evidence": [
+        {
+          "source": "phb2024",
+          "printedPage": 44,
+          "pdfPage": 50,
+          "label": null,
+          "originalText": "Proficiências\nAo adquirir seu primeiro nível em uma classe diferente \nda classe inicial, você obtém apenas algumas das profi-\nciências iniciais dessa nova classe, conforme detalhado \nna descrição de cada classe no capítulo 3."
+        }
+      ],
+      "savingThrowProficienciesFromNewClass": false,
+      "startingEquipmentFromNewClass": false,
+      "conditionalExamples": [
+        {
+          "classId": "clerigo",
+          "feature": "Ordem Divina: Protetor",
+          "level": 1,
+          "grants": [
+            "Armas Marciais",
+            "Armadura Pesada"
+          ],
+          "printedPage": 82,
+          "pdfPage": 88
+        },
+        {
+          "classId": "druida",
+          "feature": "Ordem Primal: Protetor",
+          "level": 1,
+          "grants": [
+            "Armas Marciais",
+            "Armadura Média"
+          ],
+          "printedPage": 92,
+          "pdfPage": 98
+        }
+      ],
+      "note": "As proficiências listadas em multiclassGain de cada classe são o ganho direto. Não deduzir treino de armadura de um valor genérico como armor=Pesada."
+    },
+    {
+      "id": "extra-attack",
+      "title": "Ataque Extra e invocações de lâmina",
+      "summary": "Ataque Extra de classes diferentes não soma ataques. Usar a quantidade permitida por uma característica aplicável; Guerreiro 11 permite três ataques e Guerreiro 20 permite quatro. Lâmina Sedenta não soma ataques à característica de outra classe; Lâmina Devoradora aprimora aquela invocação para três ataques com a arma de pacto.",
+      "evidence": [
+        {
+          "source": "phb2024",
+          "printedPage": 44,
+          "pdfPage": 50,
+          "label": null,
+          "originalText": "Ataque Extra\nSe você adquirir a característica Ataque Extra de mais \nde uma classe, as características não se acumulam. \nVocê não pode realizar mais de dois ataques com essa \ncaracterística, a menos que tenha uma característica \nque permita isso (como a característica Dois Ataques \nExtras do Guerreiro).\nDa mesma forma, a invocação Lâmina Sedenta do \nBruxo, que concede a característica Ataque Extra à sua \narma de pacto, não oferece ataques adicionais se você \ntambém já tiver Ataque Extra."
+        },
+        {
+          "source": "phb2024",
+          "printedPage": 128,
+          "pdfPage": 134,
+          "label": null,
+          "originalText": "Nível 11: Dois Ataques Extras\nVocê pode atacar três vezes, em vez de uma, sempre \nque executar a ação Atacar no seu turno."
+        },
+        {
+          "source": "phb2024",
+          "printedPage": 129,
+          "pdfPage": 135,
+          "label": null,
+          "originalText": "Nível 20: Três Ataques Extras\nVocê pode atacar quatro vezes, em vez de uma, sempre \nque executar a ação Atacar no seu turno."
+        },
+        {
+          "source": "phb2024",
+          "printedPage": 71,
+          "pdfPage": 77,
+          "label": null,
+          "originalText": "Lâmina Devoradora\nPré-requisito: Bruxo Nível 12 ou superior, Lâmina \nSedenta\nO Ataque Extra da sua invocação Lâmina Sedenta \nconcede dois ataques extras em vez de um.\nLâmina Sedenta\nPré-requisitos: Bruxo Nível 5 ou superior, Pacto da Lâmina\nVocê adquire a característica Ataque Extra apenas \npara sua arma de pacto e você pode atacar duas vezes \ncom ela, em vez de uma, quando executar a ação Ata-\ncar no seu turno."
+        }
+      ],
+      "extraAttackStacks": false,
+      "fighterAttacks": [
+        {
+          "minimumFighterLevel": 1,
+          "attacks": 1
+        },
+        {
+          "minimumFighterLevel": 5,
+          "attacks": 2
+        },
+        {
+          "minimumFighterLevel": 11,
+          "attacks": 3
+        },
+        {
+          "minimumFighterLevel": 20,
+          "attacks": 4
+        }
+      ],
+      "pactBladeAttacks": [
+        {
+          "minimumWarlockLevel": 5,
+          "invocation": "Lâmina Sedenta",
+          "attacks": 2
+        },
+        {
+          "minimumWarlockLevel": 12,
+          "invocation": "Lâmina Devoradora",
+          "attacks": 3
+        }
+      ],
+      "note": "Esse número se refere à ação Atacar no próprio turno. Não elimina ataques de Ação Bônus, Reações ou outras características independentes. Substituição de ataque por truque depende do texto de cada recurso."
+    },
+    {
+      "id": "armor-class",
+      "title": "Defesa sem Armadura e outras fórmulas de CA",
+      "summary": "Várias fórmulas alternativas de CA podem existir no personagem, mas somente uma é usada por vez. Não somar Constituição e Sabedoria das duas Defesas sem Armadura. Cada fórmula conserva suas restrições de armadura e escudo.",
+      "evidence": [
+        {
+          "source": "phb2024",
+          "printedPage": 44,
+          "pdfPage": 50,
+          "label": null,
+          "originalText": "Classe de Armadura\nSe você tiver várias maneiras de calcular sua Classe de \nArmadura, pode se beneficiar apenas de uma de cada \nvez. Por exemplo, um Feiticeiro/Monge com a caracte-\nrística de Defesa Sem Armadura do Monge e a Resi-\nliência Dracônica do Feiticeiro deve escolher apenas \numa dessas características para calcular sua Classe de \nArmadura."
+        },
+        {
+          "source": "phb2024",
+          "printedPage": 51,
+          "pdfPage": 57,
+          "label": null,
+          "originalText": "Nível 1: Defesa sem Armadura\nEnquanto você não estiver vestindo nenhuma armadu-\nra, sua Classe de Armadura base é igual a 10 mais seus \nmodificadores de Destreza e Constituição. Você pode \nusar um Escudo e ainda receber este benefício."
+        },
+        {
+          "source": "phb2024",
+          "printedPage": 159,
+          "pdfPage": 165,
+          "label": null,
+          "originalText": "Nível 1: Defesa sem Armadura\nEnquanto você não estiver vestindo armadura ou \nempunhando um Escudo, sua Classe de Armadura \nbase é igual a 10 mais seus modificadores de Destreza \ne Sabedoria."
+        }
+      ],
+      "chooseOneFormula": true,
+      "formulas": [
+        {
+          "id": "barbaro-unarmored",
+          "formula": "10 + DEX + CON",
+          "requiresNoArmor": true,
+          "allowsShield": true,
+          "printedPage": 51,
+          "pdfPage": 57
+        },
+        {
+          "id": "monge-unarmored",
+          "formula": "10 + DEX + WIS",
+          "requiresNoArmor": true,
+          "allowsShield": false,
+          "printedPage": 159,
+          "pdfPage": 165
+        }
+      ],
+      "note": "Não importar a limitação de 2014 que impedia adquirir uma segunda Defesa sem Armadura. A regra 2024 manda escolher a fórmula usada."
+    },
+    {
+      "id": "channel-divinity",
+      "title": "Canalizar Divindade é separado por classe",
+      "summary": "Clérigo e Paladino têm reservas próprias e escolhem efeitos da própria classe. Não juntar os usos e não gastar os usos de uma classe para efeitos da outra. Cada reserva recupera um uso no Descanso Curto e todos os usos no Longo.",
+      "evidence": [
+        {
+          "source": "phb2024",
+          "printedPage": 82,
+          "pdfPage": 88,
+          "label": null,
+          "originalText": "Nível 2: Canalizar Divindade\nVocê pode canalizar energia divina diretamente dos \nPlanos Externos para alimentar efeitos mágicos. Você \ncomeça com dois desses efeitos: Centelha Divina e Ex-\npulsar Mortos-Vivos, cada um descrito a seguir. Cada \nvez que você usar o Canalizar Divindade desta classe, \nescolha qual efeito de Canalizar Divindade deseja \nrealizar. Você obtém opções adicionais de efeitos em \nníveis mais altos de Clérigo.\nVocê pode usar o Canalizar Divindade desta classe \nduas vezes. Você recupera um uso gasto ao completar \num Descanso Curto e todos os usos gastos ao comple-\ntar um Descanso Longo. Você adquire usos adicionais \nao atingir certos níveis de Clérigo, conforme mostra-\ndo na coluna Canalizar Divindade da tabela Caracte-\nrísticas de Clérigo.\nSe um efeito de Canalizar Divindade exigir uma \nsalvaguarda, a CD é igual a CD para evitar magia da \ncaracterística Conjuração desta classe.\nCentelha Divina. Como uma ação Usar Magia, você \nexpõe seu Símbolo Sagrado para outra criatura à sua \nvista a até 9 metros e canaliza energia divina nela. \nJogue 1d8 e adicione seu modificador de Sabedoria. \nVocê pode restaurar Pontos de Vida da criatura igual \nao resultado total ou forçar a criatura a realizar uma \nsalvaguarda de Constituição. Se falhar, a criatura so-\nfre dano Necrótico ou Radiante (à sua escolha) igual \nao total. Em caso de sucesso, a criatura recebe metade \ndo dano (arredondado para baixo).\nVocê joga um d8 adicional quando atinge os níveis \nde 7 (2d8), 13 (3d8) e 18 (4d8) de Clérigo.\nExpulsar Mortos-Vivos. Como uma ação Usar Magia, \nvocê mostra seu Símbolo Sagrado e repreende cria-\nturas Mortas-Vivas. Cada Morto-Vivo à sua escolha \na até 9 metros de você deve realizar uma salvaguarda \nde Sabedoria. Se a criatura falhar, ela está com as"
+        },
+        {
+          "source": "phb2024",
+          "printedPage": 168,
+          "pdfPage": 174,
+          "label": null,
+          "originalText": "Nível 3: Canalizar Divindade\nVocê pode canalizar energia divina diretamente dos \nPlanos Externos, usando-a para causar efeitos mágicos. \nVocê começa com um desses efeitos: Sentido Divino, \ndescrito abaixo. Outras características de Paladino dão \nopções adicionais de efeito de Canalizar Divindade. \nCada vez que você usa Canalizar Divindade desta clas-\nse, você escolhe qual efeito desta classe usar.\nVocê pode usar Canalizar Divindade desta classe \nduas vezes e três vezes a partir do nível 11 de Paladino. \nVocê recupera um uso gasto ao completar um Descan-\nso Curto, e restaura todos os usos gastos ao completar \num Descanso Longo."
+        },
+        {
+          "source": "phb2024",
+          "printedPage": 169,
+          "pdfPage": 175,
+          "label": null,
+          "originalText": "Se um efeito de Canalizar Divindade exigir uma \nsalvaguarda, a CD é igual a CD para evitar magias da \ncaracterística Conjuração desta classe.\nSentido Divino. Como uma Ação Bônus, você pode \nabrir sua consciência para detectar Celestiais, Ínferos e \nMortos-Vivos. Pelos próximos 10 minutos ou até você \nter a condição Incapacitado, você sabe a localização de \nqualquer criatura desse tipo a até 18 metros de você \ne conhece o tipo de criatura. Dentro do mesmo raio, \nvocê também detecta a presença de qualquer lugar ou \nobjeto que tenha sido consagrado ou profanado, como \nna magia Consagrar."
+        }
+      ],
+      "poolsSeparateByClass": true,
+      "crossClassSpendingAllowed": false,
+      "clericUsesByLevel": [
+        0,
+        2,
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4
+      ],
+      "paladinUsesByLevel": [
+        0,
+        0,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "saveAbilities": {
+        "clerigo": "wis",
+        "paladino": "cha"
+      },
+      "shortRestRecoveryPerPool": 1,
+      "longRestRecovery": "all",
+      "interpretation": "Conclusão direta das expressões Canalizar Divindade desta classe e efeito desta classe nos dois recursos 2024. O capítulo de multiclasse não contém a antiga regra de compartilhamento de 2014."
+    },
+    {
+      "id": "spell-preparation",
+      "title": "Magias preparadas e truques por classe",
+      "summary": "Determinar as magias elegíveis e a quantidade preparada separadamente para cada classe, como se o personagem tivesse apenas os níveis daquela classe. Espaços de círculo maior não liberam preparação de magias de círculo maior nessa classe. Cada magia mantém sua classe de origem e atributo de conjuração. Somar os truques que cada classe concede; o dano/escalonamento dos truques usa nível total, salvo texto contrário.",
+      "evidence": [
+        {
+          "source": "phb2024",
+          "printedPage": 44,
+          "pdfPage": 50,
+          "label": null,
+          "originalText": "Conjuração\nSua capacidade de conjurar magias depende parcial-\nmente dos seus níveis combinados em todas as suas \nclasses conjuradoras e parcialmente dos seus níveis \nindividuais nessas classes. Ao realizar multiclasse e \nter a característica Conjuração de mais de uma classe, \nutilize as regras abaixo. Se você usar multiclasse, mas \ntiver a característica Conjuração apenas em uma clas-\nse, siga as regras dessa classe.\nMagias Preparadas. Você determina quais magias \npode preparar para cada classe individualmente, como \nse fosse um membro de classe única dessa classe. Por \nexemplo, se você é um Guardião de nível 4 / Feiticeiro \nde nível 3, pode preparar cinco magias de 1º círculo de \nGuardião e preparar seis magias de 1º ou 2º círculo de \nFeiticeiro (além de quatro truques de Feiticeiro).\nCada magia que você prepara está associada a uma \nde suas classes, e você usa o atributo de conjuração \ndessa classe quando conjura a magia.\nTruques. Se um truque seu aumenta de poder em ní-\nveis mais altos, o aumento é baseado no seu nível total \nde personagem, não no nível em uma classe específica, \na menos que a magia indique o contrário."
+        }
+      ],
+      "preparationAccessUses": "individual class level and its own single-class spell table",
+      "preparedCapacityUses": "individual class prepared table, not combined caster level or a generic intelligence/wisdom formula",
+      "spellcastingAbilityUses": "class associated with that prepared spell",
+      "cantripPowerUses": "total character level unless the spell says otherwise",
+      "cantripChoicesGrantedUses": "each class level separately",
+      "alwaysPreparedFeatureSpellsCountAgainstBaseCapacity": false,
+      "wizardSpellbookNote": "Mago 1 recebe um livro com seis magias de 1º círculo. Cada nível posterior de Mago adiciona duas magias que o nível individual de Mago permite; espaços combinados não autorizam copiar/preparar uma magia mais alta. Veja páginas impressas 147–149 (PDF 153–155)."
+    },
+    {
+      "id": "multiclass-spell-slots",
+      "title": "Espaços de Conjuração combinados",
+      "summary": "A tabela combinada é usada ao ter Conjuração de mais de uma classe. Somar níveis integrais dos cinco conjuradores plenos; metade de Paladino e Guardião arredondada para cima; terços de Guerreiro Cavaleiro Místico e Ladino Trapaceiro Arcano arredondados para baixo. Bruxo não entra nessa soma. Espaços maiores podem aprimorar magias preparadas inferiores.",
+      "evidence": [
+        {
+          "source": "phb2024",
+          "printedPage": 44,
+          "pdfPage": 50,
+          "label": null,
+          "originalText": "Conjuração\nSua capacidade de conjurar magias depende parcial-\nmente dos seus níveis combinados em todas as suas \nclasses conjuradoras e parcialmente dos seus níveis \nindividuais nessas classes. Ao realizar multiclasse e \nter a característica Conjuração de mais de uma classe, \nutilize as regras abaixo. Se você usar multiclasse, mas \ntiver a característica Conjuração apenas em uma clas-\nse, siga as regras dessa classe."
+        },
+        {
+          "source": "phb2024",
+          "printedPage": 45,
+          "pdfPage": 51,
+          "label": null,
+          "originalText": "Espaços de Magia. Você determina seus espaços de \nmagia disponíveis somando o seguinte:\n• Todos os seus níveis nas classes Bardo, Clérigo, Drui-\nda, Feiticeiro e Mago\n• Metade dos seus níveis (arredonde para cima) nas \nclasses Guardião e Paladino\n• Um terço dos seus níveis de Guerreiro ou Ladino \n(arredondado para baixo) se você tiver a subclasse \nCavaleiro Místico ou Trapaceiro Arcano.\nEm seguida, consulte o total de níveis na coluna Cír-\nculo da tabela Conjurador Multiclasse. Você utiliza os \nespaços para aquele círculo para conjurar magias de \num círculo apropriado de qualquer classe cuja caracte-\nrística Conjuração você possui.\nEsta tabela pode lhe dar espaços de magia de um cír-\nculo mais alto do que as magias que você prepara. Você \npode usar esses espaços, mas apenas para conjurar suas \nmagias de círculo inferior. Se uma magia de círculo \ninferior que você conjurar, como Mãos Flamejantes, \ntiver um efeito aprimorado quando conjurado em um \ncírculo superior, você pode usar o efeito aprimorado \nnormalmente.\nPor exemplo, se você é um Guardião de nível 4 / Fei-\nticeiro de nível 3, conta como um personagem de nível \n5 ao determinar seus espaços de magia, somando todos \nos seus níveis como Feiticeiro e metade dos níveis \nde Guardião. Como mostrado na tabela Conjurador \nMulticlasse, você tem quatro espaços de magia de 1º \ncírculo, três espaços de 2º círculo e dois espaços de 3º \nUm personagem com níveis de Bruxo e Paladino pode \ninvocar um juramento de força e um patrono sobrenatural\ncírculo. No entanto, você não pode preparar magias de \n3º círculo, nem pode preparar magias de 2º círculo de \nGuardião. Você pode usar os espaços de magia desses \ncírculos para conjurar as magias que preparou — e \npotencialmente aprimorar seus efeitos."
+        }
+      ],
+      "fullCasters": [
+        "bardo",
+        "clerigo",
+        "druida",
+        "feiticeiro",
+        "mago"
+      ],
+      "halfCasters": [
+        "paladino",
+        "guardiao"
+      ],
+      "thirdCasters": [
+        {
+          "classId": "guerreiro",
+          "subclass": "Cavaleiro Místico"
+        },
+        {
+          "classId": "ladino",
+          "subclass": "Trapaceiro Arcano"
+        }
+      ],
+      "recommendedFormula": "Bardo + Clérigo + Druida + Feiticeiro + Mago + ceil(Paladino/2) + ceil(Guardião/2) + floor(GuerreiroCavaleiroMístico/3) + floor(LadinoTrapaceiroArcano/3) + ceil(ArtíficeLegado/2)",
+      "useOwnClassSlotsWhenOnlyOneSpellcastingClass": true,
+      "roundingOrderReview": {
+        "recommended": "Dividir e arredondar cada contribuição de classe antes de somar.",
+        "twoOddHalfCastersExampleExplicitInProvidedPDF": false,
+        "primaryOnlineRuleAlsoGivesNoWorkedTwoOddExample": true,
+        "confidence": "Direção de arredondamento explícita; ordem classe a classe é a leitura operacional usual, não um exemplo escrito na fonte.",
+        "paladin1Ranger1UnderRecommendedFormula": 2,
+        "paladin3Ranger3UnderRecommendedFormula": 4,
+        "doNotRepresentAsLiteralQuote": "O PDF não escreve ceil(P/2)+ceil(G/2). A fórmula é a interpretação operacional recomendada."
+      },
+      "slotsByEffectiveCasterLevel": [
+        [],
+        [
+          2
+        ],
+        [
+          3
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          3,
+          2
+        ],
+        [
+          4,
+          3,
+          3
+        ],
+        [
+          4,
+          3,
+          3,
+          1
+        ],
+        [
+          4,
+          3,
+          3,
+          2
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          1
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          2
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          1,
+          1
+        ]
+      ],
+      "slotArrayIndex": "effective caster level; index 0 is []"
+    },
+    {
+      "id": "pact-magic",
+      "title": "Magia de Pacto e Conjuração",
+      "summary": "Guardar espaços de Pacto em reserva distinta, com quantidade e círculo definidos só pelo nível de Bruxo. Pode gastar Pacto em magias preparadas de outras classes e espaços de Conjuração em magias de Bruxo, desde que o círculo seja suficiente. A classe/atributo da magia não muda conforme a reserva gasta. Espaços de Pacto recuperam no Curto ou Longo; a reserva normal mantém sua recuperação própria.",
+      "evidence": [
+        {
+          "source": "phb2024",
+          "printedPage": 45,
+          "pdfPage": 51,
+          "label": null,
+          "originalText": "Magia de Pacto. Se você possui a característica Magia \nde Pacto da classe Bruxo e a característica Conjuração, \npode usar os espaços de magia que adquire de Magia \nde Pacto para conjurar magias que você preparou das \nclasses com a característica Conjuração, e pode usar os \nespaços de magia que adquire da característica Conjura-\nção para conjurar magias de Bruxo que você preparou."
+        },
+        {
+          "source": "phb2024",
+          "printedPage": 69,
+          "pdfPage": 75,
+          "label": null,
+          "originalText": "Nível 1: Magia de Pacto\nPor meio de uma cerimônia oculta, você realizou um \npacto com uma entidade misteriosa para obter poderes \nmágicos. Essa voz nas sombras é enigmática, mas a dá-\ndiva concedida por ela é clara: a habilidade de conjurar \nmagias. Veja o capítulo 7 para as regras de conjuração. \nAs informações a seguir explicam como aplicar essas \nregras às magias de Bruxo, que estão listadas mais \nadiante na descrição da classe.\nTruques. Você conhece dois truques de Bruxo \nà sua escolha. Prestidigitação Arcana e Raio Místico \nsão recomendados. Ao alcançar um nível de Bruxo, \nNESTOR OSSANDON LEAL"
+        },
+        {
+          "source": "phb2024",
+          "printedPage": 70,
+          "pdfPage": 76,
+          "label": null,
+          "originalText": "Espaços de Magia. A tabela Características de Bruxo \nmostra quantos espaços de magia você tem para \nconjurar suas magias de Bruxo de 1º a 5º círculo. A \ntabela também mostra o círculo desses espaços, todos \ndo mesmo círculo. Você restaura todos os espaços \nde Magia de Pacto gastos ao completar um Descanso \nCurto ou Longo.\nPor exemplo, quando você é um Bruxo de nível 5, \nvocê tem dois espaços de magia de 3º círculo. Para \nconjurar a magia Raio de Bruxa de 1º círculo, você deve \ngastar um desses espaços e conjurá-la como uma magia \nde 3º círculo."
+        }
+      ],
+      "pactSlotsByWarlockLevel": [
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4
+      ],
+      "pactSlotLevelByWarlockLevel": [
+        1,
+        1,
+        2,
+        2,
+        3,
+        3,
+        4,
+        4,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "pactRecovery": [
+        "shortRest",
+        "longRest"
+      ],
+      "warlockCountsInCombinedCasterLevel": false,
+      "magicalCunning": {
+        "minimumWarlockLevel": 2,
+        "time": "1 minuto",
+        "regains": "ceil(maximum pact slots / 2)",
+        "recharge": "long rest",
+        "affectsOnlyPactSlots": true,
+        "printedPage": 70,
+        "pdfPage": 76
+      },
+      "mysticArcanum": {
+        "warlockLevels": [
+          11,
+          13,
+          15,
+          17
+        ],
+        "spellLevels": [
+          6,
+          7,
+          8,
+          9
+        ],
+        "usesSpellSlots": false,
+        "oneCastEachPerLongRest": true,
+        "printedPage": 71,
+        "pdfPage": 77
+      }
+    },
+    {
+      "id": "feats-asi",
+      "title": "Aumentos de atributo, talentos e Dádivas Épicas",
+      "summary": "As oportunidades de talento vêm dos níveis de cada classe, não do nível total. ASI normalmente ocorre em 4/8/12/16; Guerreiro também em 6 e 14; Ladino também em 10. As classes 2024 dão uma oportunidade de Dádiva Épica em nível 19 da classe. No ASI, pode escolher Aumento no Valor de Atributo ou outro talento elegível; seu pré-requisito de nível sem nome de classe usa nível do personagem.",
+      "evidence": [
+        {
+          "source": "phb2024",
+          "printedPage": 128,
+          "pdfPage": 134,
+          "label": null,
+          "originalText": "Nível 4: Aumento no Valor de Atributo\nVocê adquire o talento Aumento no Valor de Atributo \n(veja o capítulo 5) ou outro talento à sua escolha para o \nqual atenda os pré-requisitos. Você adquire essa caracte-\nrística novamente nos níveis 6, 8, 12, 14 e 16 de Guerreiro."
+        },
+        {
+          "source": "phb2024",
+          "printedPage": 138,
+          "pdfPage": 144,
+          "label": null,
+          "originalText": "Nível 4: Aumento no Valor de Atributo\nVocê adquire o talento Aumento no Valor de Atributo \n(veja o capítulo 5) ou outro talento à sua escolha para \no qual atende os pré-requisitos. Você adquire essa \ncaracterística novamente nos níveis 8, 10, 12 e 16 de \nLadino.\nNível 5: Golpe Astuto\nVocê encontrou maneiras astutas de aplicar seu Ataque \nFurtivo. Ao causar dano com ele, você pode adicionar \num dos seguintes efeitos de Golpe Astuto, cada um \ncom um custo em dados que deve ser subtraído do \ndano total do Ataque Furtivo. Remova o dado antes de \njogar, e o efeito ocorre imediatamente após o dano. Por \nexemplo, ao escolher o efeito Envenenar, retire 1d6 de \ndano do Ataque Furtivo antes de jogá-lo.\nSe um efeito de Golpe Astuto exigir uma salvaguar-\nda, a CD é igual a 8 mais seu modificador de Destreza e \nBônus de Proficiência.\nEnvenenar (Custo: 1d6). Você adiciona uma toxina ao \nseu ataque, forçando o alvo a realizar uma salvaguar-\nda de Constituição. Se falhar, o alvo tem a condição \nEnvenenado por 1 minuto. No final de cada um dos \nturnos do alvo Envenenado, ele repete a salvaguarda, \nencerrando o efeito em si em caso de sucesso.\nPara usar esse efeito, você deve ter um Kit de Veneno \ncom você.\nRetirada (Custo: 1d6). Imediatamente após o ataque, \nvocê se move até metade do seu Deslocamento sem \nprovocar Ataques de Oportunidade.\nTropeço (Custo: 1d6). Se o alvo for Grande ou menor, \nele deve ser bem-sucedido em uma salvaguarda de \nDestreza ou tem a condição Caído."
+        },
+        {
+          "source": "phb2024",
+          "printedPage": 203,
+          "pdfPage": 209,
+          "label": null,
+          "originalText": "Aumento no Valor de Atributo\nTalento Geral (Pré-requisito: Nível 4 ou superior)\nAumente um valor de atributo à sua escolha em 2, ou \naumente dois valores de atributo à sua escolha em 1. \nEste talento não pode aumentar um valor de atributo \nacima de 20.\nRepetível. Você pode adquirir este talento mais de \numa vez."
+        },
+        {
+          "source": "phb2024",
+          "printedPage": 199,
+          "pdfPage": 205,
+          "label": null,
+          "originalText": "Categoria. Um talento pertence a uma categoria, in-\ndicada no talento. Se você for instruído a escolher um \ntalento de uma categoria específica, como a categoria \nOrigem, essa categoria deve aparecer sob o nome do \ntalento. Se for instruído a escolher um talento sem \nespecificar uma categoria, você pode escolher qualquer \ncategoria.\nPré-requisito. Para adquirir um talento, você deve \natender a qualquer pré-requisito descrito, a menos que \numa característica permita que você adquira o talento \nsem o cumprir. Se um pré-requisito incluir uma classe, \nvocê deve ter pelo menos 1 nível naquela classe para \nadquirir o talento.\nBenefício. Os benefícios de um talento são detalha-\ndos após qualquer pré-requisito. Se você possui um \ntalento, adquire os benefícios dele.\nRepetível. Um talento pode ser adquirido apenas uma \nvez, a menos que a descrição do talento indique o con-\ntrário em uma subseção chamada “Repetível”."
+        },
+        {
+          "source": "phb2024",
+          "printedPage": 210,
+          "pdfPage": 216,
+          "label": null,
+          "originalText": "Talentos de Dádiva Épica\nEsses talentos estão na categoria Dádiva Épica.\nDádiva da Fortitude\nTalento de Dádiva Épica (Pré-requisito: Nível 19 ou \nsuperior)\nVocê adquire os seguintes benefícios.\nAumento no Valor de Atributo. Aumente um valor de \natributo à sua escolha em 1, até no máximo 30.\nSaúde Fortalecida. Seus Pontos de Vida máximos \naumentam em 40. Além disso, sempre que você recu-\nperar Pontos de Vida, pode recuperar Pontos de Vida \nadicionais iguais ao seu modificador de Constituição. \nApós recuperar esses Pontos de Vida adicionais, você \nnão pode fazer isso novamente até o início do seu \npróximo turno."
+        }
+      ],
+      "defaultAsiClassLevels": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "fighterAsiClassLevels": [
+        4,
+        6,
+        8,
+        12,
+        14,
+        16
+      ],
+      "rogueAsiClassLevels": [
+        4,
+        8,
+        10,
+        12,
+        16
+      ],
+      "epicBoonClassLevel": 19,
+      "asiFeat": {
+        "minimumCharacterLevel": 4,
+        "repeatable": true,
+        "choose": [
+          {
+            "+2 to one ability": true
+          },
+          {
+            "+1 to two abilities": true
+          }
+        ],
+        "maximumAbilityScore": 20
+      },
+      "epicBoonFeatMinimumCharacterLevel": 19,
+      "lateAsiCanChooseEpicBoon": {
+        "allowedByReadingOfSources": true,
+        "example": "Guerreiro 15 / Ladino 3 sobe Ladino para 4 no nível total 19: a oportunidade de talento de Ladino 4 pode escolher uma Dádiva Épica, porque não há restrição de categoria e o pré-requisito Nível 19 está cumprido.",
+        "type": "Conclusão das regras de categoria/pré-requisitos e ASI; não é exemplo literal do PDF."
+      },
+      "backgroundOriginFeatNotRepeatedByNewClass": true
+    },
+    {
+      "id": "level20",
+      "title": "Progressão além de 20",
+      "summary": "A progressão de classes normal termina no nível total 20. O quadro opcional de avanço concede, a critério do Mestre, um talento por 30.000 XP além de 355.000, em lugar de novos níveis de classe.",
+      "evidence": [
+        {
+          "source": "phb2024",
+          "printedPage": 43,
+          "pdfPage": 49,
+          "label": null,
+          "originalText": "Talentos Adicionais no Nível 20\nUm Mestre pode usar talentos como forma de \navanço após os personagens alcançarem o nível 20, \nproporcionando maior poder àqueles que não têm \nmais níveis para adquirir. Com essa abordagem, cada \npersonagem obtém um talento à sua escolha a cada \n30.000 XP recebidos além de 355.000 XP. Dádivas Épicas \nsão especialmente apropriadas para esses talentos \nadicionais, mas um jogador pode escolher qualquer \ntalento para o qual seu personagem de nível 20 se \nqualifique."
+        }
+      ],
+      "optionalFeatPerAdditionalXP": 30000,
+      "baselineXP": 355000,
+      "doesNotGrantMoreClassLevels": true
+    },
+    {
+      "id": "artificer-legacy",
+      "title": "Artífice legado na multiclasse 2024",
+      "summary": "A fonte de Tasha exige Inteligência 13 para entrar ou sair por multiclasse, concede armaduras leves/médias/escudos e ferramentas de ladrão/funileiro ao entrar, e soma metade de seus níveis arredondada para cima aos espaços combinados. A preparação continua Inteligência + metade do nível de Artífice arredondada para baixo, mínimo 1.",
+      "evidence": [
+        {
+          "source": "tasha",
+          "printedPage": 10,
+          "pdfPage": 10,
+          "label": null,
+          "originalText": "Multiclasse e o Artífice\nSe o seu grupo utilizar a regra opcional de\nmulticlasse do Livro do Jogador, aqui está o que\nvocê precisa saber se escolher o artífice como uma\nde suas classes.\nValor mínimo de atributo. Como um personagem\ncom multiclasse, você deve ter um valor de\nInteligência de no mínimo 13 para adquirir um\nnível nessa classe, ou para adquirir um nível em\noutra classe se você já for um artífice.\nProficiências ganhas. Se artífice não for a sua\nclasse inicial, essas são as proficiências que você\nganha quando adquire o seu primeiro nível nessa\nclasse: armaduras leves, armaduras médias,\nescudos, ferramentas de ladrão, ferramentas de\nfunileiro.\nEspaços de Magia. Adicione metade dos seus\nníveis(arredondado para cima) na classe do artífice\naos níveis apropriados de outras classes para\ndeterminar seus slots de magia disponíveis."
+        },
+        {
+          "source": "tasha",
+          "printedPage": 11,
+          "pdfPage": 11,
+          "label": null,
+          "originalText": "Preparando e Conjurando Magias\nA tabela O Artífice mostra quantos espaços de magia você\ntem para conjurar suas magias de artífice. Para conjurar uma\nde suas magias de artífice de 1º círculo ou superior, você deve\ngastar um espaço do círculo da magia ou superior. Você\nrecupera todos os espaços de magia gastos quando termina\num descanso longo.\nVocê prepara a lista de magias de artífice que estão\ndisponíveis para você conjurar escolhendo a partir da lista de\nmagias do artífice. Ao fazer isso, escolha um número de\nmagias de artífice igual ao seu modificador de Inteligência +\nmetade do seu nível de artífice, arredondado para baixo\n(mínimo de uma magia). As magias devem ser de um círculo\npara o qual você tenha espaços de magia.\nPor exemplo, se você é um artífice de 5ª nível, você tem\nquatro espaços de magia de primeiro círculo e dois de\nsegundo círculo. Com Inteligência 14, sua lista de magias\npreparadas pode incluir quatro magias de primeiro ou\nsegundo círculo, em qualquer combinação. Se você preparar\na magia de primeiro círculo Curar Ferimentos, você pode\nconjurá-la usando um espaço de magia de 1º ou 2º círculo.\nConjurar a magia não a remove de sua lista de magias\npreparadas.\nVocê pode alterar sua lista de magias preparadas quando\nterminar um descanso longo. Preparar uma nova lista de\nmagias de artífice requer tempo gasto ajustando seu foco de\nconjuração: pelo menos 1 minuto por círculo de magia para\ncada magia em sua lista"
+        }
+      ],
+      "default2024RulesHavePriority": true,
+      "legacyClassRuleSpecificException": true
+    }
+  ],
+  "classes": {
+    "barbaro": {
+      "id": "barbaro",
+      "name": "Bárbaro",
+      "source": "phb2024",
+      "printedPage": 51,
+      "pdfPage": 57,
+      "requirements": {
+        "allOf": [
+          {
+            "anyOf": [
+              "str"
+            ],
+            "minimumScore": 13
+          }
+        ]
+      },
+      "hitDie": 12,
+      "fixedHpAfterCharacterLevel1": 7,
+      "startingSavingThrowProficiencies": [
+        "str",
+        "con"
+      ],
+      "multiclassGain": {
+        "armorTraining": [
+          "Escudos"
+        ],
+        "weaponProficiencies": [
+          "Armas Marciais"
+        ],
+        "toolProficiencies": [],
+        "savingThrowProficiencies": [],
+        "skillChoices": {
+          "count": 0,
+          "from": []
+        },
+        "toolChoices": {
+          "count": 0,
+          "category": null
+        },
+        "startingEquipment": false,
+        "grantsLevel1ClassFeatures": true
+      },
+      "multiclassOriginalText": "Como um Personagem Multiclasse\n• Adquira as seguintes características da tabela Traços \nBásicos de Bárbaro: Dado de Ponto de Vida, pro-\nficiência com armas Marciais e treinamento com \nEscudos.\n• Adquira as características de nível 1 de Bárbaro, \napresentadas na tabela Características de Bárbaro.",
+      "asiClassLevels": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "epicBoonClassLevel": 19,
+      "subclassClassLevel": 3
+    },
+    "bardo": {
+      "id": "bardo",
+      "name": "Bardo",
+      "source": "phb2024",
+      "printedPage": 59,
+      "pdfPage": 65,
+      "requirements": {
+        "allOf": [
+          {
+            "anyOf": [
+              "cha"
+            ],
+            "minimumScore": 13
+          }
+        ]
+      },
+      "hitDie": 8,
+      "fixedHpAfterCharacterLevel1": 5,
+      "startingSavingThrowProficiencies": [
+        "dex",
+        "cha"
+      ],
+      "multiclassGain": {
+        "armorTraining": [
+          "Leve"
+        ],
+        "weaponProficiencies": [],
+        "toolProficiencies": [],
+        "savingThrowProficiencies": [],
+        "skillChoices": {
+          "count": 1,
+          "from": "any"
+        },
+        "toolChoices": {
+          "count": 1,
+          "category": "Instrumento Musical"
+        },
+        "startingEquipment": false,
+        "grantsLevel1ClassFeatures": true
+      },
+      "multiclassOriginalText": "Como um Personagem Multiclasse\n• Adquira as seguintes características da tabela Traços \nBásicos de Bardo: Dado de Ponto de Vida, proficiên-\ncia em uma perícia à sua escolha, proficiência com \num Instrumento Musical à sua escolha e treinamento \ncom armadura Leve.\n• Adquira as características de nível 1 de Bardo, apre-\nsentadas na tabela Características de Bardo. Veja \ntambém regras de multiclasse no capítulo 2 para \ndeterminar seus espaços de magia disponíveis.",
+      "asiClassLevels": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "epicBoonClassLevel": 19,
+      "subclassClassLevel": 3
+    },
+    "bruxo": {
+      "id": "bruxo",
+      "name": "Bruxo",
+      "source": "phb2024",
+      "printedPage": 69,
+      "pdfPage": 75,
+      "requirements": {
+        "allOf": [
+          {
+            "anyOf": [
+              "cha"
+            ],
+            "minimumScore": 13
+          }
+        ]
+      },
+      "hitDie": 8,
+      "fixedHpAfterCharacterLevel1": 5,
+      "startingSavingThrowProficiencies": [
+        "wis",
+        "cha"
+      ],
+      "multiclassGain": {
+        "armorTraining": [
+          "Leve"
+        ],
+        "weaponProficiencies": [],
+        "toolProficiencies": [],
+        "savingThrowProficiencies": [],
+        "skillChoices": {
+          "count": 0,
+          "from": []
+        },
+        "toolChoices": {
+          "count": 0,
+          "category": null
+        },
+        "startingEquipment": false,
+        "grantsLevel1ClassFeatures": true
+      },
+      "multiclassOriginalText": "Como um Personagem Multiclasse\n• Adquira as seguintes características da tabela Traços \nBásicos de Bruxo: Dado de Ponto de Vida e treina-\nmento com armadura Leve.\n• Adquira as características de nível 1 de Bruxo, apre-\nsentadas na tabela Características de Bruxo. Veja \ntambém regras de multiclasse no capítulo 2 para \ndeterminar seus espaços de magia disponíveis.",
+      "asiClassLevels": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "epicBoonClassLevel": 19,
+      "subclassClassLevel": 3
+    },
+    "clerigo": {
+      "id": "clerigo",
+      "name": "Clérigo",
+      "source": "phb2024",
+      "printedPage": 81,
+      "pdfPage": 87,
+      "requirements": {
+        "allOf": [
+          {
+            "anyOf": [
+              "wis"
+            ],
+            "minimumScore": 13
+          }
+        ]
+      },
+      "hitDie": 8,
+      "fixedHpAfterCharacterLevel1": 5,
+      "startingSavingThrowProficiencies": [
+        "wis",
+        "cha"
+      ],
+      "multiclassGain": {
+        "armorTraining": [
+          "Leve",
+          "Média",
+          "Escudos"
+        ],
+        "weaponProficiencies": [],
+        "toolProficiencies": [],
+        "savingThrowProficiencies": [],
+        "skillChoices": {
+          "count": 0,
+          "from": []
+        },
+        "toolChoices": {
+          "count": 0,
+          "category": null
+        },
+        "startingEquipment": false,
+        "grantsLevel1ClassFeatures": true
+      },
+      "multiclassOriginalText": "Como um Personagem Multiclasse\n• Adquira as seguintes características da tabela \nTraços Básicos de Clérigo: Dado de Ponto de Vida e \ntreinamento com armadura Leve, Média e Escudos.\n• Adquira as características de nível 1 de Clérigo, \napresentadas na tabela Características de Clérigo. \nVeja também regras de multiclasse no capítulo 2 \npara determinar seus espaços de magia disponíveis.",
+      "asiClassLevels": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "epicBoonClassLevel": 19,
+      "subclassClassLevel": 3
+    },
+    "druida": {
+      "id": "druida",
+      "name": "Druida",
+      "source": "phb2024",
+      "printedPage": 91,
+      "pdfPage": 97,
+      "requirements": {
+        "allOf": [
+          {
+            "anyOf": [
+              "wis"
+            ],
+            "minimumScore": 13
+          }
+        ]
+      },
+      "hitDie": 8,
+      "fixedHpAfterCharacterLevel1": 5,
+      "startingSavingThrowProficiencies": [
+        "int",
+        "wis"
+      ],
+      "multiclassGain": {
+        "armorTraining": [
+          "Leve",
+          "Escudos"
+        ],
+        "weaponProficiencies": [],
+        "toolProficiencies": [],
+        "savingThrowProficiencies": [],
+        "skillChoices": {
+          "count": 0,
+          "from": []
+        },
+        "toolChoices": {
+          "count": 0,
+          "category": null
+        },
+        "startingEquipment": false,
+        "grantsLevel1ClassFeatures": true
+      },
+      "multiclassOriginalText": "Como um Personagem Multiclasse\n• Adquira as seguintes características da tabela Traços \nBásicos de Druida: Dado de Ponto de Vida e treina-\nmento com armadura Leve e Escudos.\n• Adquira as características de nível 1 de Druida, \napresentadas na tabela Características de Druida. \nVeja também regras de multiclasse no capítulo 2 para \ndeterminar seus espaços de magia disponíveis.",
+      "asiClassLevels": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "epicBoonClassLevel": 19,
+      "subclassClassLevel": 3
+    },
+    "feiticeiro": {
+      "id": "feiticeiro",
+      "name": "Feiticeiro",
+      "source": "phb2024",
+      "printedPage": 103,
+      "pdfPage": 109,
+      "requirements": {
+        "allOf": [
+          {
+            "anyOf": [
+              "cha"
+            ],
+            "minimumScore": 13
+          }
+        ]
+      },
+      "hitDie": 6,
+      "fixedHpAfterCharacterLevel1": 4,
+      "startingSavingThrowProficiencies": [
+        "con",
+        "cha"
+      ],
+      "multiclassGain": {
+        "armorTraining": [],
+        "weaponProficiencies": [],
+        "toolProficiencies": [],
+        "savingThrowProficiencies": [],
+        "skillChoices": {
+          "count": 0,
+          "from": []
+        },
+        "toolChoices": {
+          "count": 0,
+          "category": null
+        },
+        "startingEquipment": false,
+        "grantsLevel1ClassFeatures": true
+      },
+      "multiclassOriginalText": "Como um Personagem Multiclasse\n• Adquira o Dado de Ponto de Vida da tabela Traços \nBásicos de Feiticeiro.\n• Adquira as características de nível 1 de Feiticeiro, \napresentadas na tabela Características de Feiticeiro. \nVeja também regras de multiclasse no capítulo 2 para \ndeterminar seus espaços de magia disponíveis.",
+      "asiClassLevels": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "epicBoonClassLevel": 19,
+      "subclassClassLevel": 3
+    },
+    "guardiao": {
+      "id": "guardiao",
+      "name": "Guardião",
+      "source": "phb2024",
+      "printedPage": 117,
+      "pdfPage": 123,
+      "requirements": {
+        "allOf": [
+          {
+            "anyOf": [
+              "dex"
+            ],
+            "minimumScore": 13
+          },
+          {
+            "anyOf": [
+              "wis"
+            ],
+            "minimumScore": 13
+          }
+        ]
+      },
+      "hitDie": 10,
+      "fixedHpAfterCharacterLevel1": 6,
+      "startingSavingThrowProficiencies": [
+        "str",
+        "dex"
+      ],
+      "multiclassGain": {
+        "armorTraining": [
+          "Leve",
+          "Média",
+          "Escudos"
+        ],
+        "weaponProficiencies": [
+          "Armas Marciais"
+        ],
+        "toolProficiencies": [],
+        "savingThrowProficiencies": [],
+        "skillChoices": {
+          "count": 1,
+          "from": [
+            "Atletismo",
+            "Furtividade",
+            "Intuição",
+            "Investigação",
+            "Lidar com Animais",
+            "Natureza",
+            "Percepção",
+            "Sobrevivência"
+          ]
+        },
+        "toolChoices": {
+          "count": 0,
+          "category": null
+        },
+        "startingEquipment": false,
+        "grantsLevel1ClassFeatures": true
+      },
+      "multiclassOriginalText": "Como um Personagem Multiclasse\n• Você adquire as seguintes características da tabe-\nla Traços Básicos de Guardião: Dado de Ponto de \nVida, proficiência com armas Marciais, proficiência \nem uma perícia à sua escolha da lista de perícias \nde Guardião e treinamento com armaduras Leves, \nMédias e Escudos.\n• Adquira as características de nível 1 de Guardião, \napresentadas na tabela Características de Guardião. \nVeja também regras de multiclasse no capítulo 2 para \ndeterminar seus espaços de magia disponíveis.",
+      "asiClassLevels": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "epicBoonClassLevel": 19,
+      "subclassClassLevel": 3
+    },
+    "guerreiro": {
+      "id": "guerreiro",
+      "name": "Guerreiro",
+      "source": "phb2024",
+      "printedPage": 127,
+      "pdfPage": 133,
+      "requirements": {
+        "allOf": [
+          {
+            "anyOf": [
+              "str",
+              "dex"
+            ],
+            "minimumScore": 13
+          }
+        ]
+      },
+      "hitDie": 10,
+      "fixedHpAfterCharacterLevel1": 6,
+      "startingSavingThrowProficiencies": [
+        "str",
+        "con"
+      ],
+      "multiclassGain": {
+        "armorTraining": [
+          "Leve",
+          "Média",
+          "Escudos"
+        ],
+        "weaponProficiencies": [
+          "Armas Marciais"
+        ],
+        "toolProficiencies": [],
+        "savingThrowProficiencies": [],
+        "skillChoices": {
+          "count": 0,
+          "from": []
+        },
+        "toolChoices": {
+          "count": 0,
+          "category": null
+        },
+        "startingEquipment": false,
+        "grantsLevel1ClassFeatures": true
+      },
+      "multiclassOriginalText": "Como um Personagem Multiclasse\n• Você adquire as seguintes características da tabela \nTraços Básicos de Guerreiro: Dado de Ponto de Vida, \nproficiência com armas Marciais e treinamento com \narmaduras Leves e Médias e Escudos.\n• Adquira as características de nível 1 do Guerreiro, \napresentadas na tabela Características de Guerreiro.",
+      "asiClassLevels": [
+        4,
+        6,
+        8,
+        12,
+        14,
+        16
+      ],
+      "epicBoonClassLevel": 19,
+      "subclassClassLevel": 3
+    },
+    "ladino": {
+      "id": "ladino",
+      "name": "Ladino",
+      "source": "phb2024",
+      "printedPage": 137,
+      "pdfPage": 143,
+      "requirements": {
+        "allOf": [
+          {
+            "anyOf": [
+              "dex"
+            ],
+            "minimumScore": 13
+          }
+        ]
+      },
+      "hitDie": 8,
+      "fixedHpAfterCharacterLevel1": 5,
+      "startingSavingThrowProficiencies": [
+        "dex",
+        "int"
+      ],
+      "multiclassGain": {
+        "armorTraining": [
+          "Leve"
+        ],
+        "weaponProficiencies": [],
+        "toolProficiencies": [
+          "Ferramentas de Ladrão"
+        ],
+        "savingThrowProficiencies": [],
+        "skillChoices": {
+          "count": 1,
+          "from": [
+            "Acrobacia",
+            "Atletismo",
+            "Enganação",
+            "Furtividade",
+            "Intimidação",
+            "Intuição",
+            "Investigação",
+            "Percepção",
+            "Persuasão",
+            "Prestidigitação"
+          ]
+        },
+        "toolChoices": {
+          "count": 0,
+          "category": null
+        },
+        "startingEquipment": false,
+        "grantsLevel1ClassFeatures": true
+      },
+      "multiclassOriginalText": "Como um Personagem Multiclasse\n• Adquira as seguintes características da tabela Traços \nBásicos de Ladino: Dado de Ponto de Vida, proficiên-\ncia em uma perícia à sua escolha da lista de perícias \ndo Ladino, proficiência com Ferramentas de Ladrão \ne treinamento com armadura Leve.\n• Adquira as características de nível 1 de Ladino, apre-\nsentadas na tabela Características de Ladino.",
+      "asiClassLevels": [
+        4,
+        8,
+        10,
+        12,
+        16
+      ],
+      "epicBoonClassLevel": 19,
+      "subclassClassLevel": 3
+    },
+    "mago": {
+      "id": "mago",
+      "name": "Mago",
+      "source": "phb2024",
+      "printedPage": 147,
+      "pdfPage": 153,
+      "requirements": {
+        "allOf": [
+          {
+            "anyOf": [
+              "int"
+            ],
+            "minimumScore": 13
+          }
+        ]
+      },
+      "hitDie": 6,
+      "fixedHpAfterCharacterLevel1": 4,
+      "startingSavingThrowProficiencies": [
+        "int",
+        "wis"
+      ],
+      "multiclassGain": {
+        "armorTraining": [],
+        "weaponProficiencies": [],
+        "toolProficiencies": [],
+        "savingThrowProficiencies": [],
+        "skillChoices": {
+          "count": 0,
+          "from": []
+        },
+        "toolChoices": {
+          "count": 0,
+          "category": null
+        },
+        "startingEquipment": false,
+        "grantsLevel1ClassFeatures": true
+      },
+      "multiclassOriginalText": "Como um Personagem Multiclasse\n• Adquira o Dado de Ponto de Vida da tabela Traços \nBásicos de Mago.\n• Adquira as características de nível 1 de Mago, \ndetalhadas na tabela Características de Mago. Veja \ntambém regras de multiclasse no capítulo 2 para \ndeterminar seus espaços de magia disponíveis.",
+      "asiClassLevels": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "epicBoonClassLevel": 19,
+      "subclassClassLevel": 3
+    },
+    "monge": {
+      "id": "monge",
+      "name": "Monge",
+      "source": "phb2024",
+      "printedPage": 159,
+      "pdfPage": 165,
+      "requirements": {
+        "allOf": [
+          {
+            "anyOf": [
+              "dex"
+            ],
+            "minimumScore": 13
+          },
+          {
+            "anyOf": [
+              "wis"
+            ],
+            "minimumScore": 13
+          }
+        ]
+      },
+      "hitDie": 8,
+      "fixedHpAfterCharacterLevel1": 5,
+      "startingSavingThrowProficiencies": [
+        "str",
+        "dex"
+      ],
+      "multiclassGain": {
+        "armorTraining": [],
+        "weaponProficiencies": [],
+        "toolProficiencies": [],
+        "savingThrowProficiencies": [],
+        "skillChoices": {
+          "count": 0,
+          "from": []
+        },
+        "toolChoices": {
+          "count": 0,
+          "category": null
+        },
+        "startingEquipment": false,
+        "grantsLevel1ClassFeatures": true
+      },
+      "multiclassOriginalText": "Como um Personagem Multiclasse\n• Adquira o traço Dado de Ponto de Vida da tabela \nTraços Básicos de Monge.\n• Adquira as características de nível 1 de Monge, apre-\nsentadas na tabela Características de Monge.",
+      "asiClassLevels": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "epicBoonClassLevel": 19,
+      "subclassClassLevel": 3
+    },
+    "paladino": {
+      "id": "paladino",
+      "name": "Paladino",
+      "source": "phb2024",
+      "printedPage": 167,
+      "pdfPage": 173,
+      "requirements": {
+        "allOf": [
+          {
+            "anyOf": [
+              "str"
+            ],
+            "minimumScore": 13
+          },
+          {
+            "anyOf": [
+              "cha"
+            ],
+            "minimumScore": 13
+          }
+        ]
+      },
+      "hitDie": 10,
+      "fixedHpAfterCharacterLevel1": 6,
+      "startingSavingThrowProficiencies": [
+        "wis",
+        "cha"
+      ],
+      "multiclassGain": {
+        "armorTraining": [
+          "Leve",
+          "Média",
+          "Escudos"
+        ],
+        "weaponProficiencies": [
+          "Armas Marciais"
+        ],
+        "toolProficiencies": [],
+        "savingThrowProficiencies": [],
+        "skillChoices": {
+          "count": 0,
+          "from": []
+        },
+        "toolChoices": {
+          "count": 0,
+          "category": null
+        },
+        "startingEquipment": false,
+        "grantsLevel1ClassFeatures": true
+      },
+      "multiclassOriginalText": "Como um Personagem Multiclasse\n• Você adquire as seguintes características da tabela \nTraços Básicos de Paladino: Dado de Ponto de Vida, \nproficiência com armas Marciais e treinamento com \narmaduras Leves, Médias e Escudos.\n• Adquira as características de nível 1 de Paladino, \napresentadas na tabela Características de Paladino. \nVeja também regras de multiclasse no capítulo 2 para \ndeterminar seus espaços de magia disponíveis.",
+      "asiClassLevels": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "epicBoonClassLevel": 19,
+      "subclassClassLevel": 3
+    },
+    "artifice": {
+      "id": "artifice",
+      "name": "Artífice",
+      "source": "tasha-legacy",
+      "printedPage": 10,
+      "pdfPage": 10,
+      "requirements": {
+        "allOf": [
+          {
+            "anyOf": [
+              "int"
+            ],
+            "minimumScore": 13
+          }
+        ]
+      },
+      "hitDie": 8,
+      "fixedHpAfterCharacterLevel1": 5,
+      "startingSavingThrowProficiencies": [
+        "con",
+        "int"
+      ],
+      "multiclassGain": {
+        "armorTraining": [
+          "Leve",
+          "Média",
+          "Escudos"
+        ],
+        "weaponProficiencies": [],
+        "toolProficiencies": [
+          "Ferramentas de Ladrão",
+          "Ferramentas de Funileiro"
+        ],
+        "savingThrowProficiencies": [],
+        "skillChoices": {
+          "count": 0,
+          "from": []
+        },
+        "toolChoices": {
+          "count": 0,
+          "category": null
+        },
+        "startingEquipment": false,
+        "grantsLevel1ClassFeatures": true
+      },
+      "multiclassOriginalText": "Multiclasse e o Artífice\nSe o seu grupo utilizar a regra opcional de\nmulticlasse do Livro do Jogador, aqui está o que\nvocê precisa saber se escolher o artífice como uma\nde suas classes.\nValor mínimo de atributo. Como um personagem\ncom multiclasse, você deve ter um valor de\nInteligência de no mínimo 13 para adquirir um\nnível nessa classe, ou para adquirir um nível em\noutra classe se você já for um artífice.\nProficiências ganhas. Se artífice não for a sua\nclasse inicial, essas são as proficiências que você\nganha quando adquire o seu primeiro nível nessa\nclasse: armaduras leves, armaduras médias,\nescudos, ferramentas de ladrão, ferramentas de\nfunileiro.\nEspaços de Magia. Adicione metade dos seus\nníveis(arredondado para cima) na classe do artífice\naos níveis apropriados de outras classes para\ndeterminar seus slots de magia disponíveis.",
+      "asiClassLevels": [
+        4,
+        8,
+        12,
+        16,
+        19
+      ],
+      "epicBoonClassLevel": null,
+      "subclassClassLevel": 3,
+      "legacyCompatibilityNote": "Artífice não é classe do PHB 2024 fornecido. Usar sua regra específica de metade arredondada para cima, sem aplicar o arredondamento para baixo dos meios-conjuradores 2014. Não dar a ele uma Dádiva Épica automática 2024 no nível 19; ele conserva ASI legado nesse nível, podendo escolher talentos permitidos pela política 2024."
+    }
+  },
+  "spellProgression": {
+    "bardo": {
+      "classId": "bardo",
+      "arrayIndex": "classLevel - 1 (20 entries, levels 1–20)",
+      "preparedByLevel": [
+        4,
+        5,
+        6,
+        7,
+        9,
+        10,
+        11,
+        12,
+        14,
+        15,
+        16,
+        16,
+        17,
+        17,
+        18,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "cantripsByLevel": [
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "printedPage": 60,
+      "pdfPage": 66,
+      "ability": "cha",
+      "reprepare": {
+        "event": "classLevelGain",
+        "maximumReplaced": 1
+      },
+      "minimumSpellcastingClassLevel": 1,
+      "doesNotInclude": "Magias sempre preparadas ou truques adicionais vindos de subclasse, espécie, talento, Ordem Divina/Primal, Estilo de Luta ou Invocações."
+    },
+    "bruxo": {
+      "classId": "bruxo",
+      "arrayIndex": "classLevel - 1 (20 entries, levels 1–20)",
+      "preparedByLevel": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        10,
+        11,
+        11,
+        12,
+        12,
+        13,
+        13,
+        14,
+        14,
+        15,
+        15
+      ],
+      "cantripsByLevel": [
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "printedPage": 70,
+      "pdfPage": 76,
+      "ability": "cha",
+      "reprepare": {
+        "event": "classLevelGain",
+        "maximumReplaced": 1
+      },
+      "minimumSpellcastingClassLevel": 1,
+      "doesNotInclude": "Magias sempre preparadas ou truques adicionais vindos de subclasse, espécie, talento, Ordem Divina/Primal, Estilo de Luta ou Invocações."
+    },
+    "clerigo": {
+      "classId": "clerigo",
+      "arrayIndex": "classLevel - 1 (20 entries, levels 1–20)",
+      "preparedByLevel": [
+        4,
+        5,
+        6,
+        7,
+        9,
+        10,
+        11,
+        12,
+        14,
+        15,
+        16,
+        16,
+        17,
+        17,
+        18,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "cantripsByLevel": [
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "printedPage": 82,
+      "pdfPage": 88,
+      "ability": "wis",
+      "reprepare": {
+        "event": "longRest",
+        "maximumReplaced": "any",
+        "from": "classSpellList"
+      },
+      "minimumSpellcastingClassLevel": 1,
+      "doesNotInclude": "Magias sempre preparadas ou truques adicionais vindos de subclasse, espécie, talento, Ordem Divina/Primal, Estilo de Luta ou Invocações."
+    },
+    "druida": {
+      "classId": "druida",
+      "arrayIndex": "classLevel - 1 (20 entries, levels 1–20)",
+      "preparedByLevel": [
+        4,
+        5,
+        6,
+        7,
+        9,
+        10,
+        11,
+        12,
+        14,
+        15,
+        16,
+        16,
+        17,
+        17,
+        18,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "cantripsByLevel": [
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "printedPage": 92,
+      "pdfPage": 98,
+      "ability": "wis",
+      "reprepare": {
+        "event": "longRest",
+        "maximumReplaced": "any",
+        "from": "classSpellList"
+      },
+      "minimumSpellcastingClassLevel": 1,
+      "doesNotInclude": "Magias sempre preparadas ou truques adicionais vindos de subclasse, espécie, talento, Ordem Divina/Primal, Estilo de Luta ou Invocações."
+    },
+    "feiticeiro": {
+      "classId": "feiticeiro",
+      "arrayIndex": "classLevel - 1 (20 entries, levels 1–20)",
+      "preparedByLevel": [
+        2,
+        4,
+        6,
+        7,
+        9,
+        10,
+        11,
+        12,
+        14,
+        15,
+        16,
+        16,
+        17,
+        17,
+        18,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "cantripsByLevel": [
+        4,
+        4,
+        4,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "printedPage": 104,
+      "pdfPage": 110,
+      "ability": "cha",
+      "reprepare": {
+        "event": "classLevelGain",
+        "maximumReplaced": 1
+      },
+      "minimumSpellcastingClassLevel": 1,
+      "doesNotInclude": "Magias sempre preparadas ou truques adicionais vindos de subclasse, espécie, talento, Ordem Divina/Primal, Estilo de Luta ou Invocações."
+    },
+    "guardiao": {
+      "classId": "guardiao",
+      "arrayIndex": "classLevel - 1 (20 entries, levels 1–20)",
+      "preparedByLevel": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        6,
+        7,
+        7,
+        9,
+        9,
+        10,
+        10,
+        11,
+        11,
+        12,
+        12,
+        14,
+        14,
+        15,
+        15
+      ],
+      "cantripsByLevel": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "printedPage": 118,
+      "pdfPage": 124,
+      "ability": "wis",
+      "reprepare": {
+        "event": "longRest",
+        "maximumReplaced": 1
+      },
+      "minimumSpellcastingClassLevel": 1,
+      "doesNotInclude": "Magias sempre preparadas ou truques adicionais vindos de subclasse, espécie, talento, Ordem Divina/Primal, Estilo de Luta ou Invocações."
+    },
+    "mago": {
+      "classId": "mago",
+      "arrayIndex": "classLevel - 1 (20 entries, levels 1–20)",
+      "preparedByLevel": [
+        4,
+        5,
+        6,
+        7,
+        9,
+        10,
+        11,
+        12,
+        14,
+        15,
+        16,
+        16,
+        17,
+        18,
+        19,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "cantripsByLevel": [
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "printedPage": 148,
+      "pdfPage": 154,
+      "ability": "int",
+      "reprepare": {
+        "event": "longRest",
+        "maximumReplaced": "any",
+        "from": "spellbook"
+      },
+      "minimumSpellcastingClassLevel": 1,
+      "doesNotInclude": "Magias sempre preparadas ou truques adicionais vindos de subclasse, espécie, talento, Ordem Divina/Primal, Estilo de Luta ou Invocações.",
+      "additionalPreparationChange": {
+        "feature": "Memorizar Magia",
+        "minimumWizardLevel": 5,
+        "event": "shortRest",
+        "maximumReplaced": 1,
+        "from": "spellbook",
+        "printedPage": 149,
+        "pdfPage": 155,
+        "originalText": "Nível 5: Memorizar Magia\nAo completar um Descanso Curto, você pode estudar \nseu livro de magias e substituir uma das magias de \nMago de 1º círculo ou superior que você preparou para \nsua característica Conjuração por outra magia de 1º \ncírculo ou superior do livro."
+      }
+    },
+    "paladino": {
+      "classId": "paladino",
+      "arrayIndex": "classLevel - 1 (20 entries, levels 1–20)",
+      "preparedByLevel": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        6,
+        7,
+        7,
+        9,
+        9,
+        10,
+        10,
+        11,
+        11,
+        12,
+        12,
+        14,
+        14,
+        15,
+        15
+      ],
+      "cantripsByLevel": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "printedPage": 168,
+      "pdfPage": 174,
+      "ability": "cha",
+      "reprepare": {
+        "event": "longRest",
+        "maximumReplaced": 1
+      },
+      "minimumSpellcastingClassLevel": 1,
+      "doesNotInclude": "Magias sempre preparadas ou truques adicionais vindos de subclasse, espécie, talento, Ordem Divina/Primal, Estilo de Luta ou Invocações."
+    },
+    "cavaleiro_mistico": {
+      "classId": "guerreiro",
+      "subclass": "Cavaleiro Místico",
+      "arrayIndex": "classLevel - 1 (20 entries, levels 1–20)",
+      "preparedByLevel": [
+        0,
+        0,
+        3,
+        4,
+        4,
+        4,
+        5,
+        6,
+        6,
+        7,
+        8,
+        8,
+        9,
+        10,
+        10,
+        11,
+        11,
+        11,
+        12,
+        13
+      ],
+      "cantripsByLevel": [
+        0,
+        0,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "printedPage": 130,
+      "pdfPage": 136,
+      "ability": "int",
+      "minimumSpellcastingClassLevel": 3,
+      "reprepare": {
+        "event": "classLevelGain",
+        "maximumReplaced": 1
+      },
+      "singleClassSlotsByLevel": [
+        [],
+        [],
+        [],
+        [
+          2
+        ],
+        [
+          3
+        ],
+        [
+          3
+        ],
+        [
+          3
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          3,
+          2
+        ],
+        [
+          4,
+          3,
+          2
+        ],
+        [
+          4,
+          3,
+          2
+        ],
+        [
+          4,
+          3,
+          3
+        ],
+        [
+          4,
+          3,
+          3
+        ],
+        [
+          4,
+          3,
+          3
+        ],
+        [
+          4,
+          3,
+          3,
+          1
+        ],
+        [
+          4,
+          3,
+          3,
+          1
+        ]
+      ],
+      "singleClassSlotArrayIndex": "classLevel; index 0 is []",
+      "note": "As duas subclasses têm os mesmos números de magias preparadas e espaços. Trapaceiro Arcano inclui Mãos Mágicas na quantidade de truques."
+    },
+    "trapaceiro_arcano": {
+      "classId": "ladino",
+      "subclass": "Trapaceiro Arcano",
+      "arrayIndex": "classLevel - 1 (20 entries, levels 1–20)",
+      "preparedByLevel": [
+        0,
+        0,
+        3,
+        4,
+        4,
+        4,
+        5,
+        6,
+        6,
+        7,
+        8,
+        8,
+        9,
+        10,
+        10,
+        11,
+        11,
+        11,
+        12,
+        13
+      ],
+      "cantripsByLevel": [
+        0,
+        0,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "printedPage": 144,
+      "pdfPage": 150,
+      "ability": "int",
+      "minimumSpellcastingClassLevel": 3,
+      "reprepare": {
+        "event": "classLevelGain",
+        "maximumReplaced": 1
+      },
+      "singleClassSlotsByLevel": [
+        [],
+        [],
+        [],
+        [
+          2
+        ],
+        [
+          3
+        ],
+        [
+          3
+        ],
+        [
+          3
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          3,
+          2
+        ],
+        [
+          4,
+          3,
+          2
+        ],
+        [
+          4,
+          3,
+          2
+        ],
+        [
+          4,
+          3,
+          3
+        ],
+        [
+          4,
+          3,
+          3
+        ],
+        [
+          4,
+          3,
+          3
+        ],
+        [
+          4,
+          3,
+          3,
+          1
+        ],
+        [
+          4,
+          3,
+          3,
+          1
+        ]
+      ],
+      "singleClassSlotArrayIndex": "classLevel; index 0 is []",
+      "note": "As duas subclasses têm os mesmos números de magias preparadas e espaços. Trapaceiro Arcano inclui Mãos Mágicas na quantidade de truques."
+    },
+    "artifice": {
+      "classId": "artifice",
+      "source": "tasha-legacy",
+      "ability": "int",
+      "minimumSpellcastingClassLevel": 1,
+      "preparedFormula": "max(1, intelligenceModifier + floor(artificerClassLevel / 2))",
+      "cantripsByLevel": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "arrayIndex": "classLevel - 1 (20 entries, levels 1–20)",
+      "reprepare": {
+        "event": "longRest",
+        "maximumReplaced": "any"
+      },
+      "printedPage": 11,
+      "pdfPage": 11,
+      "combinedCasterContribution": "ceil(artificerClassLevel / 2)",
+      "note": "A tabela de quantidade de truques está na página 9. A preparação usa a fórmula legada específica; os demais conjuradores 2024 usam sua tabela."
+    }
+  },
+  "testCases": [
+    {
+      "id": "prereq-current-class",
+      "input": {
+        "currentClasses": {
+          "barbaro": 1
+        },
+        "newClass": "mago",
+        "scores": {
+          "str": 12,
+          "int": 16
+        }
+      },
+      "expected": {
+        "allowed": false,
+        "missing": [
+          "Força 13 da classe atual Bárbaro"
+        ]
+      },
+      "pages": [
+        44,
+        51,
+        147
+      ]
+    },
+    {
+      "id": "prereq-fighter-or",
+      "input": {
+        "currentClasses": {
+          "guerreiro": 1
+        },
+        "newClass": "mago",
+        "scores": {
+          "str": 8,
+          "dex": 13,
+          "int": 13
+        }
+      },
+      "expected": {
+        "allowed": true
+      },
+      "pages": [
+        44,
+        127,
+        147
+      ]
+    },
+    {
+      "id": "prereq-monk-and",
+      "input": {
+        "currentClasses": {
+          "mago": 1
+        },
+        "newClass": "monge",
+        "scores": {
+          "int": 13,
+          "dex": 14,
+          "wis": 12
+        }
+      },
+      "expected": {
+        "allowed": false,
+        "missing": [
+          "Sabedoria 13"
+        ]
+      },
+      "pages": [
+        44,
+        159
+      ]
+    },
+    {
+      "id": "initial-class-no-multiclass-gate",
+      "input": {
+        "currentClasses": {},
+        "newClass": "barbaro",
+        "scores": {
+          "str": 8
+        }
+      },
+      "expected": {
+        "allowedByMulticlassRules": true,
+        "reason": "Primeira classe em nível total 1 não usa pré-requisitos de multiclasse."
+      },
+      "pages": [
+        44
+      ]
+    },
+    {
+      "id": "hp-wizard-then-fighter",
+      "input": {
+        "startingClass": "mago",
+        "classLevels": {
+          "mago": 1,
+          "guerreiro": 1
+        },
+        "conModifier": 2,
+        "method": "fixed"
+      },
+      "expected": {
+        "maxHp": 16,
+        "hitDice": {
+          "d6": 1,
+          "d10": 1
+        },
+        "savingThrows": [
+          "int",
+          "wis"
+        ],
+        "armorTraining": [
+          "Leve",
+          "Média",
+          "Escudos"
+        ],
+        "heavyArmorFromMulticlass": false
+      },
+      "pages": [
+        41,
+        42,
+        44,
+        127,
+        147
+      ]
+    },
+    {
+      "id": "hp-fighter-then-wizard",
+      "input": {
+        "startingClass": "guerreiro",
+        "classLevels": {
+          "guerreiro": 1,
+          "mago": 1
+        },
+        "conModifier": 2,
+        "method": "fixed"
+      },
+      "expected": {
+        "maxHp": 18,
+        "hitDice": {
+          "d6": 1,
+          "d10": 1
+        },
+        "savingThrows": [
+          "str",
+          "con"
+        ],
+        "heavyArmorFromStartingClass": true
+      },
+      "pages": [
+        41,
+        42,
+        44,
+        127,
+        147
+      ]
+    },
+    {
+      "id": "constitution-retroactive",
+      "input": {
+        "classLevels": {
+          "guerreiro": 3,
+          "mago": 2
+        },
+        "conModifierChange": {
+          "from": 1,
+          "to": 2
+        }
+      },
+      "expected": {
+        "additionalMaxHp": 5
+      },
+      "pages": [
+        42
+      ]
+    },
+    {
+      "id": "constitution-change-during-level-gain",
+      "input": {
+        "startingClass": "mago",
+        "beforeClassLevels": {
+          "mago": 3
+        },
+        "previousMaxHp": 17,
+        "gainClass": "mago",
+        "conModifierChange": {
+          "from": 1,
+          "to": 2
+        },
+        "method": "fixed"
+      },
+      "expected": {
+        "newLevelHpUsingNewCon": 6,
+        "retroactiveHpForPreviousLevels": 3,
+        "newMaxHp": 26,
+        "doNotAddNewConTwiceForNewLevel": true
+      },
+      "pages": [
+        42
+      ]
+    },
+    {
+      "id": "pb-total",
+      "input": {
+        "classLevels": {
+          "guerreiro": 3,
+          "ladino": 2
+        }
+      },
+      "expected": {
+        "totalLevel": 5,
+        "proficiencyBonus": 3,
+        "nextLevelXP": 14000
+      },
+      "pages": [
+        41,
+        44
+      ]
+    },
+    {
+      "id": "extra-attack-no-stack",
+      "input": {
+        "classLevels": {
+          "guerreiro": 5,
+          "paladino": 5
+        }
+      },
+      "expected": {
+        "attacksPerAttackAction": 2
+      },
+      "pages": [
+        44
+      ]
+    },
+    {
+      "id": "fighter-three-attacks",
+      "input": {
+        "classLevels": {
+          "guerreiro": 11,
+          "paladino": 5
+        }
+      },
+      "expected": {
+        "attacksPerAttackAction": 3
+      },
+      "pages": [
+        44,
+        128
+      ]
+    },
+    {
+      "id": "warlock-blade-no-stack",
+      "input": {
+        "classLevels": {
+          "bruxo": 5,
+          "guerreiro": 5
+        },
+        "invocations": [
+          "Lâmina Sedenta"
+        ]
+      },
+      "expected": {
+        "attacksPerAttackAction": 2
+      },
+      "pages": [
+        44,
+        71
+      ]
+    },
+    {
+      "id": "devouring-blade",
+      "input": {
+        "classLevels": {
+          "bruxo": 12,
+          "guerreiro": 5
+        },
+        "invocations": [
+          "Pacto da Lâmina",
+          "Lâmina Sedenta",
+          "Lâmina Devoradora"
+        ]
+      },
+      "expected": {
+        "attacksWithPactWeapon": 3,
+        "otherWeaponAttacksFromFighter": 2,
+        "notFiveAttacks": true
+      },
+      "pages": [
+        44,
+        71
+      ]
+    },
+    {
+      "id": "unarmored-formulas",
+      "input": {
+        "classLevels": {
+          "barbaro": 1,
+          "monge": 1
+        },
+        "modifiers": {
+          "dex": 2,
+          "con": 3,
+          "wis": 4
+        },
+        "shield": false
+      },
+      "expected": {
+        "availableAcValues": [
+          15,
+          16
+        ],
+        "chooseOne": true,
+        "notAc19": true
+      },
+      "pages": [
+        44,
+        51,
+        159
+      ]
+    },
+    {
+      "id": "unarmored-shield",
+      "input": {
+        "classLevels": {
+          "barbaro": 1,
+          "monge": 1
+        },
+        "modifiers": {
+          "dex": 2,
+          "con": 3,
+          "wis": 4
+        },
+        "shield": true
+      },
+      "expected": {
+        "barbarianAcWithShield": 17,
+        "monkFormulaEligible": false
+      },
+      "pages": [
+        44,
+        51,
+        159
+      ]
+    },
+    {
+      "id": "channel-divinity-two-pools",
+      "input": {
+        "classLevels": {
+          "clerigo": 2,
+          "paladino": 3
+        }
+      },
+      "expected": {
+        "pools": {
+          "clerigo": 2,
+          "paladino": 2
+        },
+        "crossSpend": false,
+        "shortRestRecovery": {
+          "clerigo": 1,
+          "paladino": 1
+        }
+      },
+      "pages": [
+        82,
+        168,
+        169
+      ]
+    },
+    {
+      "id": "source-worked-example",
+      "input": {
+        "classLevels": {
+          "guardiao": 4,
+          "feiticeiro": 3
+        }
+      },
+      "expected": {
+        "effectiveCasterLevel": 5,
+        "slots": [
+          4,
+          3,
+          2
+        ],
+        "prepared": {
+          "guardiao": 5,
+          "feiticeiro": 6
+        },
+        "maxPreparedSpellLevel": {
+          "guardiao": 1,
+          "feiticeiro": 2
+        },
+        "cantrips": {
+          "guardiao": 0,
+          "feiticeiro": 4
+        }
+      },
+      "pages": [
+        44,
+        45
+      ]
+    },
+    {
+      "id": "odd-half-caster-plus-full",
+      "input": {
+        "classLevels": {
+          "paladino": 1,
+          "mago": 1
+        }
+      },
+      "expected": {
+        "effectiveCasterLevel": 2,
+        "slots": [
+          3
+        ],
+        "maxPreparedSpellLevel": {
+          "paladino": 1,
+          "mago": 1
+        }
+      },
+      "pages": [
+        45
+      ]
+    },
+    {
+      "id": "two-odd-halves-1-1",
+      "input": {
+        "classLevels": {
+          "paladino": 1,
+          "guardiao": 1
+        }
+      },
+      "expected": {
+        "effectiveCasterLevel": 2,
+        "slots": [
+          3
+        ]
+      },
+      "pages": [
+        45
+      ],
+      "interpretationNote": "Aplicação classe a classe recomendada; PDF não fornece exemplo explícito com ambos ímpares."
+    },
+    {
+      "id": "two-odd-halves-3-3",
+      "input": {
+        "classLevels": {
+          "paladino": 3,
+          "guardiao": 3
+        }
+      },
+      "expected": {
+        "effectiveCasterLevel": 4,
+        "slots": [
+          4,
+          3
+        ],
+        "prepared": {
+          "paladino": 4,
+          "guardiao": 4
+        },
+        "maxPreparedSpellLevel": {
+          "paladino": 1,
+          "guardiao": 1
+        }
+      },
+      "pages": [
+        45,
+        118,
+        168
+      ],
+      "interpretationNote": "Aplicação classe a classe recomendada; não usar ceil((3+3)/2)=3."
+    },
+    {
+      "id": "third-only-use-own-table",
+      "input": {
+        "classLevels": {
+          "guerreiro": 4,
+          "bruxo": 1
+        },
+        "fighterSubclass": "Cavaleiro Místico"
+      },
+      "expected": {
+        "normalSpellcastingSlots": [
+          3
+        ],
+        "pactSlots": {
+          "count": 1,
+          "level": 1
+        },
+        "doNotUseFloor4Over3AsOnlyCaster": true
+      },
+      "pages": [
+        44,
+        45,
+        70,
+        130
+      ]
+    },
+    {
+      "id": "third-plus-full",
+      "input": {
+        "classLevels": {
+          "guerreiro": 4,
+          "mago": 1
+        },
+        "fighterSubclass": "Cavaleiro Místico"
+      },
+      "expected": {
+        "effectiveCasterLevel": 2,
+        "slots": [
+          3
+        ],
+        "prepared": {
+          "cavaleiro_mistico": 4,
+          "mago": 4
+        }
+      },
+      "pages": [
+        45,
+        130,
+        148
+      ]
+    },
+    {
+      "id": "two-thirds-round-before-sum",
+      "input": {
+        "classLevels": {
+          "guerreiro": 4,
+          "ladino": 5
+        },
+        "fighterSubclass": "Cavaleiro Místico",
+        "rogueSubclass": "Trapaceiro Arcano"
+      },
+      "expected": {
+        "effectiveCasterLevel": 2,
+        "slots": [
+          3
+        ]
+      },
+      "pages": [
+        45
+      ],
+      "interpretationNote": "Dividir e arredondar contribuições de classes separadamente, antes de somar."
+    },
+    {
+      "id": "noncasting-fighter-contributes-zero",
+      "input": {
+        "classLevels": {
+          "guerreiro": 6,
+          "mago": 1
+        },
+        "fighterSubclass": "Campeão"
+      },
+      "expected": {
+        "effectiveCasterLevel": 1,
+        "slots": [
+          2
+        ]
+      },
+      "pages": [
+        44,
+        45
+      ]
+    },
+    {
+      "id": "pact-separated-crosscast",
+      "input": {
+        "classLevels": {
+          "bruxo": 5,
+          "feiticeiro": 3
+        }
+      },
+      "expected": {
+        "normalSlots": [
+          4,
+          2
+        ],
+        "pactSlots": {
+          "count": 2,
+          "level": 3
+        },
+        "canUsePactForPreparedSorcererSpell": true,
+        "canUseNormalForEligiblePreparedWarlockSpell": true,
+        "maxPreparedSpellLevel": {
+          "bruxo": 3,
+          "feiticeiro": 2
+        },
+        "shortRestRecoversNormalSlots": false
+      },
+      "pages": [
+        45,
+        70,
+        104
+      ]
+    },
+    {
+      "id": "wizard-higher-slots-no-preparation",
+      "input": {
+        "classLevels": {
+          "mago": 1,
+          "clerigo": 5
+        }
+      },
+      "expected": {
+        "effectiveCasterLevel": 6,
+        "slots": [
+          4,
+          3,
+          3
+        ],
+        "prepared": {
+          "mago": 4,
+          "clerigo": 9
+        },
+        "maxPreparedSpellLevel": {
+          "mago": 1,
+          "clerigo": 3
+        },
+        "wizardCanCopyLevel3Spell": false,
+        "wizardSpellAbility": "int",
+        "clericSpellAbility": "wis"
+      },
+      "pages": [
+        44,
+        45,
+        147,
+        148,
+        149
+      ]
+    },
+    {
+      "id": "cantrip-power-total-count-per-class",
+      "input": {
+        "classLevels": {
+          "mago": 1,
+          "bruxo": 4
+        }
+      },
+      "expected": {
+        "characterLevel": 5,
+        "cantripPowerTier": 5,
+        "baseCantripChoices": {
+          "mago": 3,
+          "bruxo": 3
+        },
+        "totalBaseChoices": 6
+      },
+      "pages": [
+        44,
+        70,
+        148
+      ]
+    },
+    {
+      "id": "spell-preparation-specific-arrays",
+      "input": {
+        "classLevel": 20
+      },
+      "expected": {
+        "prepared": {
+          "bardo": 22,
+          "clerigo": 22,
+          "druida": 22,
+          "feiticeiro": 22,
+          "mago": 25,
+          "bruxo": 15,
+          "paladino": 15,
+          "guardiao": 15
+        }
+      },
+      "pages": [
+        60,
+        70,
+        82,
+        92,
+        104,
+        118,
+        148,
+        168
+      ]
+    },
+    {
+      "id": "sorcerer-low-level-counts",
+      "input": {
+        "classLevels": [
+          1,
+          2,
+          3
+        ]
+      },
+      "expected": {
+        "sorcererPrepared": [
+          2,
+          4,
+          6
+        ],
+        "bardClericDruidWizardPrepared": [
+          4,
+          5,
+          6
+        ]
+      },
+      "pages": [
+        60,
+        82,
+        92,
+        104,
+        148
+      ]
+    },
+    {
+      "id": "asi-not-total-four",
+      "input": {
+        "classLevels": {
+          "guerreiro": 2,
+          "ladino": 2
+        }
+      },
+      "expected": {
+        "asiChoices": 0
+      },
+      "pages": [
+        44,
+        128,
+        138
+      ]
+    },
+    {
+      "id": "asi-fighter-extra",
+      "input": {
+        "classLevels": {
+          "guerreiro": 6,
+          "ladino": 4
+        }
+      },
+      "expected": {
+        "asiChoices": 3,
+        "from": {
+          "guerreiro": [
+            4,
+            6
+          ],
+          "ladino": [
+            4
+          ]
+        }
+      },
+      "pages": [
+        128,
+        138
+      ]
+    },
+    {
+      "id": "late-feat-epic-boon",
+      "input": {
+        "before": {
+          "guerreiro": 15,
+          "ladino": 3
+        },
+        "gainClass": "ladino"
+      },
+      "expected": {
+        "totalLevel": 19,
+        "rogueLevel": 4,
+        "getsRogueAsiChoice": true,
+        "eligibleForEpicBoonFeat": true,
+        "automaticLevel19ClassEpicBoon": false
+      },
+      "pages": [
+        128,
+        138,
+        199,
+        210
+      ],
+      "interpretationNote": "Consequência de pré-requisito em nível de personagem e de seleção sem categoria restrita."
+    },
+    {
+      "id": "artificer-round-up",
+      "input": {
+        "classLevels": {
+          "artifice": 3,
+          "mago": 1
+        },
+        "intModifier": 3
+      },
+      "expected": {
+        "effectiveCasterLevel": 3,
+        "slots": [
+          4,
+          2
+        ],
+        "artificerPrepared": 4,
+        "wizardPrepared": 4
+      },
+      "pages": [
+        45
+      ],
+      "legacySourcePage": 10
+    },
+    {
+      "id": "artificer-entry-proficiencies",
+      "input": {
+        "startingClass": "mago",
+        "newClass": "artifice"
+      },
+      "expected": {
+        "gainsArmor": [
+          "Leve",
+          "Média",
+          "Escudos"
+        ],
+        "gainsTools": [
+          "Ferramentas de Ladrão",
+          "Ferramentas de Funileiro"
+        ],
+        "noNewSavingThrows": true,
+        "noExtraArtisanToolFromCoreTraits": true
+      },
+      "legacySourcePage": 10
+    }
+  ],
+  "primaryOnlineChecks": [
+    {
+      "url": "https://www.dndbeyond.com/sources/dnd/br-2024/creating-a-character",
+      "purpose": "Confirmar que a redação oficial de multiclasse mantém arredondamento para cima dos meios-conjuradores e para baixo dos terços; também não fornece exemplo com Paladino e Guardião ambos ímpares."
+    },
+    {
+      "url": "https://www.dndbeyond.com/sources/dnd/sae/sage-advice-compendium",
+      "purpose": "Confirmar por fonte oficial que salvaguardas iniciais não são concedidas na multiclasse, recursos que concedem proficiência continuam válidos, todos os truques das classes são recebidos e atributos temporários não satisfazem o pré-requisito.",
+      "extraRulingsNotExplicitInLocalPDF": {
+        "multiclassPrerequisiteUsesBaseScoreNotTemporaryScore": true
+      }
+    }
+  ],
+  "sourceIssues": [
+    {
+      "location": "PHB impresso 45, PDF 51",
+      "issue": "Redação não apresenta exemplo com Paladino e Guardião ambos ímpares. A fórmula classe a classe recomendada está identificada como interpretação operacional, sem fingir confirmação literal de ordem das operações."
+    },
+    {
+      "location": "Proficiências de Ladino, impresso 137/PDF143",
+      "issue": "Lista 2024 tem 10 opções e não inclui Atuação. Não carregar a lista inicial 2014 de 11 opções na seleção de perícia por multiclasse."
+    },
+    {
+      "location": "Tabelas de magias preparadas 2024",
+      "issue": "Não usar um PREPARED.full genérico de Mago para todos: Mago diverge nos níveis altos; Feiticeiro diverge nos níveis 1–2. Arrays extraídos diretamente das colunas da fonte."
+    }
+  ],
+  "coverage": "Pesquisa das regras e tabelas requeridas; nenhuma alteração no repositório."
+}

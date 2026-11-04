@@ -1,0 +1,4 @@
+Arcana — multiclasse, avanço de nível, equipamentos próprios e retrato
+Revisão: 8fc2bd6234ed2955079613612b7f2d3bc00292ea
+Abra README.md para executar.
+55 testes automatizados aprovados. Upload do retrato: validações locais testadas; verificação visual do envio de arquivo bloqueada pela permissão do navegador de testes.
