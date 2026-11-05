@@ -1,6 +1,7 @@
-Arcana — atualização de contraste, grimório por classe e painéis de combate e cura.
+Arcana 0.3 — atualização de criação, magias, combate e curas.
 
-Mantém o Hub de fichas, modo noturno, Economias, histórico, conversor de moedas e pasta docs/ sincronizada com dist/.
-Inclui seleção visual de atributos com Pontos padrão 15–14–13–12–10–8, filtro de classe com consulta sem acesso indevido, painel de magias de dano e janela de curas com usos rastreados.
+Criação: atributos começam em 0, conjunto padrão 15-14-13-12-10-8 e seleção visual reforçada. Tema noturno: contraste aprimorado nos campos e superfícies. Navegação: Habilidades logo abaixo de Minha ficha.
 
-70 testes automatizados aprovados; JavaScript validado com node --check.
+Magias: janela de pesquisa por classe com consulta sem inclusão indevida; acesso por fonte especial precisa ser registrado; contadores de conhecidas/preparadas adaptados ao modelo de cada classe. Combate: magias de dano conhecidas. Minha ficha: janela de curas e recuperação com controle de usos.
+
+docs/ sincronizada com dist/. Testes automatizados: 56/56 aprovados; arquivos JavaScript validados com node --check.

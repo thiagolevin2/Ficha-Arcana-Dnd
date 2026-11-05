@@ -20,10 +20,6 @@ Use um servidor HTTP: abrir `dist/index.html` diretamente por duplo clique imped
 - 12 classes e 48 subclasses do livro de 2024, mais Artífice e 40 subclasses adicionais: 13 classes e 88 subclasses no total.
 - 10 espécies do livro de 2024, mais 100 espécies, variantes ou linhagens adicionais, com busca na criação. São opções de fontes diferentes, incluindo compilações e materiais experimentais identificados.
 - 16 antecedentes de 2024; atributos pela origem, conjunto padrão, compra de pontos ou 4d6 descartando o menor.
-- Criação de personagem com seleção visual destacada e método de atributos **Pontos padrão (15–14–13–12–10–8)**, além de conjunto recomendado, compra de pontos e rolagem.
-- Campos editáveis com fonte maior, negrito e contraste reforçado nos temas claro e noturno.
-- Filtro de classe no grimório: o jogador pode pesquisar e visualizar magias de outras classes, mas preparar/conjurar fica restrito a uma classe válida ou a uma fonte especial explicitamente registrada.
-- Painel de combate com magias de dano disponíveis e janela separada de **Curas e recuperação**, reunindo magias de cura (incluindo Toque Vampírico e magias de retorno à vida) e usos rastreados de Cura pelas Mãos, Recuperar Fôlego e Mãos Curativas.
 - Uma ou várias classes, até o nível total 20; níveis e subclasses separados, pré-requisitos de multiclasse, proficiências da classe inicial, PV e dados de vida por classe.
 - Botão **Subir de nível**, com prévia de PV e proficiência, escolha de classe/subclasse, PV fixos ou rolados, aumentos de atributo e registro de talentos ou escolhas pendentes.
 - Preparação e atributo de conjuração por classe; espaços combinados de Conjuração e reserva separada de Pacto. Descanso curto restaura apenas a reserva de Pacto entre os espaços.
@@ -35,6 +31,10 @@ Use um servidor HTTP: abrir `dist/index.html` diretamente por duplo clique imped
 - Crítico de ataque em 20 natural e erro em 1 natural; testes comuns com CD usam o total. Sem CD, um teste comum não declara sucesso ou falha automaticamente.
 - Animação pode ser pulada ou desativada; a preferência de movimento reduzido é respeitada.
 - 424 descrições de magias: 391 da base e 33 adicionais não repetidas, com filtros, preparação, espaços, pacto e fórmulas para magias comuns.
+- Em **Magias**, o botão **Adicionar magia** abre o acervo por classe: magias fora da classe/nível/limite ficam somente para consulta; uma fonte externa (item, talento ou habilidade) pode ser registrada manualmente quando a ficha realmente a conceder. Contadores separam truques conhecidos, magias conhecidas e magias preparadas conforme o modelo da classe.
+- A criação de personagem inicia os seis campos de atributo em **0**, destaca escolhas selecionadas e oferece o conjunto padrão **15, 14, 13, 12, 10, 8**, além da compra de pontos e rolagem 4d6.
+- Em **Combate**, a ficha apresenta magias de dano já incluídas no grimório. Em **Minha ficha**, a janela **Curas e recuperação** reúne magias de cura e habilidades com controle de usos, incluindo recursos como Cura pelas Mãos, Recuperar Fôlego, Mãos Curativas, Vigor Arcano e frutos de Bom Fruto quando disponíveis.
+- O tema noturno reforça o contraste de campos editáveis, textos, cartões, janelas e opções selecionadas com uma paleta verde e oliva; **Habilidades** aparece logo abaixo de **Minha ficha** na navegação.
 - Catálogo de talentos, invocações, manobras, itens, infusões, opções de classe e dons dos suplementos. Descrições, fonte, página, notas de adaptação e textos históricos separados.
 - Itens podem ser adicionados à mochila; referências e talentos podem ser guardados na ficha. Recursos de subclasses legadas são mostrados conforme o nível.
 - 509 páginas de 10 documentos únicos pesquisáveis; 490 têm texto extraível. Uma cópia idêntica de Subclasses Revisadas foi ignorada. Wildemount e Ravenloft incluem somente os trechos enviados.
@@ -55,7 +55,8 @@ Consulte `ADAPTACOES_2024.md` e `dist/supplement-compatibility.json` para a audi
 - **Subir de nível** avança em uma classe existente ou adiciona uma nova, com validação de atributos. O avanço conserva os usos e espaços gastos e mantém o dano sofrido em relação aos PV máximos.
 - **Classes** permite redistribuir níveis e definir subclasses/ordens, preservando a classe inicial. Perícias e ferramentas concedidas por correções nessa tela devem ser conferidas em Habilidades.
 - Em **Magias**, selecione um dos cartões de classe para preparar por essa classe. Ao conjurar, escolha a fonte e uma reserva de espaços. Espaços combinados superiores não liberam preparação de círculos superiores.
-  O filtro de classe também permite consultar outras listas sem liberar preparação ou conjuração. O painel de combate reúne magias de dano; **Curas e recuperação** agrupa magias curativas e habilidades com usos.
+- Em **Magias → Adicionar magia**, escolha a lista da classe a consultar. Para incluir uma magia, a classe do personagem precisa concedê-la no nível e limite corretos; para fontes especiais, registre o nome do item, talento ou habilidade que efetivamente concede o acesso. O registro especial documenta a concessão, mas cargas e condições próprias do item ainda devem seguir sua descrição e ser acompanhadas pelo jogador.
+- Os contadores mostram truques e magias conhecidos e, nas classes que preparam, o total preparado e o limite; nas classes de magias conhecidas, mostram o limite de conhecidas sem criar um limite de preparação inexistente.
 - Em **Equipamentos**, use **Adicionar arma → Arma personalizada** e **Criar item**. Clique no nome de um item para editar descrição, sintonização ou cargas. A seção **Tesouro** também contém o conversor entre PC, PP, PE, PO e PL.
 - Na guia **Economias**, escolha ganho ou gasto, descreva a movimentação, informe a quantidade e a moeda e clique em **Registrar movimentação**. Ganhos entram no Tesouro; gastos são descontados. O histórico fica salvo com o personagem e acompanha a exportação JSON. Para desfazer, use o ícone de lixeira na linha; o sistema reverte o saldo quando possível. A janela **Valor equivalente das moedas** apresenta a equivalência de PC, PP, PE, PO e PL em peças de cobre e ouro.
 - Use **Retrato → Importar imagem** para escolher uma imagem. A imagem fica no navegador e acompanha o arquivo de personagem; não é enviada a um servidor de imagens.

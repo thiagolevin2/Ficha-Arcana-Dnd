@@ -168,38 +168,142 @@
 @media(max-width:620px){.hub-screen{padding:16px 15px 24px}.hub-header{align-items:flex-start}.hub-header-actions{gap:4px}.hub-header-actions .btn{font-size:10px;padding:7px 8px;min-height:32px}.hub-brand span{font-size:20px;letter-spacing:3px}.hub-brand svg{width:28px;height:30px}.hub-welcome{margin:28px auto 25px;padding:27px 20px}.hub-welcome h1{font-size:30px}.hub-welcome p{font-size:11px}.hub-list-heading h2{font-size:23px}.hub-list-heading>.btn{display:none}.hub-character-grid{grid-template-columns:1fr;gap:12px}.hub-character-art{height:130px}.hub-footer{display:block;line-height:2}.hub-footer span{display:block}.economy-rate{grid-template-columns:1.15fr 1fr 1fr;gap:5px;padding:10px 8px;font-size:10px}.economy-rate-heading{font-size:8px;letter-spacing:0}.economy-rates-card .card-title{gap:8px}}
 
 
-/* Campos de edição com tipografia e contraste reforçados em ambos os temas. */
-.field input,.field select,.field textarea,.stat-edit input,.coin-field input,.hp-controls input,.search input,.toolbar input,.toolbar select,.spell-grant-panel select{font-size:15px;font-weight:700;letter-spacing:.12px;min-height:40px;border:1.5px solid #84977f;background:#fff;color:#1d3024;text-shadow:none;-webkit-text-fill-color:currentColor}
-.field textarea{line-height:1.55;padding:10px 12px}
-.field input::placeholder,.field textarea::placeholder,.search input::placeholder{color:#687967;opacity:1;font-weight:500}
-:root[data-theme=dark] .field input,:root[data-theme=dark] .field select,:root[data-theme=dark] .field textarea,:root[data-theme=dark] .stat-edit input,:root[data-theme=dark] .coin-field input,:root[data-theme=dark] .hp-controls input,:root[data-theme=dark] .search input,:root[data-theme=dark] .toolbar input,:root[data-theme=dark] .toolbar select,:root[data-theme=dark] .spell-grant-panel select{background:#101a14!important;color:#f7faef!important;border-color:#718a75!important;-webkit-text-fill-color:#f7faef!important;font-weight:700}
-:root[data-theme=dark] .field input::placeholder,:root[data-theme=dark] .field textarea::placeholder,:root[data-theme=dark] .search input::placeholder{color:#c2d0bf!important;opacity:1}
-:root[data-theme=dark] select option{background:#17231b;color:#f7faef}
+/* 0.3.1 — contraste acessível, seleção clara e interfaces de magia/cura */
+:root[data-theme="dark"] input,
+:root[data-theme="dark"] textarea,
+:root[data-theme="dark"] select,
+:root[data-theme="dark"] .field input,
+:root[data-theme="dark"] .field select,
+:root[data-theme="dark"] .field textarea,
+:root[data-theme="dark"] .stat-edit input,
+:root[data-theme="dark"] .spell-toolbar .search,
+:root[data-theme="dark"] .spell-browser-controls .search {
+  color: #f2f0e5 !important;
+  background: #223329 !important;
+  border-color: #58705a !important;
+  caret-color: #d7c58f;
+}
+:root[data-theme="dark"] input::placeholder,
+:root[data-theme="dark"] textarea::placeholder { color: #aeb9a8; opacity: 1; }
+:root[data-theme="dark"] .option-card,
+:root[data-theme="dark"] .species-card,
+:root[data-theme="dark"] .stat-edit,
+:root[data-theme="dark"] .form-note,
+:root[data-theme="dark"] .mini-card,
+:root[data-theme="dark"] .guide,
+:root[data-theme="dark"] .check-grid label,
+:root[data-theme="dark"] .spell-card,
+:root[data-theme="dark"] .spell-browser-row,
+:root[data-theme="dark"] .spell-counter-card,
+:root[data-theme="dark"] .healing-row {
+  background: #1e2d23 !important;
+  border-color: #405747 !important;
+  color: #e8ecdf !important;
+}
+:root[data-theme="dark"] .option-card strong,
+:root[data-theme="dark"] .option-card small,
+:root[data-theme="dark"] .stat-edit label,
+:root[data-theme="dark"] .stat-edit .mod,
+:root[data-theme="dark"] .stat-edit small,
+:root[data-theme="dark"] .spell-card h3,
+:root[data-theme="dark"] .spell-browser-row strong,
+:root[data-theme="dark"] .spell-counter-card strong,
+:root[data-theme="dark"] .healing-row strong { color: #f0ead7 !important; }
+.option-card.selected,
+.wizard-class-grid .option-card.selected,
+.species-grid .option-card.selected {
+  border: 2px solid #9aaf78 !important;
+  background: #eef3e5 !important;
+  box-shadow: 0 0 0 3px #8fa66a30, 0 8px 20px #1b38221c;
+  transform: translateY(-1px);
+}
+.option-card.selected::after { content: "✓ Selecionado"; display: block; margin-top: 6px; color: #3e6743; font-size: 10px; font-weight: 700; letter-spacing: .3px; }
+:root[data-theme="dark"] .option-card.selected,
+:root[data-theme="dark"] .wizard-class-grid .option-card.selected,
+:root[data-theme="dark"] .species-grid .option-card.selected {
+  background: #304a37 !important;
+  border-color: #c3d49a !important;
+  box-shadow: 0 0 0 3px #b9ce8b30, 0 8px 22px #0005;
+}
+:root[data-theme="dark"] .option-card.selected strong,
+:root[data-theme="dark"] .option-card.selected small,
+:root[data-theme="dark"] .option-card.selected::after { color: #f0edda !important; }
+.spell-counters { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:10px; margin:14px 0 18px; }
+.spell-counter-card { border:1px solid var(--line); border-radius:10px; background:var(--paper); padding:12px; }
+.spell-counter-card strong { display:block; margin-bottom:7px; color:var(--green); }
+.spell-counter-card>div { display:flex; justify-content:space-between; gap:10px; padding:4px 0; border-top:1px solid var(--line); font-size:11px; }
+.spell-counter-card b { font-variant-numeric:tabular-nums; }
+.spell-toolbar { flex-wrap:wrap; }
+.spell-browser-controls { display:grid; grid-template-columns:1fr .7fr 1.2fr; gap:10px; align-items:end; margin-bottom:14px; }
+.spell-browser-results { display:flex; flex-direction:column; gap:9px; max-height:52vh; overflow:auto; padding-right:3px; }
+.spell-browser-row { display:flex; justify-content:space-between; align-items:center; gap:13px; border:1px solid var(--line); border-radius:9px; background:var(--paper); padding:12px; }
+.spell-browser-main { min-width:0; flex:1; }
+.spell-browser-main small { display:block; color:var(--muted); margin:4px 0; }
+.spell-browser-main p { color:var(--muted); font-size:11px; line-height:1.5; }
+.spell-browser-actions { display:flex; flex-wrap:wrap; gap:6px; align-items:center; justify-content:flex-end; }
+.combat-spell-card { margin-top:0; }
+.combat-spell-row,.healing-row { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 0; border-bottom:1px solid var(--line); }
+.combat-spell-row:last-of-type,.healing-row:last-child { border-bottom:0; }
+.combat-spell-row strong,.healing-row strong { display:block; font-size:12px; }
+.combat-spell-row small,.healing-row small { display:block; color:var(--muted); font-size:10px; }
+.healing-section { margin-bottom:18px; }
+.healing-section h3 { margin:0 0 8px; color:var(--green); }
+.healing-row input { width:76px; min-width:76px; }
+:root[data-theme="dark"] .combat-spell-row,
+:root[data-theme="dark"] .healing-row { border-color:var(--line); }
+:root[data-theme="dark"] .combat-spell-row strong { color:var(--ink); }
+@media(max-width:650px) {
+ .spell-browser-controls { grid-template-columns:1fr 1fr; }
+ .spell-browser-controls .search { grid-column:1/-1; }
+ .spell-browser-row { align-items:flex-start; flex-direction:column; }
+ .spell-browser-actions { justify-content:flex-start; }
+ .combat-spell-row,.healing-row { align-items:flex-start; flex-direction:column; }
+ .healing-row>.flex { flex-wrap:wrap; }
+}
 
-/* Contraste adicional para campos editáveis, seleção do criador e painéis de combate. */
-.field input,.field select,.field textarea,.stat-edit input,.coin-field input,.hp-controls input,.search input,.toolbar input,.toolbar select,.spell-grant-panel select{font-size:14px;font-weight:600;color:#25362a;caret-color:#2f684a;-webkit-text-fill-color:currentColor}
-input::placeholder,textarea::placeholder{color:#74816f;opacity:1;font-weight:400}
-input:focus,select:focus,textarea:focus{outline:2px solid #91ad78;outline-offset:1px;border-color:#71915e!important}
-.option-card.selected{border:2px solid #547c50!important;background:#e8f1e4!important;box-shadow:0 0 0 3px #8baa7140,inset 0 0 0 1px #fff}
-.option-card .selected-mark{display:block;margin-top:7px;padding:4px 7px;border-radius:5px;background:#315f43;color:white;font-size:10px;font-weight:700;letter-spacing:.2px}
-.wizard-methods{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
-.wizard-selection-note{padding:11px 13px;border:1px solid #8aa879;border-radius:8px;background:#edf4e9;color:#2f5137;margin:8px 0 13px}
-.combat-spells .combat-spell-row,.healing-resource{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px 0;border-top:1px solid var(--line)}
-.combat-spell-row strong,.healing-resource strong{display:block;font-size:12px}
-.combat-spell-row small,.healing-resource small{display:block;color:var(--muted);font-size:10px;margin-top:3px;max-width:430px}
-.combat-heal-action{display:flex;justify-content:flex-end;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
-.healing-section{margin:0 0 19px}
-.healing-section h3{display:flex;align-items:center;gap:8px;padding-bottom:9px;border-bottom:1px solid var(--line);margin-bottom:8px}
-.healing-section h3 svg{color:var(--green)}
-.healing-resource{display:block;padding:12px 0}
-.healing-resource .field-row{align-items:end;margin-top:9px}
-.spell-grant-panel{width:100%;display:flex;align-items:center;flex-wrap:wrap;gap:9px;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--green-soft)}
-.spell-grant-panel .hint{flex-basis:100%}
-:root[data-theme=dark] .field input,:root[data-theme=dark] .field select,:root[data-theme=dark] .field textarea,:root[data-theme=dark] .stat-edit input,:root[data-theme=dark] .coin-field input,:root[data-theme=dark] .hp-controls input,:root[data-theme=dark] .search input,:root[data-theme=dark] .toolbar input,:root[data-theme=dark] .toolbar select,:root[data-theme=dark] .spell-grant-panel select{background:#101a14!important;color:#f2f6ed!important;border-color:#617566!important;-webkit-text-fill-color:#f2f6ed!important;font-weight:650}
-:root[data-theme=dark] input::placeholder,:root[data-theme=dark] textarea::placeholder{color:#b7c4b4!important;opacity:1}
-:root[data-theme=dark] .field label,:root[data-theme=dark] .stat-edit label,:root[data-theme=dark] .stat-edit small,:root[data-theme=dark] .wizard-selection-note{color:#e3ecdf}
-:root[data-theme=dark] .option-card.selected{background:#294432!important;border-color:#a6ce97!important;box-shadow:0 0 0 3px #a6ce9740,inset 0 0 0 1px #dcebd8}
-:root[data-theme=dark] .option-card .selected-mark{background:#b5d29f;color:#142218}
-:root[data-theme=dark] .wizard-selection-note{background:#263b2c;border-color:#799b6c}
-:root[data-theme=dark] .spell-grant-panel{background:#26392b;border-color:#536b54}
-@media(max-width:620px){.combat-spells .combat-spell-row{align-items:flex-start;flex-direction:column}.healing-resource .field-row{grid-template-columns:1fr}.wizard-methods .btn{white-space:normal;text-align:left}}
+
+/* 0.3.2 — superfícies e texto legíveis no tema noturno */
+:root[data-theme="dark"] .source-book,
+:root[data-theme="dark"] .source-book.selected,
+:root[data-theme="dark"] .class-plan-row,
+:root[data-theme="dark"] .class-plan-list .card,
+:root[data-theme="dark"] .origin-bonus .field,
+:root[data-theme="dark"] .stat-edit,
+:root[data-theme="dark"] .ability,
+:root[data-theme="dark"] .ability .score,
+:root[data-theme="dark"] .resource-card,
+:root[data-theme="dark"] .economy-wallet-card,
+:root[data-theme="dark"] .economy-wallet-grid > div,
+:root[data-theme="dark"] .spell-summary,
+:root[data-theme="dark"] .spell-counter-card,
+:root[data-theme="dark"] .spell-browser-row,
+:root[data-theme="dark"] .healing-row {
+  background-color: #1d2c22 !important;
+  border-color: #465b49 !important;
+  color: #e7eddc !important;
+}
+:root[data-theme="dark"] .source-book strong,
+:root[data-theme="dark"] .source-book .eyebrow,
+:root[data-theme="dark"] .source-book small,
+:root[data-theme="dark"] .class-plan-row h3,
+:root[data-theme="dark"] .page-top h1,
+:root[data-theme="dark"] .modal-body h3,
+:root[data-theme="dark"] .modal-body .label,
+:root[data-theme="dark"] .stat-edit label,
+:root[data-theme="dark"] .stat-edit .mod,
+:root[data-theme="dark"] .stat-edit small,
+:root[data-theme="dark"] .spell-counter-card span,
+:root[data-theme="dark"] .spell-browser-row small,
+:root[data-theme="dark"] .spell-browser-row p,
+:root[data-theme="dark"] .healing-row small { color: #d7e2d0 !important; }
+:root[data-theme="dark"] .ability .score { color: #bdcbb4 !important; border-color: #405343 !important; }
+:root[data-theme="dark"] .source-book.selected { box-shadow: inset 0 0 0 1px #a9c08c; }
+:root[data-theme="dark"] .option-card:not(.selected):hover,
+:root[data-theme="dark"] .species-card:hover { background: #2a3d30 !important; }
+:root[data-theme="dark"] .modal input:disabled,
+:root[data-theme="dark"] .modal select:disabled { color: #899b8b !important; background: #17231b !important; }
+:root[data-theme="dark"] input[type="checkbox"],
+:root[data-theme="dark"] input[type="radio"] { accent-color: #b4c88f; }
+:root[data-theme="dark"] .btn.primary { background: #55734e; border-color: #78936c; color: #fff6df; }
+:root[data-theme="dark"] .btn.primary:hover { background: #64865b; }
+:root[data-theme="dark"] .spell-browser-actions .btn:not(.primary) { color: #e5eddd !important; }
