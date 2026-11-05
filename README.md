@@ -35,6 +35,7 @@ Use um servidor HTTP: abrir `dist/index.html` diretamente por duplo clique imped
 - Itens podem ser adicionados à mochila; referências e talentos podem ser guardados na ficha. Recursos de subclasses legadas são mostrados conforme o nível.
 - 509 páginas de 10 documentos únicos pesquisáveis; 490 têm texto extraível. Uma cópia idêntica de Subclasses Revisadas foi ignorada. Wildemount e Ravenloft incluem somente os trechos enviados.
 - Guia separada **Economias**, com registro de ganhos e gastos, descrição, valor, moeda, data, saldo atual, totais acumulados e opção de desfazer movimentações; os lançamentos atualizam o Tesouro automaticamente.
+- Hub inicial **Minhas fichas** para escolher, criar, importar e exportar personagens antes de abrir uma ficha; tema claro/noturno com preferência salva neste navegador.
 - Múltiplos personagens, anotações, mochila, moedas, peso, PV, concentração, exaustão, descansos, exportação/importação JSON e impressão em ficha própria.
 
 ## Prioridade de regras
@@ -51,7 +52,7 @@ Consulte `ADAPTACOES_2024.md` e `dist/supplement-compatibility.json` para a audi
 - **Classes** permite redistribuir níveis e definir subclasses/ordens, preservando a classe inicial. Perícias e ferramentas concedidas por correções nessa tela devem ser conferidas em Habilidades.
 - Em **Magias**, selecione um dos cartões de classe para preparar por essa classe. Ao conjurar, escolha a fonte e uma reserva de espaços. Espaços combinados superiores não liberam preparação de círculos superiores.
 - Em **Equipamentos**, use **Adicionar arma → Arma personalizada** e **Criar item**. Clique no nome de um item para editar descrição, sintonização ou cargas. A seção **Tesouro** também contém o conversor entre PC, PP, PE, PO e PL.
-- Na guia **Economias**, escolha ganho ou gasto, descreva a movimentação, informe a quantidade e a moeda e clique em **Registrar movimentação**. Ganhos entram no Tesouro; gastos são descontados. O histórico fica salvo com o personagem e acompanha a exportação JSON. Para desfazer, use o ícone de lixeira na linha; o sistema reverte o saldo quando possível.
+- Na guia **Economias**, escolha ganho ou gasto, descreva a movimentação, informe a quantidade e a moeda e clique em **Registrar movimentação**. Ganhos entram no Tesouro; gastos são descontados. O histórico fica salvo com o personagem e acompanha a exportação JSON. Para desfazer, use o ícone de lixeira na linha; o sistema reverte o saldo quando possível. A janela **Valor equivalente das moedas** apresenta a equivalência de PC, PP, PE, PO e PL em peças de cobre e ouro.
 - Use **Retrato → Importar imagem** para escolher uma imagem. A imagem fica no navegador e acompanha o arquivo de personagem; não é enviada a um servidor de imagens.
 
 A base da multiclasse está em `MULTICLASSE_2024.md`. O formato antigo de fichas continua aceito; personagens locais mantêm sua identidade ao migrar.
@@ -65,7 +66,7 @@ O índice de livros mantém capítulos históricos, bestiário, tabelas e encont
 ## Arquivos e desenvolvimento
 
 - `dist/app.js`: interface e fluxos. A seção **Tesouro** inclui conversão de moedas (PC, PP, PE, PO e PL); a guia **Economias** registra ganhos e gastos e atualiza o saldo do Tesouro.
-- `docs/`: cópia estática pronta para publicação pelo GitHub Pages; o `index.html` fica diretamente nesta pasta.
+- `docs/`: cópia estática pronta para publicação pelo GitHub Pages; o `index.html` fica diretamente nesta pasta. A abertura do site leva ao hub **Minhas fichas**; o tema noturno pode ser alternado pelo botão de lua/sol no cabeçalho.
 - `dist/core.js`: cálculos, avanço, descansos, equipamentos e sanitização de importação.
 - `dist/progression.js` e `dist/class-progression-data.js`: níveis, pré-requisitos, proficiências e progressão de conjuração por classe.
 - `dist/portrait.js`: validação dos arquivos e dimensões do retrato.
@@ -85,3 +86,7 @@ No ambiente de edição Sites, a prévia usa `sites-preview start /workspace/sit
 Personagens ficam no armazenamento local do navegador; não há sincronização entre dispositivos. Exporte JSON para cópias de segurança e transferência. A versão hospedada mantém o acesso privado do proprietário.
 
 Conteúdo de referência e ilustrações foram extraídos ou resumidos dos arquivos fornecidos pelo usuário para uso pessoal. Dungeons & Dragons, livros e arte pertencem aos respectivos titulares. Ferramenta independente. Os PDFs originais e credenciais de hospedagem não acompanham o código.
+
+## Hub e tema
+
+Ao abrir o site, o jogador chega ao hub **Minhas fichas**, onde pode abrir um personagem salvo, criar um novo ou importar um JSON. Dentro da ficha, use **Minhas fichas** no menu lateral para voltar ao hub. O botão com lua/sol alterna entre tema claro e noturno; a escolha fica salva neste navegador.

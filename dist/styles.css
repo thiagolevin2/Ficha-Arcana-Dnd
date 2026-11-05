@@ -77,3 +77,92 @@
 .economy-table .icon-btn:hover{background:#f8e9e6;color:var(--red)}
 @media(max-width:900px){.economy-intro{padding:20px}.economy-intro h2{font-size:23px}.economy-summary{gap:9px}.economy-stat{padding:14px}.economy-stat strong{font-size:22px}}
 @media(max-width:620px){.economy-intro{padding:18px;gap:10px}.economy-intro h2{font-size:21px}.economy-intro p{font-size:10px}.economy-intro-mark{width:43px;height:43px}.economy-intro-mark svg{width:22px}.economy-summary{grid-template-columns:1fr 1fr}.economy-stat:first-child{grid-column:1/-1}.economy-stat strong{font-size:21px}.economy-wallet-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.economy-layout .field-row{grid-template-columns:1fr 1fr}}
+
+/* Hub de personagens */
+.hub-screen{min-height:100vh;padding:28px clamp(18px,5vw,72px) 26px;background:var(--bg);color:var(--ink)}
+.hub-header{max-width:1240px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.hub-brand{color:var(--green);padding:0}
+.hub-brand svg{width:36px;height:38px}
+.hub-brand span{font-size:25px;letter-spacing:5px}
+.hub-header-actions{display:flex;align-items:center;gap:9px}
+.hub-header-actions .btn.ghost{border:1px solid var(--line);background:var(--paper)}
+.hub-welcome{max-width:1240px;margin:42px auto 35px;padding:42px clamp(22px,5vw,58px);border:1px solid #62775755;border-radius:18px;background:linear-gradient(115deg,#193528 0%,#304c37 62%,#576342 100%);color:#edf0e4;position:relative;overflow:hidden}
+.hub-welcome:after{content:'✦';position:absolute;right:8%;top:-35px;font:180px Georgia,serif;color:#e4d7a51a}
+.hub-welcome .eyebrow{color:#c5c99e;font-size:9px}
+.hub-welcome h1{font:clamp(30px,4vw,46px) Georgia,serif;color:#f1e4bd;margin:13px 0 9px;max-width:650px}
+.hub-welcome p{max-width:610px;color:#d0d8c8;font-size:13px;line-height:1.8}
+.hub-list-section{max-width:1240px;margin:0 auto}
+.hub-list-heading{margin-bottom:17px}
+.hub-list-heading h2{font:26px Georgia,serif;color:var(--ink)}
+.hub-list-heading p{font-size:11px;color:var(--muted);margin-top:4px}
+.hub-character-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:17px}
+.hub-character-card{overflow:hidden;background:var(--paper);border:1px solid var(--line);border-radius:13px;box-shadow:var(--shadow);transition:transform .18s,border-color .18s}
+.hub-character-card:hover{transform:translateY(-3px);border-color:#9cae86}
+.hub-character-art{height:155px;position:relative;background:#1c3024;overflow:hidden}
+.hub-character-art:after{content:'';position:absolute;inset:35% 0 0;background:linear-gradient(transparent,#17291fd9)}
+.hub-character-art img{width:100%;height:100%;object-fit:cover;object-position:center 30%;opacity:.9}
+.hub-level{position:absolute;z-index:1;right:12px;bottom:11px;color:#f0e4bd;font-size:9px;letter-spacing:1.2px}
+.hub-character-body{padding:17px 18px 18px}
+.hub-character-body .eyebrow{font-size:8px;color:var(--muted);letter-spacing:1px}
+.hub-character-body h2{font:24px Georgia,serif;color:var(--ink);margin:7px 0 4px;overflow-wrap:anywhere}
+.hub-character-body>p{font-size:10px;color:var(--muted)}
+.hub-character-actions{display:flex;align-items:center;gap:8px;margin-top:16px}
+.hub-character-actions .btn.primary{flex:1}
+.hub-character-actions .btn svg{width:14px;height:14px}
+.hub-footer{max-width:1240px;margin:40px auto 0;padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:15px;color:var(--muted);font-size:8px;letter-spacing:1px}
+.hub-footer span{letter-spacing:0;text-transform:none;font-size:10px}
+.theme-toggle{color:var(--ink);background:var(--paper);border-color:var(--line)}
+.theme-toggle:hover{background:var(--green-soft)}
+
+/* Tabela de equivalência do dinheiro na guia Economias */
+.economy-rates-card{margin:0 0 18px}
+.economy-rates-card .card-title{align-items:flex-start}
+.economy-rates-card .card-title .hint{margin-top:4px}
+.economy-rates-grid{border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.economy-rate{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:12px;align-items:center;padding:11px 14px;border-bottom:1px solid var(--line);font-size:11px}
+.economy-rate:last-child{border-bottom:0}
+.economy-rate strong{font-weight:600;color:var(--ink)}
+.economy-rate span{color:var(--muted);font-variant-numeric:tabular-nums}
+.economy-rate-heading{background:var(--green-soft);font-size:9px;text-transform:uppercase;letter-spacing:.6px}
+.economy-rate-heading span{color:var(--green);font-weight:600}
+
+/* Modo noturno: paleta aplicada às superfícies, formulários e componentes principais. */
+:root[data-theme="dark"]{color-scheme:dark;--bg:#111914;--paper:#1b2820;--ink:#e5eadf;--muted:#a1ad9e;--line:#36463a;--green:#a4c29a;--green-soft:#293a2e;--gold:#d3bb7c;--red:#e18b82;--shadow:0 8px 28px #0005}
+:root[data-theme="dark"] body{background:var(--bg);color:var(--ink)}
+:root[data-theme="dark"] .topbar{background:#18231c;border-color:var(--line)}
+:root[data-theme="dark"] .card,:root[data-theme="dark"] .stat,:root[data-theme="dark"] .economy-stat,:root[data-theme="dark"] .class-plan-row,:root[data-theme="dark"] .casting-source,:root[data-theme="dark"] .economy-wallet-grid>div,:root[data-theme="dark"] .hub-character-card{background:var(--paper);border-color:var(--line);color:var(--ink)}
+:root[data-theme="dark"] .economy-stat-balance{background:#24372a;border-color:#405a43}
+:root[data-theme="dark"] .economy-stat strong,:root[data-theme="dark"] .stat-value,:root[data-theme="dark"] .resource-value,:root[data-theme="dark"] .hub-character-body h2,:root[data-theme="dark"] .hub-list-heading h2{color:var(--ink)}
+:root[data-theme="dark"] .stat-icon,:root[data-theme="dark"] .casting-source.selected,:root[data-theme="dark"] .stat-editor .stat-edit{background:var(--green-soft);border-color:var(--line)}
+:root[data-theme="dark"] .btn:not(.primary):not(.gold):not(.danger){background:#202e25;border-color:var(--line);color:var(--ink)}
+:root[data-theme="dark"] .btn.ghost{background:transparent;border-color:transparent}
+:root[data-theme="dark"] .btn:hover,:root[data-theme="dark"] .icon-btn:hover{background:#304536;border-color:#536d55}
+:root[data-theme="dark"] input,:root[data-theme="dark"] select,:root[data-theme="dark"] textarea{background:#17231b;color:var(--ink);border-color:var(--line)}
+:root[data-theme="dark"] .character-select{background:#17231b;color:var(--ink);border-color:var(--line)}
+:root[data-theme="dark"] .search{background:#17231b;border-color:var(--line)}
+:root[data-theme="dark"] .search input{background:transparent}
+:root[data-theme="dark"] .note-area{background:linear-gradient(#1b2820 30px,#2a382d 31px);background-size:100% 32px;color:var(--ink)}
+:root[data-theme="dark"] .modal{background:var(--paper);color:var(--ink)}
+:root[data-theme="dark"] .modal-header,:root[data-theme="dark"] .modal-footer{background:#202d24;border-color:var(--line)}
+:root[data-theme="dark"] .modal-subtitle,:root[data-theme="dark"] .field label{color:var(--muted)}
+:root[data-theme="dark"] .economy-intro{border-color:#59694f;background:linear-gradient(110deg,#1d382a,#2b4734)}
+:root[data-theme="dark"] .economy-wallet-card{background:#17231b}
+:root[data-theme="dark"] .economy-wallet-grid>div{border-color:var(--line);background:#202d24}
+:root[data-theme="dark"] .economy-table td{border-color:var(--line)}
+:root[data-theme="dark"] .economy-table td strong,:root[data-theme="dark"] .economy-table th{color:var(--ink)}
+:root[data-theme="dark"] .economy-table .icon-btn:hover{background:#4a2b2a}
+:root[data-theme="dark"] .economy-rate-heading{background:#26392b}
+:root[data-theme="dark"] .economy-rate-heading span{color:#b9d2ad}
+:root[data-theme="dark"] .economy-rate strong{color:var(--ink)}
+:root[data-theme="dark"] .economy-rate{border-color:var(--line)}
+:root[data-theme="dark"] .hub-header .hub-brand{color:#e3d3a6}
+:root[data-theme="dark"] .hub-header-actions .btn.ghost{background:#1b2820}
+:root[data-theme="dark"] .hub-footer{border-color:var(--line)}
+:root[data-theme="dark"] .tabs{border-color:var(--line)}
+:root[data-theme="dark"] .tab.active{color:#d5e5ca;border-color:#9db88c}
+:root[data-theme="dark"] .inventory-table td{border-color:var(--line)}
+:root[data-theme="dark"] .source-note,:root[data-theme="dark"] .hint{color:#a8b5a2}
+:root[data-theme="dark"] .rule-notice,:root[data-theme="dark"] .adaptation-notes{background:#26372b;border-color:#405344;color:#c4d0bd}
+:root[data-theme="dark"] .rule-notice strong,:root[data-theme="dark"] .adaptation-notes strong{color:#d5e4ca}
+:root[data-theme="dark"] .empty{color:#a6b29f}
+@media(max-width:620px){.hub-screen{padding:16px 15px 24px}.hub-header{align-items:flex-start}.hub-header-actions{gap:4px}.hub-header-actions .btn{font-size:10px;padding:7px 8px;min-height:32px}.hub-brand span{font-size:20px;letter-spacing:3px}.hub-brand svg{width:28px;height:30px}.hub-welcome{margin:28px auto 25px;padding:27px 20px}.hub-welcome h1{font-size:30px}.hub-welcome p{font-size:11px}.hub-list-heading h2{font-size:23px}.hub-list-heading>.btn{display:none}.hub-character-grid{grid-template-columns:1fr;gap:12px}.hub-character-art{height:130px}.hub-footer{display:block;line-height:2}.hub-footer span{display:block}.economy-rate{grid-template-columns:1.15fr 1fr 1fr;gap:5px;padding:10px 8px;font-size:10px}.economy-rate-heading{font-size:8px;letter-spacing:0}.economy-rates-card .card-title{gap:8px}}

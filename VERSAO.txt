@@ -1,6 +1,5 @@
-Arcana — conversor de moedas e guia Economias com histórico de ganhos e gastos
-Revisão baseada no pacote com docs/ sincronizada com dist/.
+Arcana — hub de fichas, modo noturno e tabela de equivalência de moedas.
 
-56 testes automatizados aprovados. JavaScript validado com node --check.
+Mantém guia Economias, histórico de ganhos e gastos, conversor no Tesouro e pasta docs/ sincronizada com dist/.
 
-A guia Economias salva os lançamentos no personagem, atualiza as moedas do Tesouro e é preservada na exportação/importação JSON.
+56 testes automatizados aprovados; JavaScript validado com node --check.
