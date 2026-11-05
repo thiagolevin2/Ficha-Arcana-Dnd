@@ -1,6 +1,7 @@
 import {ABILITIES,CLASSES,SPECIES,BACKGROUNDS,ARMORS,WEAPONS,FULL_SLOTS,PREPARED,CONDITIONS} from './data.js';
 import {classEntries,totalLevel,classLevel,hasClass,subclassFor,orderFor,syncClassState,validateClassPlan,multiclassEligibility,castingSources,activeCastingSource,slotPools,preparedLimitFor,hitDicePools,hitPointBase,savingThrows,training,attackCount,abilityImprovementAt,MULTICLASS_TRAINING} from './progression.js';
 import {FIGHTING_STYLE_FEATS,grantsFightingStyle,hasFightingStyleFeature} from './feats.js';
+import {XP_THRESHOLDS,xpForLevel} from './progression.js';
 export const mod=n=>Math.floor((n-10)/2);
 export const sign=n=>n>=0?'+'+n:String(n);
 export const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));
@@ -11,6 +12,18 @@ export function roll(formula,{critical=false,random=die}={}){
  const parts=f.match(/[+-]?(?:\d*d\d+|\d+)/g);let total=0;const detail=[];
  for(const p of parts){const m=p.match(/^([+-]?)(\d*)d(\d+)$/);if(m){const count=Number(m[2]||1)*(critical?2:1),sides=Number(m[3]),sg=m[1]==='-'?-1:1;if(count<1||count>100||sides<2||sides>1000)throw Error('Use até 100 dados de 2 a 1000 faces.');const values=Array.from({length:count},()=>random(sides));total+=sg*values.reduce((a,b)=>a+b,0);detail.push({type:'dice',count,sides,values,sign:sg})}else{const n=Number(p);total+=n;detail.push({type:'fixed',value:n})}}
  return {total,formula:f,detail,critical};
+}
+// Combate com Armas Grandes: cada dado da arma que mostrar 1 ou 2 é repetido uma vez.
+// A função recebe um gerador aleatório injetável para permitir testes determinísticos.
+export function rollWeaponDamage(formula,{critical=false,greatWeapon=false,random=die}={}){
+ const result=roll(formula,{critical,random}),adjustments=[];
+ if(greatWeapon){
+  for(const part of result.detail){
+   if(part.type!=='dice')continue;
+   part.values=part.values.map(value=>{if(value===1||value===2){adjustments.push({sides:part.sides,from:value,to:3});result.total+=part.sign*(3-value);return 3;}return value;});
+  }
+ }
+ return {...result,adjustments};
 }
 export function rollD20(bonus,{mode='normal',random=die,lucky=false,reliable=false,penalty=0}={}){
  const rolls=Array.from({length:mode==='normal'?1:2},()=>random(20));const rerolls=[];
@@ -39,6 +52,17 @@ export function normalizeWeapon(w){
  return item;
 }
 export const weaponDefinition=w=>w.custom||WEAPONS[w.key];
+// Lista de equipamento inicial por proficiência, incluindo exceções de classe do PHB 2024.
+export function weaponAllowedAtCreation(c,w){
+ if(!w)return false;
+ if(w.simple||training(c).martial)return true;
+ if(c.classId==='ladino')return ['bestamao','espadalonga','rapieira','espadacurta'].includes(w.key);
+ if(c.classId==='monge')return !w.ranged&&!!w.light;
+ return false;
+}
+export function hasOtherLightWeapon(c,index){
+ return (c.weapons||[]).some((item,i)=>i!==Number(index)&&!!weaponDefinition(item)?.light);
+}
 export function normalizeCustomArmor(a){if(!a||typeof a!=='object')throw Error('Armadura personalizada inválida.');const id=safeString(a.id||crypto.randomUUID(),80),name=safeString(a.name||'Armadura personalizada',100).trim();if(!name)throw Error('Informe o nome da armadura.');const dex=a.dex===true?true:a.dex===false?false:clamp(Number(a.dex)||0,0,10);return {id,name,base:clamp(Number(a.base)||10,1,40),dex,category:['Leve','Média','Pesada'].includes(a.category)?a.category:'Leve',str:clamp(Number(a.str)||0,0,30),weight:clamp(Number(a.weight)||0,0,999),stealth:!!a.stealth,bonus:clamp(Number(a.bonus)||0,-10,20),effects:safeString(a.effects,4000)};}
 export function normalizeCustomShield(a){if(!a||typeof a!=='object')throw Error('Escudo personalizado inválido.');const id=safeString(a.id||crypto.randomUUID(),80),name=safeString(a.name||'Escudo personalizado',100).trim();if(!name)throw Error('Informe o nome do escudo.');return {id,name,acBonus:clamp(Number(a.acBonus??2)||0,-5,20),weight:clamp(Number(a.weight??3)||0,0,999),effects:safeString(a.effects,4000)};}
 export function armorDefinition(c){const id=String(c?.armor||'none');if(id.startsWith('custom:'))return (c.customArmors||[]).find(a=>a.id===id.slice(7))||ARMORS.none;return ARMORS[id]||ARMORS.none;}
@@ -74,14 +98,23 @@ export function derive(c){
 }
 export function attackStats(c,w){
  const d=derive(c),weapon=weaponDefinition(w);if(!weapon)throw Error('Arma desconhecida.');
- const monkLevel=classLevel(c,'monge'),monk=monkLevel>0&&c.armor==='none'&&!c.shield&&(weapon.simple&&!weapon.twoHanded||weapon.light&&!weapon.twoHanded);let stat=weapon.ranged?'dex':'str';if(weapon.finesse||monk)stat=d.m.dex>d.m.str?'dex':'str';if(ABILITIES.some(a=>a[0]===w.ability))stat=w.ability;
+ const styles=new Set([c.style,...(c.styles||[]),...(c.feats||[])]),owns=name=>styles.has(name),monkLevel=classLevel(c,'monge'),monk=monkLevel>0&&c.armor==='none'&&!c.shield&&(weapon.simple&&!weapon.twoHanded||weapon.light&&!weapon.twoHanded);
+ const thrownAttack=!!(w.thrownAttack&&weapon.thrown),twoWeaponExtra=!!(w.twoWeaponExtra&&w.otherLightWeapon&&weapon.light&&c.dualWieldActive),twoHandedGrip=!!(weapon.twoHanded||w.two&&weapon.two);
+ let stat=weapon.ranged?'dex':'str';if(weapon.finesse||monk)stat=d.m.dex>d.m.str?'dex':'str';if(ABILITIES.some(a=>a[0]===w.ability))stat=w.ability;
  const proficient=w.proficiency==='yes'||w.proficiency!=='no'&&(weapon.simple||d.training.martial||c.classId==='ladino'&&(weapon.finesse||weapon.light)||c.classId==='monge'&&weapon.light);
  const extra=Number(w.magic)||0;let dice=w.two&&weapon.two?weapon.two:weapon.dice;if(monk&&!w.custom){const sides=monkLevel>=17?12:monkLevel>=11?10:monkLevel>=5?8:6;if(Number(dice.split('d')[0])===1&&Number(dice.split('d')[1])<sides)dice='1d'+sides;}
- const barbarian=classLevel(c,'barbaro'),rage=c.raging&&barbarian&&stat==='str'&&!weapon.ranged?(barbarian>=16?4:barbarian>=9?3:2):0;
- const custom=weapon&&w.custom,mode=custom?(weapon.damageMode||'ability'):'ability',abilityKey=custom&&ABILITIES.some(a=>a[0]===weapon.damageAbility)?weapon.damageAbility:stat,abilityDamage=mode==='ability'?d.m[abilityKey]:0,flatDamage=['flat','flatDice'].includes(mode)?Number(weapon.damageFlat)||0:0,extraDamageDice=['extraDice','flatDice'].includes(mode)?weapon.damageDice:'',commonDamage=extra+rage+(hasStyle(c,'Duelismo')&&!weapon.ranged&&!weapon.twoHanded&&!w.two?2:0)+(Number(w.damageBonus)||0),damageMod=abilityDamage+flatDamage+commonDamage,attack=d.m[stat]+(proficient?d.pb:0)+extra+(hasStyle(c,'Arquearia')&&weapon.ranged?2:0)+(Number(c.adjust?.attack)||0)+(Number(w.attackBonus)||0),fighter=classLevel(c,'guerreiro');
+ const barbarian=classLevel(c,'barbaro'),rage=c.raging&&barbarian&&stat==='str'&&!weapon.ranged&&!thrownAttack?(barbarian>=16?4:barbarian>=9?3:2):0;
+ const custom=!!w.custom,mode=custom?(weapon.damageMode||'ability'):'ability',abilityKey=custom&&ABILITIES.some(a=>a[0]===weapon.damageAbility)?weapon.damageAbility:stat;
+ const styleTwoWeapon=twoWeaponExtra&&owns('Combate com Duas Armas'),abilityDamage=mode==='ability'&&!(twoWeaponExtra&&!styleTwoWeapon)?d.m[abilityKey]:0;
+ const flatDamage=['flat','flatDice'].includes(mode)?Number(weapon.damageFlat)||0:0,extraDamageDice=['extraDice','flatDice'].includes(mode)?weapon.damageDice:'',dueling=owns('Duelismo')&&!c.dualWieldActive&&c.offhandEmpty!==false&&!weapon.ranged&&!thrownAttack&&!twoHandedGrip&&!twoWeaponExtra,thrownBonus=owns('Combate com Armas de Arremesso')&&thrownAttack?2:0;
+ const commonDamage=extra+rage+(dueling?2:0)+thrownBonus+(Number(w.damageBonus)||0),damageMod=abilityDamage+flatDamage+commonDamage;
+ const archery=owns('Arquearia')&&weapon.ranged,attack=d.m[stat]+(proficient?d.pb:0)+extra+(archery?2:0)+(Number(c.adjust?.attack)||0)+(Number(w.attackBonus)||0);
  const formula=dice+(extraDamageDice?'+'+extraDamageDice:'')+(damageMod?sign(damageMod):'');
- return {...weapon,stat,proficient,attack,dice,damageMod,formula,criticalThreshold:fighter>=3&&subclassFor(c,'guerreiro')==='Campeão'?(fighter>=15?18:19):20,custom:!!w.custom,attacks:d.attacks};
+ const activeStyles=[];if(archery)activeStyles.push('Arquearia · +2 no ataque');if(dueling)activeStyles.push('Duelismo · +2 no dano');if(thrownBonus)activeStyles.push('Armas de Arremesso · +2 no dano');if(twoWeaponExtra&&styleTwoWeapon)activeStyles.push('Duas Armas · atributo no dano do ataque adicional');if(owns('Combate com Armas Grandes')&&!c.shield&&twoHandedGrip&&!weapon.ranged)activeStyles.push('Armas Grandes · resultados 1 e 2 nos dados da arma contam como 3');
+ const fighter=classLevel(c,'guerreiro');
+ return {...weapon,stat,proficient,attack,dice,damageMod,formula,criticalThreshold:fighter>=3&&subclassFor(c,'guerreiro')==='Campeão'?(fighter>=15?18:19):20,custom:!!w.custom,attacks:d.attacks,activeStyles,styleOwners:[...styles],thrownAttack,twoWeaponExtra,twoHandedGrip,styleGreatWeapon:owns('Combate com Armas Grandes')&&!c.shield&&twoHandedGrip&&!weapon.ranged,styleTwoWeapon,styleDueling:dueling,styleThrown:!!thrownBonus};
 }
+
 export function resources(c){
  const d=derive(c),r=[],add=(id,name,max,recovery='long',hint='',classId='')=>r.push({id,name,max,recovery,hint,classId});
  for(const e of classEntries(c)){const n=e.level,k=e.classId;
@@ -103,20 +136,22 @@ export function resources(c){
 }
 export const preparedLimit=(c,id=activeCastingSource(c)?.classId)=>preparedLimitFor(c,id);
 export function newCharacter(part={}){
- const c={id:crypto.randomUUID(),name:'Novo aventureiro',classId:'guerreiro',level:1,subclass:'',speciesId:'humano',variant:'',backgroundId:'soldado',base:{str:15,dex:14,con:13,int:8,wis:10,cha:12},origin:{str:2,dex:0,con:1,int:0,wis:0,cha:0},advances:{},skills:['Atletismo','Percepção'],expertise:[],feats:[],armor:'malha',customArmors:[],customShields:[],shield:false,shieldId:'',alignment:'Não definido',style:'',weapons:[{key:'espadalonga',magic:0},{key:'arco',magic:0}],items:[{name:'Mochila',qty:1,weight:2.5},{name:'Rações (dia)',qty:5,weight:1},{name:'Corda (15 m)',qty:1,weight:2.5}],coins:{pc:0,pp:0,pe:0,po:50,pl:0},economy:[],hp:0,tempHp:0,usedHD:0,usedHDByDie:null,hpRolls:[],slotsUsed:[],pactUsed:0,resourceUsed:{},prepared:[],spellClasses:{},knownSpellsByClass:{},spellAccess:{},goodberries:0,conditions:[],exhaustion:0,concentration:null,death:{success:0,fail:0},inspiration:false,raging:false,notes:'',story:'',selectedOptions:[],portrait:'',portraitPosition:50,progressionLog:[],adjust:{},order:'',...part};if(c.classes?.length)c.classes=validateClassPlan(c,c.classes,{checkRequirements:false});syncClassState(c);c.hp=derive(c).hpMax;return c;
+ const c={id:crypto.randomUUID(),name:'Novo aventureiro',classId:'guerreiro',level:1,subclass:'',speciesId:'humano',variant:'',backgroundId:'soldado',base:{str:15,dex:14,con:13,int:8,wis:10,cha:12},origin:{str:2,dex:0,con:1,int:0,wis:0,cha:0},advances:{},skills:['Atletismo','Percepção'],expertise:[],feats:[],armor:'malha',customArmors:[],customShields:[],shield:false,shieldId:'',alignment:'Não definido',style:'',weapons:[{key:'espadalonga',magic:0},{key:'arco',magic:0}],items:[{name:'Mochila',qty:1,weight:2.5},{name:'Rações (dia)',qty:5,weight:1},{name:'Corda (15 m)',qty:1,weight:2.5}],coins:{pc:0,pp:0,pe:0,po:50,pl:0},economy:[],hp:0,tempHp:0,usedHD:0,usedHDByDie:null,hpRolls:[],slotsUsed:[],pactUsed:0,resourceUsed:{},prepared:[],spellClasses:{},knownSpellsByClass:{},spellAccess:{},goodberries:0,conditions:[],exhaustion:0,concentration:null,death:{success:0,fail:0},inspiration:false,raging:false,notes:'',story:'',selectedOptions:[],portrait:'',portraitPosition:50,progressionLog:[],adjust:{},order:'',...part};if(c.classes?.length)c.classes=validateClassPlan(c,c.classes,{checkRequirements:false});syncClassState(c);c.xp=part.xp===undefined?xpForLevel(totalLevel(c)):Math.max(xpForLevel(totalLevel(c)),clamp(Math.floor(Number(part.xp)||0),0,999999999));c.hp=derive(c).hpMax;return c;
 }
 export function demoCharacter(){return newCharacter({name:'Elarion Ventofolha',classId:'guardiao',level:5,subclass:'Caçador',speciesId:'elfo',variant:'Elfo Silvestre',backgroundId:'guia',base:{str:12,dex:15,con:13,int:8,wis:14,cha:10},origin:{dex:2,con:1},advances:{dex:1,wis:1},skills:['Percepção','Natureza','Intuição'],expertise:['Percepção'],armor:'batido',style:'Arquearia',weapons:[{key:'arcolongo',magic:0},{key:'espadacurta',magic:0},{key:'cimitarra',magic:0}],coins:{pc:12,pp:8,pe:0,po:125,pl:0},notes:'Encontre a passagem esquecida sob as ruínas de Pedra Alta.\n\nComprar flechas antes de partir para a Floresta Esmeralda.',story:'Criado entre as raízes antigas da Floresta Esmeralda, Elarion deixou seu lar para descobrir por que as estrelas estão desaparecendo.'})}
-export function updateClassPlan(c,entries,{checkRequirements=true}={}){
- const next=structuredClone(c),before=derive(c),pools=hitDicePools(c);next.classes=validateClassPlan(c,entries,{checkRequirements});syncClassState(next);
+export function updateClassPlan(c,entries,{checkRequirements=true,allowLevelIncrease=false}={}){
+ const validated=validateClassPlan(c,entries,{checkRequirements});
+ if(!allowLevelIncrease&&validated.some(e=>e.level>classLevel(c,e.classId)))throw Error('A progressão de nível deve ser feita pela janela de XP e subida de nível.');
+ const next=structuredClone(c),before=derive(c),pools=hitDicePools(c);next.classes=validated;syncClassState(next);
  next.usedHDByDie=Object.fromEntries(pools.map(p=>[p.sides,p.used]));next.hpRolls=(next.hpRolls||[]).filter(r=>classLevel(next,r.classId)>=r.level);next.usedHDByDie=Object.fromEntries(hitDicePools(next).map(p=>[p.sides,p.used]));next.usedHD=hitDicePools(next).reduce((n,p)=>n+p.used,0);
  const d=derive(next);next.hp=clamp(c.hp+d.hpMax-before.hpMax,0,d.hpMax);next.slotsUsed=(c.slotsUsed||[]).map((n,i)=>Math.min(n,d.standardSlots.counts[i]||0));next.pactUsed=Math.min(c.pactUsed||0,d.pactSlots.counts[0]||0);return next;
 }
 export function advanceCharacter(c,classId,{subclass='',order='',hpRoll=null,skill='',increases={},feat='',fightingStyle='',styleAlternative=''}={}){
- if(totalLevel(c)>=20)throw Error('O personagem já atingiu o nível total 20.');if(!Object.hasOwn(CLASSES,classId))throw Error('Classe inválida.');
+ if(totalLevel(c)>=20)throw Error('O personagem já atingiu o nível total 20.');if(Number(c.xp||0)<xpForLevel(totalLevel(c)+1))throw Error('XP insuficiente. É necessário alcançar '+xpForLevel(totalLevel(c)+1)+' XP para subir de nível.');if(!Object.hasOwn(CLASSES,classId))throw Error('Classe inválida.');
  const entries=classEntries(c),entry=entries.find(e=>e.classId===classId),newClass=!entry;
  if(newClass){const test=multiclassEligibility(c,classId);if(!test.valid)throw Error(test.errors.join(' '));entries.push({classId,level:1,subclass:'',order});}else{entry.level++;entry.subclass=subclass||entry.subclass;entry.order=order||entry.order;}
  const chosen=entries.find(e=>e.classId===classId);if(chosen.level>=3&&!CLASSES[classId].subclasses.includes(chosen.subclass))throw Error('Escolha a subclasse de '+CLASSES[classId].name+'.');
- const grant=MULTICLASS_TRAINING[classId];if(newClass&&grant?.skill){const allowed=(grant.skillOptions||CLASSES[classId].skills).filter(s=>!c.skills.includes(s)&&!BACKGROUNDS[c.backgroundId].skills.includes(s));if(allowed.length&&!allowed.includes(skill))throw Error('Escolha uma nova perícia concedida pela multiclasse.');}let next=updateClassPlan(c,entries,{checkRequirements:newClass});const oldMax=derive(c).hpMax,n=chosen.level;
+ const grant=MULTICLASS_TRAINING[classId];if(newClass&&grant?.skill){const allowed=(grant.skillOptions||CLASSES[classId].skills).filter(s=>!c.skills.includes(s)&&!BACKGROUNDS[c.backgroundId].skills.includes(s));if(allowed.length&&!allowed.includes(skill))throw Error('Escolha uma nova perícia concedida pela multiclasse.');}let next=updateClassPlan(c,entries,{checkRequirements:newClass,allowLevelIncrease:true});const oldMax=derive(c).hpMax,n=chosen.level;
  if(hpRoll!==null){if(!Number.isInteger(hpRoll)||hpRoll<1||hpRoll>CLASSES[classId].hd)throw Error('Resultado do dado de vida inválido.');next.hpRolls=[...(next.hpRolls||[]),{classId,level:n,roll:hpRoll}];}
  const increments=Object.entries(increases).filter(([,v])=>Number(v)>0);if(increments.length||feat){if(!abilityImprovementAt(classId,n))throw Error('Este nível de classe não concede aumento de atributo ou talento.');if(increments.length&&feat)throw Error('Escolha aumento de atributo ou talento.');}if(fightingStyle){if(!FIGHTING_STYLE_FEATS.includes(fightingStyle)||!grantsFightingStyle(classId,n))throw Error('Este nível não concede uma escolha de Estilo de Luta válida.');}if(styleAlternative){const expected=classId==='paladino'?'Guerreiro Abençoado':classId==='guardiao'?'Guerreiro Druídico':'';if(!expected||styleAlternative!==expected||!grantsFightingStyle(classId,n))throw Error('Alternativa de conjuração inválida para esta classe ou nível.');}
  if(increments.reduce((sum,[,v])=>sum+Number(v),0)>2)throw Error('Distribua no máximo dois pontos de atributo.');for(const [key,value]of increments){if(!ABILITIES.some(a=>a[0]===key)||![1,2].includes(Number(value)))throw Error('Aumento de atributo inválido.');if(scores(next)[key]+Number(value)>20)throw Error('O aumento de atributo não pode elevar o valor acima de 20.');next.advances[key]=(Number(next.advances[key])||0)+Number(value);}
@@ -126,7 +161,7 @@ export function advanceCharacter(c,classId,{subclass='',order='',hpRoll=null,ski
 export function normalizeImported(data,{preserveId=false}={}){
  if(!data||typeof data!=='object'||!Object.hasOwn(CLASSES,data.classId)||!Object.hasOwn(SPECIES,data.speciesId)||!Object.hasOwn(BACKGROUNDS,data.backgroundId)||!data.base)throw Error('Arquivo de personagem inválido.');
  const c=newCharacter({classId:data.classId});Object.assign(c,data);c.id=preserveId&&typeof data.id==='string'?data.id:crypto.randomUUID();c.name=safeString(c.name||'Aventureiro');c.level=clamp(Math.floor(Number(c.level)||1),1,20);
- if(Array.isArray(data.classes)&&data.classes.length){c.classes=validateClassPlan(c,data.classes,{checkRequirements:false});syncClassState(c);}else delete c.classes;
+ if(Array.isArray(data.classes)&&data.classes.length){c.classes=validateClassPlan(c,data.classes,{checkRequirements:false});syncClassState(c);}else delete c.classes;c.xp=Math.max(xpForLevel(totalLevel(c)),clamp(Math.floor(Number(data.xp??xpForLevel(totalLevel(c)))||0),0,999999999));
  for(const key of ['base','origin','advances'])c[key]=Object.fromEntries(ABILITIES.map(([k])=>[k,clamp(Math.floor(Number(c[key]?.[k])||0),key==='base'?1:0,key==='base'?30:20)]));
  c.customArmors=Array.isArray(c.customArmors)?c.customArmors.slice(0,100).flatMap(x=>{try{return [normalizeCustomArmor(x)]}catch{return []}}):[];c.customShields=Array.isArray(c.customShields)?c.customShields.slice(0,100).flatMap(x=>{try{return [normalizeCustomShield(x)]}catch{return []}}):[];
  const customArmorId=String(c.armor||'');if(customArmorId.startsWith('custom:')&&!c.customArmors.some(x=>x.id===customArmorId.slice(7)))c.armor='none';else if(!customArmorId.startsWith('custom:')&&!Object.hasOwn(ARMORS,c.armor))c.armor='none';c.shieldId=c.customShields.some(x=>x.id===c.shieldId)?c.shieldId:'';c.alignment=['Leal e Bom','Neutro e Bom','Caótico e Bom','Leal e Neutro','Neutro','Caótico e Neutro','Leal e Mau','Neutro e Mau','Caótico e Mau'].includes(c.alignment)?c.alignment:'Não definido';c.subclass=CLASSES[c.classId].subclasses.includes(c.subclass)?c.subclass:'';c.variant=SPECIES[c.speciesId].variants.includes(c.variant)?c.variant:'';

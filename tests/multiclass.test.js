@@ -61,11 +61,11 @@ test('mixed Hit Dice are tracked and consumed by die type',()=>{
  const result=finishRest(c,{diceCounts:{6:1,10:1},random:sides=>sides});assert.equal(result.healing,20);assert.equal(result.character.hp,21);assert.deepEqual(result.character.usedHDByDie,{'6':1,'10':1});assert.throws(()=>finishRest(result.character,{diceCounts:{6:2}}));
 });
 test('level advancement preserves damage and spent slots and applies retroactive Constitution',()=>{
- const c=newCharacter({level:3,subclass:'Campeão',base:{...stats,con:13},origin:{}});c.hp=20;c.slotsUsed=[1];const next=advanceCharacter(c,'guerreiro',{increases:{con:2}});assert.equal(next.level,4);assert.equal(derive(next).hpMax,36);assert.equal(next.hp,31);assert.equal(c.level,3);assert.equal(next.progressionLog.at(-1).pending,false);
- const spellcaster=newCharacter({classId:'mago',level:3,subclass:'Evocador',base:stats,origin:{},slotsUsed:[2,1]});const advanced=advanceCharacter(spellcaster,'mago');assert.deepEqual(advanced.slotsUsed,[2,1]);assert.equal(advanced.progressionLog.at(-1).pending,true);
+ const c=newCharacter({level:3,xp:2700,subclass:'Campeão',base:{...stats,con:13},origin:{}});c.hp=20;c.slotsUsed=[1];const next=advanceCharacter(c,'guerreiro',{increases:{con:2}});assert.equal(next.level,4);assert.equal(derive(next).hpMax,36);assert.equal(next.hp,31);assert.equal(c.level,3);assert.equal(next.progressionLog.at(-1).pending,false);
+ const spellcaster=newCharacter({classId:'mago',level:3,xp:2700,subclass:'Evocador',base:stats,origin:{},slotsUsed:[2,1]});const advanced=advanceCharacter(spellcaster,'mago');assert.deepEqual(advanced.slotsUsed,[2,1]);assert.equal(advanced.progressionLog.at(-1).pending,true);
 });
 test('a new class uses normal level HP and rolled HP is retained',()=>{
- const c=newCharacter({classId:'mago',level:1,base:stats,origin:{},armor:'none'}),next=advanceCharacter(c,'guerreiro',{hpRoll:3});assert.equal(derive(next).hpMax,13);assert.equal(next.hpRolls[0].level,1);assert.equal(normalizeImported(next).hpRolls[0].roll,3);assert.equal(classLevel(next,'mago'),1);
+ const c=newCharacter({classId:'mago',level:1,xp:300,base:stats,origin:{},armor:'none'}),next=advanceCharacter(c,'guerreiro',{hpRoll:3});assert.equal(derive(next).hpMax,13);assert.equal(next.hpRolls[0].level,1);assert.equal(normalizeImported(next).hpRolls[0].roll,3);assert.equal(classLevel(next,'mago'),1);
 });
 test('advancement rejects invalid requirements, unearned ASI, missing subclass and total above 20',()=>{
  const c=newCharacter({classId:'mago',base:{...stats,str:8,dex:8},origin:{}});assert.throws(()=>advanceCharacter(c,'guerreiro'));
@@ -74,6 +74,17 @@ test('advancement rejects invalid requirements, unearned ASI, missing subclass a
  assert.throws(()=>advanceCharacter(newCharacter({level:20,base:stats,origin:{}}),'mago'));
  assert.throws(()=>updateClassPlan(newCharacter({base:stats,origin:{}}),[{classId:'guerreiro',level:15},{classId:'mago',level:6}]));
 });
+
+test('XP official is required in the core before advancing and class editor cannot grant levels',()=>{
+ const c=newCharacter({classId:'guerreiro',base:stats,origin:{}});
+ assert.equal(c.xp,0);
+ assert.throws(()=>advanceCharacter(c,'guerreiro'),/XP insuficiente/i);
+ assert.throws(()=>updateClassPlan(c,[{classId:'guerreiro',level:2}]),/progressão de nível/i);
+ assert.throws(()=>updateClassPlan(c,[{classId:'guerreiro',level:1},{classId:'mago',level:1}]),/progressão de nível/i);
+ const ready=newCharacter({classId:'guerreiro',xp:300,base:stats,origin:{}});
+ assert.equal(advanceCharacter(ready,'guerreiro').level,2);
+});
+
 test('custom weapons calculate attribute, magic, proficiency, critical damage and weight',()=>{
  const w=normalizeWeapon({custom:{name:'Lâmina Astral',dice:'2d6',type:'Psíquico',weight:3,simple:false},magic:1,ability:'int',proficiency:'yes',attackBonus:2,damageBonus:3}),c=newCharacter({level:5,base:{...stats,int:18},origin:{},weapons:[w],items:[],armor:'none'}),a=attackStats(c,w);assert.equal(a.attack,10);assert.equal(a.formula,'2d6+8');assert.equal(derive(c).weight,3);assert.equal(roll(a.formula,{critical:true,random:()=>3}).total,20);assert.throws(()=>normalizeWeapon({custom:{name:'Bad',dice:'1d6;alert(1)'}}));assert.throws(()=>normalizeWeapon({custom:{name:'Bad',dice:'99d100'}}));
 });

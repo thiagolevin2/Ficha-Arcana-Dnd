@@ -2,6 +2,9 @@ import {ABILITIES,CLASSES,FULL_SLOTS} from './data.js';
 import {CLASS_SPELL_PROGRESSION} from './class-progression-data.js';
 
 const bounded=(n,min,max)=>Math.max(min,Math.min(max,Math.floor(Number(n)||0)));
+export const XP_THRESHOLDS=Object.freeze([0,300,900,2700,6500,14000,23000,34000,48000,64000,85000,100000,120000,140000,165000,195000,225000,265000,305000,355000]);
+export const xpForLevel=level=>XP_THRESHOLDS[Math.max(1,Math.min(20,Math.floor(Number(level)||1)))-1];
+export function xpProgress(xp,level){const current=Math.max(1,Math.min(20,Math.floor(Number(level)||1))),base=xpForLevel(current),next=current>=20?null:xpForLevel(current+1),value=Math.max(0,Math.floor(Number(xp)||0));return {current,base,next,xp:value,remaining:next===null?0:Math.max(0,next-value),percent:next===null?100:Math.max(0,Math.min(100,(value-base)/(next-base)*100)),ready:next!==null&&value>=next};}
 export const MULTICLASS_REQUIREMENTS={barbaro:[['str']],bardo:[['cha']],bruxo:[['cha']],clerigo:[['wis']],druida:[['wis']],feiticeiro:[['cha']],guardiao:[['dex'],['wis']],guerreiro:[['str','dex']],ladino:[['dex']],mago:[['int']],monge:[['dex'],['wis']],paladino:[['str'],['cha']],artifice:[['int']]};
 export const MULTICLASS_TRAINING={
  barbaro:{armor:0,shield:true,martial:true,text:'Armas marciais e escudos. Não concede novos treinamentos de armadura.'},

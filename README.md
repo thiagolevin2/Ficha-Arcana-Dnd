@@ -25,6 +25,16 @@ Use um servidor HTTP: abrir `dist/index.html` diretamente por duplo clique imped
 - A barra “O destino está nos dados” pode ser escondida e restaurada pelo botão flutuante; a preferência fica salva no navegador.
 - Cópia de `dist/` sincronizada com `docs/` para GitHub Pages.
 
+## Arcana 0.8 — combate, equipamentos e progressão por XP
+
+- A janela **Verificação dos Estilos de Luta** mostra quais estilos estão ativos, quais requisitos foram atendidos e quais condições ainda faltam. Os efeitos compatíveis são aplicados nas rolagens: Arquearia (+2 no ataque à distância), Duelismo (+2 no dano com arma corpo a corpo de uma mão, podendo usar escudo), Defesa (+1 CA com armadura), Combate com Armas de Arremesso (+2 no dano ao arremessar) e Combate com Armas Grandes (resultados 1 e 2 nos dados de dano passam a 3, conforme a regra de 2024). Combate com Duas Armas aplica o modificador de atributo no dano da arma secundária quando os requisitos são atendidos.
+- O editor de Estilos de Luta usa identificadores de elementos estáveis, sem montar seletores a partir dos nomes traduzidos; isso corrige a falha de leitura de checkbox ao editar personagens já evoluídos.
+- O catálogo de armas exibe cartões com dano, propriedades, alcance e proficiências. **Espada Grande** aparece com esse nome; a identificação antiga **Montante** continua aceita para preservar fichas já salvas.
+- A seleção de equipamento inicial filtra as opções conforme as proficiências e permissões da classe escolhida.
+- A progressão usa a tabela oficial de XP para os níveis 1–20, com barra de progresso, janela para adicionar/remover XP e botão de subida habilitado somente ao alcançar o requisito. O editor de personagem e o organizador de classes não concedem níveis diretamente; a progressão e a entrada em multiclasse devem passar pela janela de XP.
+- A navegação lateral tem rolagem interna e dimensões responsivas; a página de **Talentos** está dentro de **Biblioteca**.
+- A guia **Combate** fica na barra horizontal de Minha ficha e reúne modos de ataque com armas e magias. A mochila exibe armas, escudos e armaduras e o botão de adicionar item oferece as três categorias.
+
 ## Funcionalidades
 
 - 12 classes e 48 subclasses do livro de 2024, mais Artífice e 40 subclasses adicionais: 13 classes e 88 subclasses no total.

@@ -1,5 +1,3 @@
-Arcana 0.3 — atualização de inventário, equipamentos personalizados e alinhamento.
+Arcana 0.8 — estilos de luta integrados às rolagens, catálogo de armas em cartões, inventário unificado, navegação responsiva e progressão por XP.
 
-Inventário de combate lista armas, armaduras e escudos. Armaduras e escudos personalizados aceitam CA e descrição de efeitos mágicos; armas personalizadas partem de uma arma-base e têm cinco composições de dano configuráveis. Alinhamento opcional na criação e guia própria em Minha ficha. Barra de dados pode ser escondida e restaurada.
-
-Preserva hub, talentos, estilos de luta 2024, magias, economia, combate, curas e modo noturno. docs/ sincronizada com dist/. Testes: 67/67 aprovados.
+Inclui interface de estilos ativos e requisitos, adição de armas/armaduras/escudos pela mochila, acesso aos talentos dentro da Biblioteca e XP oficial para níveis 1–20. Preserva as fichas da versão anterior e IDs de equipamentos antigos.
