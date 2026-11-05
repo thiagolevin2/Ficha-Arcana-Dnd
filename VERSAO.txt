@@ -1,1 +1,6 @@
-Ficha Arcana · Atualização de magias, câmbio dinâmico, barra de dados opcional e contraste do tema noturno.
+Arcana — atualização de contraste, grimório por classe e painéis de combate e cura.
+
+Mantém o Hub de fichas, modo noturno, Economias, histórico, conversor de moedas e pasta docs/ sincronizada com dist/.
+Inclui seleção visual de atributos com Pontos padrão 15–14–13–12–10–8, filtro de classe com consulta sem acesso indevido, painel de magias de dano e janela de curas com usos rastreados.
+
+70 testes automatizados aprovados; JavaScript validado com node --check.

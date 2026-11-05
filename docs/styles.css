@@ -168,40 +168,38 @@
 @media(max-width:620px){.hub-screen{padding:16px 15px 24px}.hub-header{align-items:flex-start}.hub-header-actions{gap:4px}.hub-header-actions .btn{font-size:10px;padding:7px 8px;min-height:32px}.hub-brand span{font-size:20px;letter-spacing:3px}.hub-brand svg{width:28px;height:30px}.hub-welcome{margin:28px auto 25px;padding:27px 20px}.hub-welcome h1{font-size:30px}.hub-welcome p{font-size:11px}.hub-list-heading h2{font-size:23px}.hub-list-heading>.btn{display:none}.hub-character-grid{grid-template-columns:1fr;gap:12px}.hub-character-art{height:130px}.hub-footer{display:block;line-height:2}.hub-footer span{display:block}.economy-rate{grid-template-columns:1.15fr 1fr 1fr;gap:5px;padding:10px 8px;font-size:10px}.economy-rate-heading{font-size:8px;letter-spacing:0}.economy-rates-card .card-title{gap:8px}}
 
 
-/* Acessibilidade do modo noturno: textos e estados legíveis em todos os painéis. */
-:root[data-theme="dark"] .main h1,:root[data-theme="dark"] .main h2,:root[data-theme="dark"] .main h3,:root[data-theme="dark"] .main h4,:root[data-theme="dark"] .card-title h2,:root[data-theme="dark"] .feature h3,:root[data-theme="dark"] .spell-card h3,:root[data-theme="dark"] .spell-picker-card h3,:root[data-theme="dark"] .reading,:root[data-theme="dark"] .item-name-button,:root[data-theme="dark"] .field input,:root[data-theme="dark"] .field select,:root[data-theme="dark"] .field textarea{color:var(--ink)}
-:root[data-theme="dark"] .main p,:root[data-theme="dark"] .main li,:root[data-theme="dark"] .main td,:root[data-theme="dark"] .main th,:root[data-theme="dark"] .metadata,:root[data-theme="dark"] .excerpt,:root[data-theme="dark"] .item-description,:root[data-theme="dark"] .feature p,:root[data-theme="dark"] .form-note,:root[data-theme="dark"] .wizard-magic-source h4{color:#c7d2c3}
-:root[data-theme="dark"] .label,:root[data-theme="dark"] .mini-label,:root[data-theme="dark"] .eyebrow,:root[data-theme="dark"] .field label,:root[data-theme="dark"] .hint,:root[data-theme="dark"] .source-note{color:#aebba9}
-:root[data-theme="dark"] .mini-card,:root[data-theme="dark"] .guide,:root[data-theme="dark"] .ability,:root[data-theme="dark"] .hp-controls,:root[data-theme="dark"] .wizard .step,:root[data-theme="dark"] .option-card,:root[data-theme="dark"] .stat-edit,:root[data-theme="dark"] .spell-picker-card,:root[data-theme="dark"] .item-spell-row{background:#223128;color:var(--ink);border-color:var(--line)}
-:root[data-theme="dark"] .mini-card strong,:root[data-theme="dark"] .guide strong,:root[data-theme="dark"] .option-card strong,:root[data-theme="dark"] .stat-edit label,:root[data-theme="dark"] .spell-detail-grid .value,:root[data-theme="dark"] .spell-picker-card strong,:root[data-theme="dark"] .item-spell-row strong{color:#e5eadf}
-:root[data-theme="dark"] .table,:root[data-theme="dark"] table,:root[data-theme="dark"] .inventory-table th,:root[data-theme="dark"] .inventory-table td,:root[data-theme="dark"] .spell-detail-grid>div{border-color:var(--line);color:#dce5d8}
-:root[data-theme="dark"] .inventory-table th,:root[data-theme="dark"] .economy-rate-heading,:root[data-theme="dark"] .economy-table th{background:#26392b;color:#cce0c4}
-:root[data-theme="dark"] .wizard-magic-start,:root[data-theme="dark"] .spellbook-main{background:var(--paper);border-color:var(--line)}
-:root[data-theme="dark"] .option-card small,:root[data-theme="dark"] .wizard-magic-source small,:root[data-theme="dark"] .item-spell-row small{color:#aebba9}
-:root[data-theme="dark"] .badge.outline{color:#d0dccb;border-color:#657b66}
-:root[data-theme="dark"] .btn.primary{color:#132016}
-:root[data-theme="dark"] .spell-picker-card{background:#1d2b22}
-.economy-converter-controls{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:620px;margin:12px 0 18px}
-.economy-converter-controls .field{margin:0}
-.spell-picker-results{max-height:min(55vh,620px);overflow:auto;padding:2px 4px 4px 0}
-.spell-picker-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.spell-picker-card{padding:14px;min-width:0}
-.spell-picker-card h3{font-family:var(--serif);font-size:18px;margin:9px 0 5px}
-.spell-picker-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-.spell-picker-actions .btn{font-size:10px;padding:7px 9px}
-.spellbook-sections{display:grid;gap:22px}
-.spellbook-sections>div>h3{font-family:var(--serif);font-size:22px;margin:8px 0 12px}
-.wizard-magic-start{margin-top:24px}
-.wizard-magic-source{padding:15px 0;border-top:1px solid var(--line)}
-.wizard-magic-source h4{margin:0 0 12px;font-size:14px}
-.wizard-magic-group{padding:8px 0}
-.wizard-magic-group .field{margin-top:8px}
-.item-spell-list{display:grid;gap:6px;max-height:50vh;overflow:auto;margin-top:12px}
-.item-spell-row{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--paper)}
-.item-spell-row input{width:auto;flex:none}
-.item-spell-row span{display:grid;gap:3px}
-.item-spell-row small{font-size:10px;color:var(--muted)}
-.dice-tray{position:relative}
-.dice-hide{margin-left:5px;opacity:.75}
-.dice-bar-show{position:fixed;z-index:45;right:18px;bottom:15px;display:inline-flex;gap:8px;align-items:center;padding:10px 14px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--ink);box-shadow:var(--shadow);cursor:pointer}
-@media(max-width:700px){.spell-picker-grid{grid-template-columns:1fr}.economy-converter-controls{grid-template-columns:1fr}.dice-hide{position:absolute;right:-9px;top:-10px;background:var(--paper)}}
+/* Campos de edição com tipografia e contraste reforçados em ambos os temas. */
+.field input,.field select,.field textarea,.stat-edit input,.coin-field input,.hp-controls input,.search input,.toolbar input,.toolbar select,.spell-grant-panel select{font-size:15px;font-weight:700;letter-spacing:.12px;min-height:40px;border:1.5px solid #84977f;background:#fff;color:#1d3024;text-shadow:none;-webkit-text-fill-color:currentColor}
+.field textarea{line-height:1.55;padding:10px 12px}
+.field input::placeholder,.field textarea::placeholder,.search input::placeholder{color:#687967;opacity:1;font-weight:500}
+:root[data-theme=dark] .field input,:root[data-theme=dark] .field select,:root[data-theme=dark] .field textarea,:root[data-theme=dark] .stat-edit input,:root[data-theme=dark] .coin-field input,:root[data-theme=dark] .hp-controls input,:root[data-theme=dark] .search input,:root[data-theme=dark] .toolbar input,:root[data-theme=dark] .toolbar select,:root[data-theme=dark] .spell-grant-panel select{background:#101a14!important;color:#f7faef!important;border-color:#718a75!important;-webkit-text-fill-color:#f7faef!important;font-weight:700}
+:root[data-theme=dark] .field input::placeholder,:root[data-theme=dark] .field textarea::placeholder,:root[data-theme=dark] .search input::placeholder{color:#c2d0bf!important;opacity:1}
+:root[data-theme=dark] select option{background:#17231b;color:#f7faef}
+
+/* Contraste adicional para campos editáveis, seleção do criador e painéis de combate. */
+.field input,.field select,.field textarea,.stat-edit input,.coin-field input,.hp-controls input,.search input,.toolbar input,.toolbar select,.spell-grant-panel select{font-size:14px;font-weight:600;color:#25362a;caret-color:#2f684a;-webkit-text-fill-color:currentColor}
+input::placeholder,textarea::placeholder{color:#74816f;opacity:1;font-weight:400}
+input:focus,select:focus,textarea:focus{outline:2px solid #91ad78;outline-offset:1px;border-color:#71915e!important}
+.option-card.selected{border:2px solid #547c50!important;background:#e8f1e4!important;box-shadow:0 0 0 3px #8baa7140,inset 0 0 0 1px #fff}
+.option-card .selected-mark{display:block;margin-top:7px;padding:4px 7px;border-radius:5px;background:#315f43;color:white;font-size:10px;font-weight:700;letter-spacing:.2px}
+.wizard-methods{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.wizard-selection-note{padding:11px 13px;border:1px solid #8aa879;border-radius:8px;background:#edf4e9;color:#2f5137;margin:8px 0 13px}
+.combat-spells .combat-spell-row,.healing-resource{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px 0;border-top:1px solid var(--line)}
+.combat-spell-row strong,.healing-resource strong{display:block;font-size:12px}
+.combat-spell-row small,.healing-resource small{display:block;color:var(--muted);font-size:10px;margin-top:3px;max-width:430px}
+.combat-heal-action{display:flex;justify-content:flex-end;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.healing-section{margin:0 0 19px}
+.healing-section h3{display:flex;align-items:center;gap:8px;padding-bottom:9px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.healing-section h3 svg{color:var(--green)}
+.healing-resource{display:block;padding:12px 0}
+.healing-resource .field-row{align-items:end;margin-top:9px}
+.spell-grant-panel{width:100%;display:flex;align-items:center;flex-wrap:wrap;gap:9px;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--green-soft)}
+.spell-grant-panel .hint{flex-basis:100%}
+:root[data-theme=dark] .field input,:root[data-theme=dark] .field select,:root[data-theme=dark] .field textarea,:root[data-theme=dark] .stat-edit input,:root[data-theme=dark] .coin-field input,:root[data-theme=dark] .hp-controls input,:root[data-theme=dark] .search input,:root[data-theme=dark] .toolbar input,:root[data-theme=dark] .toolbar select,:root[data-theme=dark] .spell-grant-panel select{background:#101a14!important;color:#f2f6ed!important;border-color:#617566!important;-webkit-text-fill-color:#f2f6ed!important;font-weight:650}
+:root[data-theme=dark] input::placeholder,:root[data-theme=dark] textarea::placeholder{color:#b7c4b4!important;opacity:1}
+:root[data-theme=dark] .field label,:root[data-theme=dark] .stat-edit label,:root[data-theme=dark] .stat-edit small,:root[data-theme=dark] .wizard-selection-note{color:#e3ecdf}
+:root[data-theme=dark] .option-card.selected{background:#294432!important;border-color:#a6ce97!important;box-shadow:0 0 0 3px #a6ce9740,inset 0 0 0 1px #dcebd8}
+:root[data-theme=dark] .option-card .selected-mark{background:#b5d29f;color:#142218}
+:root[data-theme=dark] .wizard-selection-note{background:#263b2c;border-color:#799b6c}
+:root[data-theme=dark] .spell-grant-panel{background:#26392b;border-color:#536b54}
+@media(max-width:620px){.combat-spells .combat-spell-row{align-items:flex-start;flex-direction:column}.healing-resource .field-row{grid-template-columns:1fr}.wizard-methods .btn{white-space:normal;text-align:left}}
