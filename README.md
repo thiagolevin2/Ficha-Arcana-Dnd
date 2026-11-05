@@ -13,7 +13,7 @@ python3 -m http.server 8000 --bind 127.0.0.1 --directory dist
 
 3. Abra `http://localhost:8000` no navegador. Mantenha o terminal aberto enquanto usa o site.
 
-Use um servidor HTTP: abrir `dist/index.html` diretamente por duplo clique impede o carregamento dos módulos e catálogos em alguns navegadores. Qualquer hospedagem estática pode publicar o conteúdo de `dist/`.
+Use um servidor HTTP: abrir `dist/index.html` diretamente por duplo clique impede o carregamento dos módulos e catálogos em alguns navegadores. Qualquer hospedagem estática pode publicar o conteúdo de `dist/`. Para GitHub Pages, a pasta `docs/` já contém uma cópia pronta do site; em **Settings → Pages**, selecione **Deploy from a branch**, a branch principal e a pasta **/docs**. Ao alterar o aplicativo, atualize também a cópia em `docs/` a partir de `dist/` antes de publicar.
 
 ## Funcionalidades
 
@@ -62,7 +62,8 @@ O índice de livros mantém capítulos históricos, bestiário, tabelas e encont
 
 ## Arquivos e desenvolvimento
 
-- `dist/app.js`: interface e fluxos.
+- `dist/app.js`: interface e fluxos. A seção **Tesouro** inclui conversão de moedas (PC, PP, PE, PO e PL), com conferência de saldo e conversão exata.
+- `docs/`: cópia estática pronta para publicação pelo GitHub Pages; o `index.html` fica diretamente nesta pasta.
 - `dist/core.js`: cálculos, avanço, descansos, equipamentos e sanitização de importação.
 - `dist/progression.js` e `dist/class-progression-data.js`: níveis, pré-requisitos, proficiências e progressão de conjuração por classe.
 - `dist/portrait.js`: validação dos arquivos e dimensões do retrato.
