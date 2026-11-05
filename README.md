@@ -63,6 +63,14 @@ Consulte `ADAPTACOES_2024.md` e `dist/supplement-compatibility.json` para a audi
 
 A base da multiclasse está em `MULTICLASSE_2024.md`. O formato antigo de fichas continua aceito; personagens locais mantêm sua identidade ao migrar.
 
+## Talentos e Estilos de Luta (PHB 2024)
+
+- A aba **Talentos** exibe o catálogo de talentos do Livro do Jogador 2024 em cartões, com categoria, resumo, requisitos e janela de descrição completa. A busca e os filtros por categoria funcionam também dentro da janela de escolha recebida ao subir de nível.
+- Ao receber um aumento de atributo ou talento, o jogador pode abrir **Escolher talento** e selecionar somente opções para as quais cumpra nível, atributos, conjuração e treinamentos exigidos. Opções bloqueadas continuam disponíveis para leitura.
+- Os dez talentos de **Estilo de Luta** do PHB 2024 estão disponíveis como categoria própria: Arquearia, Combate com Armas de Arremesso, Combate com Armas Grandes, Combate com Duas Armas, Combate Desarmado, Defensivo, Duelismo, Interceptação, Luta às Cegas e Protetivo. A escolha é concedida pelo Guerreiro no nível 1 e pelo Paladino e Guardião no nível 2. Também pode ser selecionada em um aumento de atributo/talento quando o personagem já possui a característica Estilo de Luta.
+- A alternativa de conjuração do Paladino (Guerreiro Abençoado) e do Guardião (Guerreiro Druídico) permanece disponível no nível em que recebem Estilo de Luta. Os truques concedidos devem ser registrados na guia Magias.
+- Arquearia, Duelismo e Defensivo possuem os modificadores diretos implementados na ficha (ataques à distância, dano com arma corpo a corpo em uma mão e CA usando armadura). Efeitos de reação e demais situações dos outros estilos permanecem descritos no cartão e exigem acompanhamento manual em combate.
+
 ## O que exige controle manual
 
 O site automatiza os cálculos e recursos básicos implementados. Efeitos contextuais de subclasses, itens, infusões, talentos, invocações, transformações, companheiros, escolhas de alvos e reações precisam de acompanhamento pelo jogador e pelo Mestre. Os campos de ajustes permitem registrar seus modificadores. Talentos registrados no avanço não aplicam automaticamente todos os benefícios: aumentos específicos do talento devem ser anotados na linha Aumentos posteriores, conforme a descrição. Guardar uma referência ou um item não aplica automaticamente todos os seus poderes.

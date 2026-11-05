@@ -1,7 +1,5 @@
-Arcana 0.3 — atualização de criação, magias, combate e curas.
+Arcana 0.3 — catálogo de talentos e Estilos de Luta do Livro do Jogador 2024.
 
-Criação: atributos começam em 0, conjunto padrão 15-14-13-12-10-8 e seleção visual reforçada. Tema noturno: contraste aprimorado nos campos e superfícies. Navegação: Habilidades logo abaixo de Minha ficha.
+A aba Talentos apresenta os talentos em cartões com categoria, resumo, requisitos e descrição completa. O fluxo de aumento de atributo/talento bloqueia escolhas sem pré-requisitos, mantendo a consulta liberada. Os dez talentos de Estilo de Luta foram integrados como categoria própria e estão disponíveis na concessão de classe: Guerreiro 1, Paladino 2 e Guardião 2. Os efeitos diretos de Arquearia, Duelismo e Defensivo são calculados; efeitos situacionais e reações permanecem para controle manual.
 
-Magias: janela de pesquisa por classe com consulta sem inclusão indevida; acesso por fonte especial precisa ser registrado; contadores de conhecidas/preparadas adaptados ao modelo de cada classe. Combate: magias de dano conhecidas. Minha ficha: janela de curas e recuperação com controle de usos.
-
-docs/ sincronizada com dist/. Testes automatizados: 56/56 aprovados; arquivos JavaScript validados com node --check.
+A versão preserva as funcionalidades anteriores de criação, magias, combate, curas, economia, hub e modo noturno. docs/ sincronizada com dist/. Testes: 63/63 aprovados.

@@ -307,3 +307,48 @@
 :root[data-theme="dark"] .btn.primary { background: #55734e; border-color: #78936c; color: #fff6df; }
 :root[data-theme="dark"] .btn.primary:hover { background: #64865b; }
 :root[data-theme="dark"] .spell-browser-actions .btn:not(.primary) { color: #e5eddd !important; }
+
+/* Catálogo de talentos e estilos de luta — PHB 2024 */
+.feat-intro{display:flex;align-items:center;justify-content:space-between;gap:22px;margin-bottom:16px;background:linear-gradient(115deg,#f7f8f1,#edf2e8);border-color:#dce5d4}
+.feat-intro h2{font:25px Georgia,serif;color:#35523a;margin:5px 0 7px}
+.feat-intro p{font-size:11px;color:#77866f;max-width:630px;line-height:1.65}
+.feat-legend{display:grid;gap:8px;min-width:190px;color:#75816e;font-size:10px}
+.feat-legend span{display:flex;align-items:center;gap:8px}
+.feat-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#71945e}
+.feat-dot.blocked{background:#b87862}
+.feat-toolbar{margin-bottom:13px}
+.feat-result-heading{margin:12px 0;color:var(--muted);font-size:10px}
+.feat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.feat-card{display:flex;flex-direction:column;gap:9px;min-width:0;padding:16px;box-shadow:var(--shadow);transition:border-color .15s,transform .15s}
+.feat-card:hover{transform:translateY(-2px);border-color:#aab99a}
+.feat-card.feat-card-style{border-top:3px solid #b49a64}
+.feat-card-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.feat-source{font-size:9px;color:var(--muted);white-space:nowrap}
+.feat-card h3{font:18px Georgia,serif;color:#3e5739;line-height:1.25}
+.feat-card>p{font-size:10px;line-height:1.65;color:#788473;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;min-height:82px}
+.feat-card-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;padding-top:4px}
+.feat-available{font-size:9px;color:#53794b;display:flex;align-items:center;gap:5px}
+.feat-unavailable{font-size:9px;color:#a16b5e;display:flex;gap:5px;align-items:flex-start;line-height:1.5}
+.feat-unavailable svg{width:13px;height:13px;flex:none}
+.feat-card-available{border-color:#a5b99a}
+.feat-picker-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:13px}
+.feat-picker-toolbar .search{flex:1}
+.feat-picker-meta{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:10px;margin:0 0 12px}
+.feat-grid-modal{grid-template-columns:repeat(2,minmax(0,1fr));max-height:min(62vh,650px);overflow:auto;padding:2px 5px 5px 1px}
+.feat-choice-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 14px;border:1px solid #d7e1cf;border-radius:9px;background:#f5f8ef}
+.feat-choice-summary strong{font:17px Georgia,serif;color:#3b5836}
+.feat-choice-summary>span{font-size:10px;color:#76856f}
+.style-pick-panel{padding:15px;margin-top:15px;border:1px solid #d9e2d0;border-radius:10px;background:#f6f8f1}
+.style-pick-panel h3{font:19px Georgia,serif;color:#3f5938}
+:root[data-theme="dark"] .feat-intro{background:linear-gradient(115deg,#202f25,#26392b);border-color:#52664d}
+:root[data-theme="dark"] .feat-intro h2,:root[data-theme="dark"] .feat-card h3,:root[data-theme="dark"] .feat-choice-summary strong,:root[data-theme="dark"] .style-pick-panel h3{color:#e2e8d7}
+:root[data-theme="dark"] .feat-intro p,:root[data-theme="dark"] .feat-legend,:root[data-theme="dark"] .feat-source,:root[data-theme="dark"] .feat-card>p,:root[data-theme="dark"] .feat-picker-meta{color:#b4c2ae}
+:root[data-theme="dark"] .feat-card{background:#1d2b22;border-color:#405440;color:#e0e8da}
+:root[data-theme="dark"] .feat-card.feat-card-style{border-top-color:#b9a16b}
+:root[data-theme="dark"] .feat-card-available{border-color:#78936d;box-shadow:inset 0 0 0 1px #526d4e}
+:root[data-theme="dark"] .feat-available{color:#b8d39e}
+:root[data-theme="dark"] .feat-unavailable{color:#e1a18b}
+:root[data-theme="dark"] .feat-choice-summary,:root[data-theme="dark"] .style-pick-panel{background:#202f25;border-color:#52664d}
+:root[data-theme="dark"] .feat-picker-toolbar .badge{background:#4b422c;color:#e2d2a4}
+@media(max-width:1050px){.feat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.feat-intro{align-items:flex-start;flex-direction:column;padding:16px}.feat-legend{grid-template-columns:1fr 1fr;min-width:0}.feat-grid,.feat-grid-modal{grid-template-columns:1fr}.feat-card{padding:14px}.feat-card>p{min-height:0;-webkit-line-clamp:4}.feat-picker-toolbar{align-items:stretch;flex-direction:column}.feat-picker-toolbar .search{width:100%}.feat-grid-modal{max-height:65vh}.feat-card-actions{flex-wrap:wrap}}
