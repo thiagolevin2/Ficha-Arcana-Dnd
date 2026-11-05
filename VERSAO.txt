@@ -1,5 +1,1 @@
-Arcana — hub de fichas, modo noturno e tabela de equivalência de moedas.
-
-Mantém guia Economias, histórico de ganhos e gastos, conversor no Tesouro e pasta docs/ sincronizada com dist/.
-
-56 testes automatizados aprovados; JavaScript validado com node --check.
+Ficha Arcana · Atualização de magias, câmbio dinâmico, barra de dados opcional e contraste do tema noturno.
