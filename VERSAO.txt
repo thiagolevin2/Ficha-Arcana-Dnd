@@ -1,5 +1,5 @@
-Arcana 0.3 — catálogo de talentos e Estilos de Luta do Livro do Jogador 2024.
+Arcana 0.3 — atualização de inventário, equipamentos personalizados e alinhamento.
 
-A aba Talentos apresenta os talentos em cartões com categoria, resumo, requisitos e descrição completa. O fluxo de aumento de atributo/talento bloqueia escolhas sem pré-requisitos, mantendo a consulta liberada. Os dez talentos de Estilo de Luta foram integrados como categoria própria e estão disponíveis na concessão de classe: Guerreiro 1, Paladino 2 e Guardião 2. Os efeitos diretos de Arquearia, Duelismo e Defensivo são calculados; efeitos situacionais e reações permanecem para controle manual.
+Inventário de combate lista armas, armaduras e escudos. Armaduras e escudos personalizados aceitam CA e descrição de efeitos mágicos; armas personalizadas partem de uma arma-base e têm cinco composições de dano configuráveis. Alinhamento opcional na criação e guia própria em Minha ficha. Barra de dados pode ser escondida e restaurada.
 
-A versão preserva as funcionalidades anteriores de criação, magias, combate, curas, economia, hub e modo noturno. docs/ sincronizada com dist/. Testes: 63/63 aprovados.
+Preserva hub, talentos, estilos de luta 2024, magias, economia, combate, curas e modo noturno. docs/ sincronizada com dist/. Testes: 67/67 aprovados.

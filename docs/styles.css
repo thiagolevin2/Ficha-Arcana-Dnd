@@ -352,3 +352,34 @@
 :root[data-theme="dark"] .feat-picker-toolbar .badge{background:#4b422c;color:#e2d2a4}
 @media(max-width:1050px){.feat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.feat-intro{align-items:flex-start;flex-direction:column;padding:16px}.feat-legend{grid-template-columns:1fr 1fr;min-width:0}.feat-grid,.feat-grid-modal{grid-template-columns:1fr}.feat-card{padding:14px}.feat-card>p{min-height:0;-webkit-line-clamp:4}.feat-picker-toolbar{align-items:stretch;flex-direction:column}.feat-picker-toolbar .search{width:100%}.feat-grid-modal{max-height:65vh}.feat-card-actions{flex-wrap:wrap}}
+
+
+/* Inventário de combate, equipamentos personalizados e alinhamento */
+.equipment-inventory .gear-section{border-top:1px solid var(--line);padding-top:13px;margin-top:13px}
+.equipment-inventory .gear-section:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.gear-section>.between{margin-bottom:8px}
+.gear-row{display:flex;align-items:center;gap:9px;min-width:0;padding:10px 0;border-top:1px solid var(--line)}
+.gear-row:first-of-type{border-top:0}
+.gear-icon{width:34px;height:34px;display:grid;place-items:center;flex:0 0 34px;border:1px solid var(--line);border-radius:9px;background:var(--green-soft);color:var(--green)}
+.gear-main{display:flex;flex:1;min-width:0;flex-direction:column;gap:2px}
+.gear-main strong{font-size:12px;overflow-wrap:anywhere}
+.gear-main small{font-size:10px;color:var(--muted);overflow-wrap:anywhere}
+.gear-row>.btn,.gear-row>.icon-btn,.gear-row>.roll-btn{flex:0 0 auto}
+.alignment-layout{align-items:start}
+.alignment-current{border:1px solid var(--line);border-radius:11px;padding:17px;background:linear-gradient(125deg,var(--green-soft),var(--paper));margin-top:14px}
+.alignment-current h2{font:24px Georgia,serif;color:var(--green);margin:7px 0}
+.alignment-current p,.alignment-option p{font-size:11px;color:var(--muted);line-height:1.65}
+.alignment-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
+.alignment-option{border:1px solid var(--line);border-radius:9px;padding:11px;background:var(--paper);min-width:0}
+.alignment-option strong{font-size:11px;display:block;margin-bottom:4px}
+.alignment-option.active{border-color:var(--green);background:var(--green-soft);box-shadow:inset 0 0 0 1px var(--green)}
+.dice-bar-hide{margin-left:4px;opacity:.8}
+.dice-bar-show{position:fixed;right:18px;bottom:16px;z-index:80;display:flex;align-items:center;gap:8px;padding:11px 15px;border:1px solid var(--green);border-radius:999px;background:var(--green);color:#fff;box-shadow:0 5px 22px #0003;font:600 12px Arcana,Arial,sans-serif}
+.dice-bar-show svg{width:17px;height:17px}
+:root[data-theme="dark"] .gear-icon{background:#293a2e;color:#c4d7b6;border-color:#465b49}
+:root[data-theme="dark"] .alignment-current{background:linear-gradient(125deg,#26392b,#1b2820);border-color:#465b49}
+:root[data-theme="dark"] .alignment-current h2{color:#d7e5c9}
+:root[data-theme="dark"] .alignment-option{background:#1d2c22;border-color:#465b49;color:var(--ink)}
+:root[data-theme="dark"] .alignment-option.active{background:#2b4433;border-color:#a4c29a;box-shadow:inset 0 0 0 1px #a4c29a}
+:root[data-theme="dark"] .dice-bar-show{background:#34543b;border-color:#668462;color:#f4f1e4}
+@media(max-width:620px){.gear-row{gap:6px;flex-wrap:wrap}.gear-main{flex-basis:calc(100% - 48px)}.gear-row>.btn{font-size:10px;padding:6px 8px}.alignment-list{grid-template-columns:1fr}.dice-bar-show{right:10px;bottom:10px}}

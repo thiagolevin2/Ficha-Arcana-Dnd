@@ -15,6 +15,16 @@ python3 -m http.server 8000 --bind 127.0.0.1 --directory dist
 
 Use um servidor HTTP: abrir `dist/index.html` diretamente por duplo clique impede o carregamento dos módulos e catálogos em alguns navegadores. Qualquer hospedagem estática pode publicar o conteúdo de `dist/`. Para GitHub Pages, a pasta `docs/` já contém uma cópia pronta do site; em **Settings → Pages**, selecione **Deploy from a branch**, a branch principal e a pasta **/docs**. Ao alterar o aplicativo, atualize também a cópia em `docs/` a partir de `dist/` antes de publicar.
 
+## Atualização de equipamentos e ficha
+
+- Inventário separado em mochila e equipamento de combate, com armas, armaduras e escudos visíveis.
+- Criação e edição de armaduras personalizadas com CA base, limite de Destreza, categoria, Força mínima, peso, furtividade, bônus mágico de CA e descrição de efeitos.
+- Criação e edição de escudos personalizados com bônus de CA, peso e efeitos.
+- Armas personalizadas podem usar qualquer arma do catálogo como base e configurar dano como dado, dado + valor fixo, dado + dado, dado + atributo ou dado + valor fixo + dado.
+- Alinhamento opcional na criação e guia própria em Minha ficha, com os nove alinhamentos.
+- A barra “O destino está nos dados” pode ser escondida e restaurada pelo botão flutuante; a preferência fica salva no navegador.
+- Cópia de `dist/` sincronizada com `docs/` para GitHub Pages.
+
 ## Funcionalidades
 
 - 12 classes e 48 subclasses do livro de 2024, mais Artífice e 40 subclasses adicionais: 13 classes e 88 subclasses no total.
