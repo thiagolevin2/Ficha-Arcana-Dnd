@@ -1,6 +1,6 @@
-Arcana — multiclasse, avanço de nível, equipamentos próprios e retrato
-Revisão: 8fc2bd6234ed2955079613612b7f2d3bc00292ea
-Abra README.md para executar.
-55 testes automatizados aprovados. Upload do retrato: validações locais testadas; verificação visual do envio de arquivo bloqueada pela permissão do navegador de testes.
+Arcana — conversor de moedas e guia Economias com histórico de ganhos e gastos
+Revisão baseada no pacote com docs/ sincronizada com dist/.
 
-Conversor de moedas na seção Tesouro; pasta docs/ sincronizada com dist/ para GitHub Pages.
+56 testes automatizados aprovados. JavaScript validado com node --check.
+
+A guia Economias salva os lançamentos no personagem, atualiza as moedas do Tesouro e é preservada na exportação/importação JSON.
