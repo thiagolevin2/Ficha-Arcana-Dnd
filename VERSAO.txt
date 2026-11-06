@@ -1,6 +1,6 @@
-Ficha Arcana 0.12 Beta
-Base: Ficha_Arcana_0.11_Melhorias (2).zip
-Revisão: Ficha_Arcana_Talentos_e_Dicas_Completa(2).xlsx
+Ficha Arcana 0.13 Beta
+Base: Ficha_Arcana_0.12_GitHub.zip (versão corrigida)
+Revisão: subclasses, com prioridade às regras de 2024
+Publicação: docs/ — 52 arquivos no pacote completo
+Validação: 315 testes aprovados
 Data: 2026-11-06
-Publicação: 50 arquivos; código executável em docs/
-Testes: 263 aprovados; complemento separado
