@@ -1,6 +1,3 @@
-Ficha Arcana — 0.9.6 Beta
-Base: 0.9.5 Beta
-Foco: espécies, linhagens, escolhas e benefícios raciais acionáveis.
-Regras D&D 2024 priorizadas; tempo, áreas, alvos e duração manuais.
-
-Pacote para GitHub com estrutura original, sem duplicacao docs/dist.
+Ficha Arcana 0.10 Beta
+Base: 0.9.6 Beta
+Data: 2026-11-06

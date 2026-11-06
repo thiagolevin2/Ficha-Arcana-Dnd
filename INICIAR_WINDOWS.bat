@@ -1,7 +1,7 @@
 @echo off
 chcp 65001 >nul
 cd /d "%~dp0"
-echo Arcana - mantenha esta janela aberta enquanto usa o site.
+echo Ficha Arcana 0.10 Beta - mantenha esta janela aberta enquanto usa o site.
 echo Abra http://localhost:8000 no navegador.
 where py >nul 2>nul
 if %errorlevel% equ 0 (

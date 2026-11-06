@@ -39,6 +39,14 @@ export function featCategory(feat) {
   return 'Outros';
 }
 
+// Exibe a exigência declarada sem confundi-la com os benefícios do talento.
+// Requisitos não estruturados continuam sob conferência do jogador.
+export function featPrerequisiteText(feat){
+ const source=String(feat?.prerequisites||feat?.prerequisite||feat?.originalText||feat?.adaptedText||feat?.summary||'').replace(/(\p{L})-\s+(\p{L})/gu,'$1$2').replace(/\s+/g,' ').trim();
+ if(feat?.prerequisites||feat?.prerequisite)return source.slice(0,500);
+ return source.match(/Pré-requisitos?\s*:\s*([^)]*)/i)?.[1]?.trim().slice(0,500)||'';
+}
+
 export function featEligibility(feat, context = {}) {
   const text = normalize(`${feat?.summary || ''} ${feat?.adaptedText || ''} ${feat?.originalText || ''}`);
   const category = featCategory(feat);

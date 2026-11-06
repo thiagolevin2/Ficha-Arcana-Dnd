@@ -20,7 +20,8 @@ export const MULTICLASS_TRAINING={
  paladino:{armor:2,shield:true,martial:true,text:'Armas marciais, armaduras leves e médias e escudos. Armaduras pesadas não são concedidas pela multiclasse.'},
  artifice:{armor:2,shield:true,text:'Adaptação do Artífice de Tasha: armaduras leves e médias, escudos, ferramentas de ladrão e de inventor. Pré-requisito: Inteligência 13.'}
 };
-export const classEntries=c=>Array.isArray(c.classes)&&c.classes.length?c.classes.map(e=>({...e,level:bounded(e.level,1,20)})):[{classId:c.classId,level:bounded(c.level,1,20),subclass:c.subclass||'',order:c.order||''}];
+export function canonicalSubclassName(id,name){return id==='guerreiro'&&name==='Mestre de Batalha'?'Mestre da Batalha':name||'';}
+export const classEntries=c=>Array.isArray(c.classes)&&c.classes.length?c.classes.map(e=>({...e,level:bounded(e.level,1,20),subclass:canonicalSubclassName(e.classId,e.subclass)})):[{classId:c.classId,level:bounded(c.level,1,20),subclass:canonicalSubclassName(c.classId,c.subclass),order:c.order||''}];
 export const totalLevel=c=>classEntries(c).reduce((n,e)=>n+e.level,0);
 export const classLevel=(c,id)=>classEntries(c).find(e=>e.classId===id)?.level||0;
 export const hasClass=(c,id,min=1)=>classLevel(c,id)>=min;
@@ -35,7 +36,7 @@ export function validateClassPlan(c,entries,{checkRequirements=true}={}){
  if(entries.reduce((n,e)=>n+Number(e.level),0)>20)throw Error('O nível total máximo é 20.');
  if(entries[0].classId!==c.classId)throw Error('A classe inicial deve permanecer a primeira: ela define PV iniciais e proficiências.');
  if(checkRequirements&&entries.length>1){const result=multiclassEligibility(c,entries.map(e=>e.classId));if(!result.valid)throw Error(result.errors.join(' '));}
- return entries.map(e=>({classId:e.classId,level:Number(e.level),subclass:Number(e.level)>=3&&CLASSES[e.classId].subclasses.includes(e.subclass)?e.subclass:'',order:['Protetor','Taumaturgo','Guardião','Mago'].includes(e.order)?e.order:''}));
+ return entries.map(e=>({classId:e.classId,level:Number(e.level),subclass:Number(e.level)>=3&&CLASSES[e.classId].subclasses.includes(canonicalSubclassName(e.classId,e.subclass))?canonicalSubclassName(e.classId,e.subclass):'',order:['Protetor','Taumaturgo','Guardião','Mago'].includes(e.order)?e.order:''}));
 }
 export function multiclassEligibility(c,target){
  const ids=Array.isArray(target)?target:[...new Set([...classEntries(c).map(e=>e.classId),target])];

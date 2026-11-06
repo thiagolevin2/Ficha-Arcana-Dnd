@@ -1,4 +1,4 @@
-# O que consome mais esforço no Ficha Arcana — após a 0.9.4
+# Prioridades e controles manuais — Ficha Arcana 0.10 Beta
 
 A classificação abaixo é qualitativa; não é uma estimativa de horas.
 
@@ -14,3 +14,11 @@ A classificação abaixo é qualitativa; não é uma estimativa de horas.
 
 **Onde o sistema deve investir tempo:** motor de combate e magias calculáveis, validade de custos, bônus por nível, consistência de dados, testes e importação segura.  
 **Onde o jogador deve decidir:** fatos de mesa, decisões do Mestre, posição, turno, duração, pré-requisitos circunstanciais e efeitos narrativos.
+
+## Decisões desta atualização
+
+- Fórmula confirmada de magia, dano e macros usam a mesma configuração. Aprimoramentos especiais são ajustados pelo jogador.
+- Mestre da Batalha segue nomes e progressão do Livro do Jogador 2024; manobras têm rolagem e consumo, sem escolher alvos ou controlar turnos.
+- Pré-requisitos de talentos recebem bordas luminosas e texto destacado. A conferência de treinamentos permanece manual onde o validador não cobre a regra.
+- Descanso curto, curas e infusões foram mantidos a pedido do usuário, incluindo as limitações conhecidas.
+- Os demais achados que podem ser administrados na ficha estão em `PENDENCIAS_0.10.md`, com a forma de contorná-los.

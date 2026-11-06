@@ -538,3 +538,34 @@
 
 /* Seleção assistida de companheiros por classe, sem estatísticas presumidas */
 .arcana095-presets{margin:12px 0 18px;padding:14px;border:1px solid var(--line);border-radius:12px}.arcana095-presets .flex{flex-wrap:wrap;gap:8px;margin-top:10px}
+
+/* Arcana 0.10 — requisitos visíveis e escolhas simples, sem relógio de combate. */
+.wrap{flex-wrap:wrap}
+.feat-prerequisites{border:1px solid #b58b3e;border-radius:10px;padding:12px;margin:12px 0;background:color-mix(in srgb,var(--paper) 92%,#c9a052);box-shadow:0 0 0 1px #c9a05235,0 0 16px #c9a05228}
+.feat-prerequisites>strong{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--green)}
+.feat-prerequisites p{font-size:13px;line-height:1.55;margin:7px 0;overflow-wrap:anywhere}
+.feat-prerequisites small{display:block;font-size:12px;color:var(--muted);line-height:1.45}
+.feat-requires-review{border-color:#b58b3e!important;box-shadow:0 0 0 1px #c9a05230,0 0 18px #c9a0521c}
+.feat-modal-glow{border:2px solid #c3a05b;box-shadow:0 0 0 3px #c3a05b26,0 0 32px #c3a05b55,0 22px 80px #0005;animation:feat-prerequisite-glow 3s ease-in-out infinite}
+@keyframes feat-prerequisite-glow{50%{box-shadow:0 0 0 3px #c3a05b32,0 0 42px #c3a05b80,0 22px 80px #0005}}
+.attribute-status{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;background:var(--green-soft);border:1px solid var(--line);padding:14px 16px;border-radius:12px;margin:12px 0 18px}
+.attribute-status>div{display:grid;gap:5px;min-width:0}
+.attribute-status strong{font-size:15px;font-weight:600;color:var(--green)}
+.attribute-status small{font-size:12px;line-height:1.5;color:var(--muted)}
+.attribute-status.over-budget{border-color:var(--red)}
+.attribute-status.over-budget strong{color:var(--red)}
+.battle-master-panel{margin-bottom:20px}
+.battle-master-panel>.card-title{flex-wrap:wrap;gap:12px}
+.battle-master-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0}
+.battle-master-stats>div{border:1px solid var(--line);background:var(--green-soft);border-radius:10px;padding:13px;display:grid;gap:7px}
+.battle-master-stats small{font-size:12px;line-height:1.4;color:var(--muted)}
+.battle-master-stats strong{font:25px Georgia,serif;color:var(--green)}
+.battle-master-training{padding:13px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:13px 0}
+.battle-master-training p,.battle-master-features p{font-size:13px;line-height:1.6;color:var(--muted);margin:7px 0}
+.battle-master-maneuvers{display:grid;gap:10px}
+.battle-master-maneuvers article{border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.battle-master-maneuvers article>div:first-child{min-width:0;flex:1}
+.battle-master-maneuvers p{margin:6px 0 0;font-size:12px;line-height:1.5}
+.battle-master-panel summary{cursor:pointer;font-size:14px;padding:8px 0}
+@media(max-width:680px){.battle-master-stats{grid-template-columns:1fr}.battle-master-maneuvers article{align-items:stretch;flex-direction:column}.battle-master-training .flex{gap:8px}.attribute-status{align-items:flex-start;flex-direction:column}}
+@media(prefers-reduced-motion:reduce){.feat-modal-glow{animation:none}}

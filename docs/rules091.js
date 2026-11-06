@@ -11,7 +11,7 @@ export const CHOICE_KINDS=Object.freeze(['invocation','metamagic','maneuver']);
 export function choiceLimit(c,kind){const w=classLevel(c,'bruxo'),s=classLevel(c,'feiticeiro'),f=classLevel(c,'guerreiro');switch(kind){
  case 'invocation':return w>=18?10:w>=15?9:w>=12?8:w>=9?7:w>=7?6:w>=5?5:w>=2?3:w>=1?1:0;
  case 'metamagic':return s>=17?6:s>=10?4:s>=2?2:0;
- case 'maneuver':return subclassFor(c,'guerreiro')==='Mestre de Batalha'?(f>=15?9:f>=10?7:f>=7?5:f>=3?3:0):0;
+ case 'maneuver':return subclassFor(c,'guerreiro')==='Mestre da Batalha'?(f>=15?9:f>=10?7:f>=7?5:f>=3?3:0):0;
  default:return 0;
 }}
 export function choiceNames(c,kind,catalog){const chosen=new Set(c.advancedChoices?.[kind]||[]);return catalog.filter(e=>e.kind===kind&&chosen.has(e.id));}
@@ -21,7 +21,7 @@ export function canUseStyleCantrip(c,sourceId,spell){if(Number(spell?.level)!==0
  return sourceId==='paladino'&&classLevel(c,'paladino')>=2&&c.fightingStyleAlternative==='Guerreiro Abençoado'&&spell.classes.includes('Clérigo')||sourceId==='guardiao'&&classLevel(c,'guardiao')>=2&&c.fightingStyleAlternative==='Guerreiro Druídico'&&spell.classes.includes('Druida');}
 export function speciesRule(c){const id=String(c.speciesId||'');const tortle=id.endsWith('-tortle'),tabaxi=id.endsWith('-tabaxi'),centaur=id.endsWith('-centauro');return {naturalAC:tortle?17:null,shell:tortle&&!!c.shellDefense,capacityFactor:centaur?2:1,skills:tabaxi?['Percepção','Furtividade']:tortle?['Sobrevivência']:[],tag:tortle?'Carapaça natural':tabaxi?'Agilidade felina':centaur?'Construção equina':null};}
 export function speciesMovements(c,species){const move=species?.movement||{};return Object.fromEntries(Object.entries(move).filter(([k,v])=>k!=='walk'&&Number.isFinite(Number(v))&&Number(v)>0).map(([k,v])=>[k,Number(v)]));}
-export function superiorityPool(c){const n=classLevel(c,'guerreiro');return subclassFor(c,'guerreiro')==='Mestre de Batalha'&&n>=3?{max:n>=15?6:n>=7?5:4,sides:n>=18?12:n>=10?10:8}:null;}
+export function superiorityPool(c){const n=classLevel(c,'guerreiro');return subclassFor(c,'guerreiro')==='Mestre da Batalha'&&n>=3?{max:n>=15?6:n>=7?5:4,sides:n>=18?12:n>=10?10:8}:null;}
 export function metamagicCost(option,spell){if(!option||option.kind!=='metamagic')throw Error('Metamagia inválida.');const m=String(option.summary||'').match(/Custo:\s*(\d+)\s+Pontos? de Feitiçaria/i);if(m)return Number(m[1]);return null;}
 export function normalizeAdvanced(c,catalog=[]){c.mysticArcanum=Object.fromEntries(Object.entries(c.mysticArcanum&&typeof c.mysticArcanum==='object'?c.mysticArcanum:{}).filter(([k,id])=>arcanumCircles(c).includes(Number(k))&&typeof id==='string'&&id.length<130));c.mysticUsed=Object.fromEntries(Object.keys(c.mysticArcanum).map(k=>[k,!!c.mysticUsed?.[k]]));c.advancedChoices=Object.fromEntries(CHOICE_KINDS.map(k=>[k,[...new Set(Array.isArray(c.advancedChoices?.[k])?c.advancedChoices[k].filter(id=>typeof id==='string'&&id.length<130):[])].slice(0,choiceLimit(c,k))]));c.shellDefense=!!c.shellDefense&&speciesRule(c).naturalAC!==null;return c;}
 // Limites de sintonização (Artífice de Tasha) e validação antes de alterar o inventário.
