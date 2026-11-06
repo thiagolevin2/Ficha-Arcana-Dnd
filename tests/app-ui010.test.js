@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
-import {newCharacter} from '../docs/core.js';
+import {newCharacter,normalizeImported} from '../docs/core.js';
 
 // Eventos reais do aplicativo com DOM reduzido. A inspeção visual é feita à parte.
 let sequence=0;
@@ -13,7 +13,7 @@ async function interfaceFor(c){
  globalThis.window={scrollTo(){},print(){},confirm:()=>true};globalThis.requestAnimationFrame=()=>{};
  globalThis.fetch=async url=>({ok:true,json:async()=>JSON.parse(await fs.readFile(new URL('../docs/'+url,import.meta.url),'utf8'))});
  await import('../docs/app.js?ui010-'+(++sequence));
- return {els,storage,ch:()=>JSON.parse(storage.arcana2024).characters[0],set:(id,value)=>{element('#'+id).value=value;},async click(action,data={}){const e={target:{closest:()=>({disabled:false,dataset:{action,...data}})},preventDefault(){}};for(const fn of events.click||[])await fn(e);},async input(id,value,dataset={}){const target={id,value,dataset,selectionStart:0};for(const fn of events.input||[])await fn({target});}};
+ return {els,storage,ch:()=>JSON.parse(storage.arcana2024).characters[0],set:(id,value)=>{element('#'+id).value=value;},async click(action,data={}){const e={target:{closest:()=>({disabled:false,dataset:{action,...data}})},preventDefault(){}};for(const fn of events.click||[])await fn(e);},async input(id,value,dataset={}){const target={id,value,dataset,selectionStart:0};for(const fn of events.input||[])await fn({target});},async change(id,value,dataset={}){const target={id,value,checked:!!value,dataset};for(const fn of events.change||[])await fn({target});}};
 }
 function mage(id='306'){
  const c=newCharacter({name:'Lia',classId:'mago',speciesId:'aasimar',level:5,armor:'none'});c.armor='none';c.knownSpellsByClass.mago=[id];return c;
@@ -66,4 +66,66 @@ test('0.10 interface: janela de talento destaca o pré-requisito completo para c
 test('0.10 interface: configuração importada sem fórmula não impede abrir o combate',async()=>{
  const c=mage();c.spellRolls={'306':{mode:'attack',formula:'script()',type:'Radiante'}};const ui=await interfaceFor(c);
  await ui.click('navigate',{view:'sheet'});await ui.click('sheet-tab',{tab:'combat'});await ui.click('combat-tab',{tab:'spells'});assert.match(ui.els['#app'].innerHTML,/Raio de Fogo/);assert.match(ui.els['#app'].innerHTML,/Rolagem opcional/);
+});
+
+
+test('0.10 interface: Economias abre, calcula o tesouro e não gera ReferenceError de economyEntries',async()=>{
+ const ui=await interfaceFor(mage());
+ await ui.click('navigate',{view:'economy'});
+ assert.match(ui.els['#app'].innerHTML,/CONTROLE FINANCEIRO DO PERSONAGEM/);
+ assert.match(ui.els['#app'].innerHTML,/Tesouro do personagem/);
+ assert.match(ui.els['#app'].innerHTML,/Histórico de ganhos e gastos/);
+ assert.doesNotMatch(ui.els['#app'].innerHTML,/economyEntries is not defined/i);
+});
+
+test('0.10 interface: grimório coloca magias preparadas primeiro e não oferece filtro exclusivo',async()=>{
+ const c=mage();c.knownSpellsByClass.mago=['3','37'];c.spellClasses={'37':['mago']};c.prepared=['37'];
+ const ui=await interfaceFor(c);await ui.click('navigate',{view:'spells'});
+ const html=ui.els['#app'].innerHTML;
+ assert.ok(html.indexOf('Bola de Fogo')<html.indexOf('Alarme'),'a magia preparada precisa vir antes das demais');
+ assert.doesNotMatch(html,/data-action="filter-prepared"|Somente preparadas/);
+});
+
+test('0.10: Mochila é uma seção e não é criada ou importada como item',()=>{
+ const c=newCharacter({classId:'guerreiro'});
+ assert.equal(c.items.some(i=>i.name.trim().toLowerCase()==='mochila'),false);
+ c.items.push({name:'Mochila',qty:1,weight:2});
+ const imported=normalizeImported(c);
+ assert.equal(imported.items.some(i=>i.name.trim().toLowerCase()==='mochila'),false);
+});
+
+test('0.10 interface: itens com descrição somente visual não entram na seção de itens mágicos',async()=>{
+ const c=mage();c.items.push({name:'Anel decorativo',qty:1,weight:.1,rarity:'Muito Raro',maxCharges:3,charges:3,description:'Anel de prata com uma gravação antiga.'},{name:'Talismã de aparência mágica',qty:1,weight:.1,rarity:'Raro',description:'Um talismã mágico com runas antigas e acabamento brilhante.'},{name:'Anel de proteção',qty:1,weight:.1,description:'Concede +1 na Classe de Armadura.'});
+ const ui=await interfaceFor(c);await ui.click('navigate',{view:'inventory'});
+ const html=ui.els['#app'].innerHTML,magicSection=html.split('<div class="two-cols">')[0];
+ assert.match(magicSection,/Itens mágicos e seus poderes/);
+ assert.doesNotMatch(magicSection,/Anel decorativo|Talismã de aparência mágica/);
+ assert.match(magicSection,/Anel de proteção/);
+});
+
+test('0.10 interface: espécie repetida em suplemento é ocultada em favor da opção do Livro 2024',async()=>{
+ const c=mage();c.selectedOptions=['supp-races-large-species-aasimar'];
+ const ui=await interfaceFor(c);await ui.click('navigate',{view:'sheet'});await ui.click('sheet-tab',{tab:'features'});
+ assert.doesNotMatch(ui.els['#app'].innerHTML,/Escolhas e referências guardadas/);
+});
+
+test('0.10 interface: armaduras iniciais aparecem em cartões com CA e treinamento permitido',async()=>{
+ const ui=await interfaceFor(mage());
+ await ui.click('new');await ui.input('wiz-name','Armadura em cartões');await ui.click('wizard-next');
+ await ui.click('wizard-species',{key:'aasimar'});await ui.click('wizard-next');await ui.click('wizard-standard');await ui.change('wiz-origin-str','2');await ui.change('wiz-origin-dex','1');await ui.click('wizard-next');
+ const html=ui.els['#modal-root'].innerHTML;
+ assert.match(html,/wizard-armor-grid/);
+ assert.match(html,/wizard-armor-card/);
+ assert.match(html,/data-wiz-armor="none"/);
+ assert.match(html,/CA 10/);
+ assert.match(html,/wizard-weapon-card/);
+});
+
+
+test('0.10 interface: Tesouro fica em Economias e não ocupa a Mochila',async()=>{
+ const ui=await interfaceFor(mage());
+ await ui.click('navigate',{view:'inventory'});
+ assert.doesNotMatch(ui.els['#app'].innerHTML,/Tesouro do personagem/);
+ await ui.click('navigate',{view:'economy'});
+ assert.match(ui.els['#app'].innerHTML,/Tesouro do personagem/);
 });

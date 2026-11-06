@@ -10,7 +10,7 @@ test('custom armor CA bonus and custom shield bonus/weight are applied while equ
   assert.equal(d.ac,20); // 14 + DES 2 + bônus mágico 1 + escudo 3
   assert.equal(d.armor.name,'Couraça rúnica');
   assert.equal(d.shieldData.name,'Égide lunar');
-  assert.equal(d.weight,24.5); // itens iniciais 10 kg + armadura 8 kg + escudo 4 kg + armas 2,5 kg
+  assert.equal(d.weight,22); // itens iniciais 7,5 kg + armadura 8 kg + escudo 4 kg + armas 2,5 kg; mochila é seção, não item
 });
 
 test('untrained custom shield does not add its custom AC bonus',()=>{

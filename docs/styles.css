@@ -569,3 +569,67 @@
 .battle-master-panel summary{cursor:pointer;font-size:14px;padding:8px 0}
 @media(max-width:680px){.battle-master-stats{grid-template-columns:1fr}.battle-master-maneuvers article{align-items:stretch;flex-direction:column}.battle-master-training .flex{gap:8px}.attribute-status{align-items:flex-start;flex-direction:column}}
 @media(prefers-reduced-motion:reduce){.feat-modal-glow{animation:none}}
+
+/* Arcana 0.10 — cartões de seleção e espaçamento das barras de navegação/combate */
+.combat-subtabs{display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:9px;margin:0 0 16px;border:1px solid var(--line);border-radius:12px;background:var(--paper);box-shadow:var(--shadow)}
+.combat-subtabs .btn{margin:0;min-height:36px;gap:8px;border-radius:8px}
+.combat-subtabs .btn svg{width:16px;height:16px}
+.combat-subtabs+.card{margin-top:0}
+.style-status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,235px),1fr));gap:12px;margin-top:14px}
+.style-status-card{display:flex;flex-direction:column;align-items:stretch;gap:10px;min-width:0;min-height:160px;padding:15px;border:1px solid var(--line);border-radius:12px;background:var(--paper);box-shadow:var(--shadow)}
+.style-status-card>.between{align-items:flex-start;gap:10px}
+.style-status-card strong{font-size:12px;line-height:1.4;color:var(--ink)}
+.style-status-card p{font-size:11px;line-height:1.55;color:var(--muted);flex:1}
+.style-status-card small{display:block;border-radius:8px;padding:9px 10px;background:var(--green-soft);font-size:10px;line-height:1.5;color:var(--green)}
+.style-status-card.owned{border-color:color-mix(in srgb,var(--green) 34%,var(--line))}
+.style-status-card:not(.owned){opacity:.88}
+.style-status-card.active{border-color:#8da879;background:var(--green-soft)}
+.style-status-card.active small{background:var(--paper);color:var(--green)}
+.style-status-card .badge{max-width:48%;white-space:normal;text-align:center;line-height:1.35}
+.style-pick-panel{display:flex;flex-direction:column;gap:10px;padding:17px;margin-top:16px;border:1px solid var(--gold);border-radius:13px;background:linear-gradient(135deg,var(--paper),var(--green-soft));box-shadow:var(--shadow)}
+.style-pick-panel>.between{align-items:flex-start;gap:12px}
+.style-pick-panel h3{margin:0;font-size:16px}
+.style-pick-panel .btn{align-self:flex-start}
+.wizard-weapon-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,205px),1fr));gap:11px;margin:12px 0 18px}
+.wizard-weapon-card{display:flex;align-items:flex-start;gap:11px;min-width:0;min-height:84px;margin:0;padding:13px;border:1px solid var(--line);border-radius:11px;background:var(--paper);color:var(--ink);cursor:pointer;box-shadow:var(--shadow);transition:border-color .16s,background .16s,box-shadow .16s,transform .16s}
+.wizard-weapon-card:hover{border-color:var(--gold);transform:translateY(-1px)}
+.wizard-weapon-card:has(input:focus-visible){outline:2px solid var(--gold);outline-offset:2px}
+.wizard-weapon-card input{margin:2px 0 0;accent-color:var(--green);flex:0 0 auto;width:16px;height:16px}
+.wizard-weapon-card>span{display:block;min-width:0;flex:1}
+.wizard-weapon-card strong{display:block;font-size:12px;line-height:1.4;color:var(--ink)}
+.wizard-weapon-card small{display:block;margin-top:5px;color:var(--muted);font-size:10px;line-height:1.5}
+.wizard-weapon-card.selected{border:2px solid var(--green);padding:12px;background:var(--green-soft);box-shadow:inset 0 0 0 1px #8da87955,0 4px 16px #273b2510}
+.wizard-weapon-card.selected strong{color:var(--green)}
+.attack-row{gap:12px}
+.attack-row .attack-info{min-width:0}
+.attack-row .roll-btn,.attack-row .icon-btn{margin-left:4px;flex-shrink:0}
+.combat-spell-row,.combat-spell-row .flex{gap:10px}
+.combat-spell-row .btn{margin:2px 0}
+:root[data-theme="dark"] .combat-subtabs{background:#1c2b22;border-color:#405444}
+:root[data-theme="dark"] .style-status-card,:root[data-theme="dark"] .wizard-weapon-card{background:#1c2b22;border-color:#405444;color:#e1e9dc}
+:root[data-theme="dark"] .style-status-card strong,:root[data-theme="dark"] .wizard-weapon-card strong{color:#e1e9dc}
+:root[data-theme="dark"] .style-status-card p,:root[data-theme="dark"] .wizard-weapon-card small{color:#b2c0b0}
+:root[data-theme="dark"] .style-status-card small{background:#263a2d;color:#c8d8be}
+:root[data-theme="dark"] .style-status-card.active,:root[data-theme="dark"] .wizard-weapon-card.selected{background:#2a4030;border-color:#9ab783}
+:root[data-theme="dark"] .style-status-card.active small{background:#1c2b22;color:#d5e4c9}
+:root[data-theme="dark"] .style-pick-panel{background:linear-gradient(135deg,#1c2b22,#25382a);border-color:#85744b}
+:root[data-theme="dark"] .wizard-weapon-card.selected strong{color:#e0ebd5}
+@media(max-width:680px){.combat-subtabs{gap:7px;padding:7px}.combat-subtabs .btn{flex:1 1 auto;min-width:0;white-space:normal}.style-status-grid{grid-template-columns:1fr;gap:9px}.style-status-card{min-height:0}.wizard-weapon-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,155px),1fr));gap:8px}.wizard-weapon-card{min-height:76px;padding:11px}.wizard-weapon-card.selected{padding:10px}.combat-spell-row{align-items:flex-start;flex-wrap:wrap}.combat-spell-row .flex{width:100%;flex-wrap:wrap}}
+
+/* Seleção de armadura inicial em cartões, no mesmo padrão visual das armas e estilos. */
+.wizard-armor-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,205px),1fr));gap:11px;margin:12px 0 18px}
+.wizard-armor-card{display:flex;align-items:flex-start;gap:11px;min-width:0;min-height:78px;margin:0;padding:13px;border:1px solid var(--line);border-radius:11px;background:var(--paper);color:var(--ink);cursor:pointer;box-shadow:var(--shadow);transition:border-color .16s,background .16s,box-shadow .16s,transform .16s}
+.wizard-armor-card:hover{border-color:var(--gold);transform:translateY(-1px)}
+.wizard-armor-card:has(input:focus-visible){outline:2px solid var(--gold);outline-offset:2px}
+.wizard-armor-card input{margin:2px 0 0;accent-color:var(--green);flex:0 0 auto;width:16px;height:16px}
+.wizard-armor-card>span{display:block;min-width:0;flex:1}
+.wizard-armor-card strong{display:block;font-size:12px;line-height:1.4;color:var(--ink)}
+.wizard-armor-card small{display:block;margin-top:5px;color:var(--muted);font-size:10px;line-height:1.5}
+.wizard-armor-card.selected{border:2px solid var(--green);padding:12px;background:var(--green-soft);box-shadow:inset 0 0 0 1px #8da87955,0 4px 16px #273b2510}
+.wizard-armor-card.selected strong{color:var(--green)}
+:root[data-theme="dark"] .wizard-armor-card{background:#1c2b22;border-color:#405444;color:#e1e9dc}
+:root[data-theme="dark"] .wizard-armor-card strong{color:#e1e9dc}
+:root[data-theme="dark"] .wizard-armor-card small{color:#b2c0b0}
+:root[data-theme="dark"] .wizard-armor-card.selected{background:#2a4030;border-color:#9ab783}
+:root[data-theme="dark"] .wizard-armor-card.selected strong{color:#e0ebd5}
+@media(max-width:680px){.wizard-armor-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,155px),1fr));gap:8px}.wizard-armor-card{min-height:72px;padding:11px}.wizard-armor-card.selected{padding:10px}}

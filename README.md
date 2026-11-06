@@ -48,7 +48,7 @@ Com Node.js 20 ou superior, sem instalar dependências:
 npm test
 ```
 
-**204 testes aprovados** neste pacote reorganizado, incluindo os cenários antigos e os novos da 0.10. Os testes usam os arquivos de `docs/`, sem exigir uma cópia completa em `dist/`.
+**211 testes aprovados** neste pacote reorganizado, incluindo os cenários antigos e os novos da 0.10. Os testes usam os arquivos de `docs/`, sem exigir uma cópia completa em `dist/`.
 
 Para reconstruir uma distribuição local completa, caso precise:
 
