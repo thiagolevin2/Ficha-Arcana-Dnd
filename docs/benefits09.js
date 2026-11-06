@@ -1,3 +1,4 @@
+import {featNames012,featSpec012,featRecords012,featOriginIssues012} from './feat-rules012.js';
 import {CLASSES,SPECIES,BACKGROUNDS} from './data.js';
 import {speciesChoiceNeeds,speciesFeats,speciesSkills} from './species096.js';
 import {classEntries,cantripLimitFor} from './progression.js';
@@ -52,5 +53,5 @@ export function characterAudit(c, knownSpellCount=()=>0) {
  if(c.speciesId&&!['humano','anao','pequenino','gnomo','golias'].includes(c.speciesId))add(manual,'Espécie: '+(SPECIES[c.speciesId]?.name||c.speciesId),'Confira poderes ativos, resistências, escolhas e usos não automatizados.');
  for(const optionId of c.selectedOptions||[])add(manual,'Opção adicional: '+optionId,'O catálogo registra a escolha, mas não garante aplicação de todos os benefícios.');
  for(const item of c.items||[])if(item.attunement || item.maxCharges)add(manual,'Item: '+item.name,'Sintonização/cargas são registradas; efeitos sobre atributos e ações precisam de conferência.');
- return {applied,manual,pending};
+ for(const message of featOriginIssues012(c))add(pending,'Talento de Origem duplicado',message);for(const name of featNames012(c)){const spec=featSpec012(name),records=featRecords012(c,name);if((spec.points||spec.choice)&&!records.length)add(pending,name,'Complete as escolhas no cartão do talento; aumentos antigos não são presumidos na importação.');for(const g of records)add(applied,name,'Escolhas registradas na aquisição '+g.source+'. Usos e efeitos situacionais continuam sob seu controle.');}return {applied,manual,pending};
 }

@@ -1,3 +1,4 @@
+import {featSpellSources012,featRecords012,featState012,spendFeatSpell012,recordSlot012} from './feat-rules012.js';
 // Ficha Arcana 0.9.4 — calcula macros sempre a partir da ficha atual.
 // Não autoriza economia de ações, gastos ou efeitos condicionais implicitamente.
 import {attackStats,derive,resources,weaponDefinition} from './core.js';
@@ -12,7 +13,7 @@ const d20SpellAttack=(d,sp,owner)=>{
 const used=(c,k)=>Number(c.resourceUsed?.[k]||0);
 const availability=(c,sp,d,book,allocation)=>{
  if(sp.level===0)return null;
- const special=c.spellAccess?.[sp.id];
+ const special=c.spellAccess?.[sp.id];const featPlans=featSpellSources012(c,sp,book);for(const p of featPlans){const id=p.grantId+':'+p.key;if(p.free&&1-p.used>(allocation['feat:'+id]||0)){allocation['feat:'+id]=(allocation['feat:'+id]||0)+1;return {kind:'featSpell',id,grantId:p.grantId,featGrantId:p.grantId,key:p.key,spellId:sp.id,choiceStamp:JSON.stringify(featRecords012(c).find(g=>g.id===p.grantId)?.choices),name:'Uso gratuito: '+p.feat+' · '+sp.name};}}
  // A magia deve fazer parte da ficha; o callback fornece o teste de preparo completo.
  const freeKey=sp.name==='Destruição Divina'?'smite':sp.name==='Marca do Predador'?'favored':'';
  const limited=freeKey&&resources(c).find(r=>r.id===freeKey);
@@ -23,11 +24,11 @@ const availability=(c,sp,d,book,allocation)=>{
  }
  for(let i=sp.level-1;i<d.standardSlots.counts.length;i++){
   if(d.standardSlots.counts[i]-Number(c.slotsUsed?.[i]||0)>(allocation['slot:'+i]||0)){
-   allocation['slot:'+i]=(allocation['slot:'+i]||0)+1;return {kind:'slot',index:i,level:i+1,name:'Espaço '+(i+1)+'º círculo'};
+   allocation['slot:'+i]=(allocation['slot:'+i]||0)+1;return {kind:'slot',featGrantId:featPlans[0]?.grantId,index:i,level:i+1,name:'Espaço '+(i+1)+'º círculo'};
   }
  }
  if(d.pactSlots.level>=sp.level&&Number(d.pactSlots.counts?.[0]||0)-Number(c.pactUsed||0)>(allocation.pact||0)){
-  allocation.pact=(allocation.pact||0)+1;return {kind:'pact',level:d.pactSlots.level,name:'Espaço de Pacto '+d.pactSlots.level+'º círculo'};
+  allocation.pact=(allocation.pact||0)+1;return {kind:'pact',featGrantId:featPlans[0]?.grantId,level:d.pactSlots.level,name:'Espaço de Pacto '+d.pactSlots.level+'º círculo'};
  }
  return false;
 };
@@ -38,7 +39,7 @@ export function evaluateMacro(c,macro,{book=[],spellMechanic,spellReady,unarmedF
  const ready=sp=>typeof spellReady==='function'?spellReady(c,sp):!!(c.prepared||[]).includes(sp.id);
  let base={kind:'weapon',label:'',bonus:0,key:'str',type:'Contundente',criticalThreshold:20,styleGreatWeapon:false,attack:true,save:'',dc:null};
  let primarySpell=null,weapon=null;
- const add=(name,formula,type,extra={})=>{if(!validMacroFormula(formula)){warnings.push(name+': fórmula inválida; efeito ignorado.');return false;}parts.push({label:name,formula,type,mainWeapon:!!extra.mainWeapon,critical:extra.critical!==false});return true;};
+ const add=(name,formula,type,extra={})=>{if(!validMacroFormula(formula)){warnings.push(name+': fórmula inválida; efeito ignorado.');return false;}parts.push({label:name,formula,type,mainWeapon:!!extra.mainWeapon,critical:extra.critical!==false,spellDamage:!!extra.spellDamage});return true;};
  const useSpell=(sp,label,{extra=false,allowIndependent=false}={})=>{
   if(!sp||!ready(sp)){warnings.push(label+': magia não conhecida/preparada; ignorada.');return false;}
   if(c.raging){warnings.push(label+': impossível conjurar durante a Fúria; ignorada.');return false;}
@@ -55,7 +56,7 @@ export function evaluateMacro(c,macro,{book=[],spellMechanic,spellReady,unarmedF
   if(separate)warnings.push(label+': soma manual. Confirme se o mesmo alvo recebe este dano e se a economia de ações permite.');
   if(mechanic.per)warnings.push(label+': '+mechanic.per);
   if(mechanic.save&&extra)warnings.push(label+': exige salvaguarda separada ('+mechanic.save+').');
-  if(!add(label,mechanic.formula,mechanic.type))return false;
+  if(!add(label,mechanic.formula,mechanic.type,{spellDamage:true}))return false;
   if(payment)costs.push({...payment,spellId:sp.id,spellName:sp.name});
   return {mechanic,payment};
  };
@@ -78,9 +79,9 @@ export function evaluateMacro(c,macro,{book=[],spellMechanic,spellReady,unarmedF
   const spec=spellMechanic(sp,payment?.level||sp.level,c);
   if(!spec||spec.healing||!validMacroFormula(spec.formula))return {ready:false,reason:'A magia não possui dano único reconhecido pelo motor; use outro ataque ou dano personalizado.',parts:[],warnings,costs:[]};
   const owner=d.castingSources.find(x=>Array.isArray(c.knownSpellsByClass?.[x.classId])&&c.knownSpellsByClass[x.classId].includes(sp.id))?.classId;
-  const attack=d20SpellAttack(d,sp,owner);if(!owner&&c.spellAccess?.[sp.id]?.ability){const ability=c.spellAccess[sp.id].ability;attack.ability=ability;attack.bonus=d.pb+(d.m[ability]||0)+(Number(c.adjust?.spellAttack)||0);attack.dc=8+d.pb+(d.m[ability]||0)+(Number(c.adjust?.spellDC)||0);}
+  const attack=d20SpellAttack(d,sp,owner);const featPlan=featSpellSources012(c,sp,book).find(p=>p.grantId===payment?.featGrantId);if(featPlan){attack.ability=featPlan.ability;attack.bonus=d.pb+d.m[featPlan.ability]+(Number(c.adjust?.spellAttack)||0);attack.dc=8+d.pb+d.m[featPlan.ability]+(Number(c.adjust?.spellDC)||0);}if(!featPlan&&!owner&&c.spellAccess?.[sp.id]?.ability){const ability=c.spellAccess[sp.id].ability;attack.ability=ability;attack.bonus=d.pb+(d.m[ability]||0)+(Number(c.adjust?.spellAttack)||0);attack.dc=8+d.pb+(d.m[ability]||0)+(Number(c.adjust?.spellDC)||0);}
   base={...base,kind:'spell',label:sp.name,attack:!!spec.attack,save:spec.save||'',dc:attack.dc,key:attack.ability,bonus:attack.bonus,type:spec.type,spell:sp,sourceClassId:attack.owner};
-  primarySpell=sp;add(sp.name,spec.formula,spec.type);
+  primarySpell=sp;add(sp.name,spec.formula,spec.type,{spellDamage:true});
   if(spec.per)warnings.push(sp.name+': '+spec.per);
   if(payment)costs.push({...payment,spellId:sp.id,spellName:sp.name});
  }else return {ready:false,reason:'Tipo de ataque não reconhecido.',parts:[],warnings,costs:[]};
@@ -128,10 +129,11 @@ export function spendMacroCosts(c,costs,spendGrant){
   if(cost.kind==='resource'){const r=resources(c).find(r=>r.id===cost.id);if(!r||r.max-used(c,cost.id)<alloc[key])throw Error('Recurso já esgotado: '+cost.name);}
   if(cost.kind==='feature'){const f=activeSubclassFeatures(c).some(x=>x.id===cost.id)?c.featureSettings?.[cost.id]:null;if(!f||f.max-f.used<alloc[key])throw Error('Recurso de subclasse já esgotado.');}
   if(cost.kind==='charges'){const it=c.items?.find(x=>x.id===cost.id);const spent=costs.filter(x=>x.kind==='charges'&&x.id===cost.id).reduce((n,x)=>n+Number(x.amount||0),0);if(!it||!it.equipped||it.attunement&&!it.attuned||Number(it.charges||0)<spent)throw Error('Cargas indisponíveis: '+cost.name);}
+  if(cost.kind==='featSpell'){const g=featRecords012(c).find(g=>g.id===cost.grantId);if(!g||JSON.stringify(g.choices)!==cost.choiceStamp||1-(c.featState012?.['spell:'+cost.grantId+':'+cost.key]?.used||0)<alloc[key])throw Error('Uso gratuito do talento não está mais disponível.');}
   if(cost.kind==='grant'){const g=c.spellAccess?.[cost.id];if(!g||g.mode!=='free'||g.uses-g.used<alloc[key])throw Error('Uso especial já esgotado.');}
  }
- for(const cost of costs){if(cost.kind==='slot')c.slotsUsed[cost.index]=(c.slotsUsed[cost.index]||0)+1;
-  if(cost.kind==='pact')c.pactUsed=(c.pactUsed||0)+1;
+ for(const cost of costs){if(cost.kind==='slot'){recordSlot012(c,{kind:'standard',index:cost.index,spellName:cost.spellName||cost.name,before:c.slotsUsed[cost.index]||0});c.slotsUsed[cost.index]=(c.slotsUsed[cost.index]||0)+1;}if(cost.kind==='featSpell')spendFeatSpell012(c,{grantId:cost.grantId,key:cost.key,free:true});
+  if(cost.kind==='pact'){recordSlot012(c,{kind:'pact',index:d.pactSlots.level-1,spellName:cost.spellName||cost.name,before:c.pactUsed||0});c.pactUsed=(c.pactUsed||0)+1;}
   if(cost.kind==='resource')c.resourceUsed[cost.id]=(c.resourceUsed[cost.id]||0)+1;
   if(cost.kind==='feature')c.featureSettings[cost.id].used++;
   if(cost.kind==='charges'){const it=c.items.find(x=>x.id===cost.id);it.charges-=Number(cost.amount||0);}

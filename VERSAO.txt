@@ -1,2 +1,6 @@
-Ficha Arcana 0.11 Beta
-Atualizado em 2026-11-06
+Ficha Arcana 0.12 Beta
+Base: Ficha_Arcana_0.11_Melhorias (2).zip
+Revisão: Ficha_Arcana_Talentos_e_Dicas_Completa(2).xlsx
+Data: 2026-11-06
+Publicação: 50 arquivos; código executável em docs/
+Testes: 263 aprovados; complemento separado

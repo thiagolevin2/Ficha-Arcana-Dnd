@@ -1,3 +1,4 @@
+import {featScore012,featMasteries012,hasFeat012} from './feat-rules012.js';
 // Ficha Arcana 0.9.2 — efeitos determinísticos de equipamentos e infusões.
 // Não interpreta automaticamente descrições livres de suplementos.
 import {classLevel} from './progression.js';
@@ -89,5 +90,5 @@ export function syncAncestrySpellAccess(c,catalog){c.spellAccess??={};const plan
  return plan;}
 
 export function dragonBreathInfo(c){if(c.speciesId!=='draconato')return null;const types={Azul:'Elétrico',Branco:'Gélido',Bronze:'Elétrico',Cobre:'Ácido',Latão:'Ígneo',Negro:'Ácido',Ouro:'Ígneo',Prata:'Gélido',Verde:'Venenoso',Vermelho:'Ígneo'};const type=types[c.variant]||null;
- const level=Math.max(1,Math.min(20,Number(c.level)||1));const pb=2+Math.floor((level-1)/4);const constitution=(Number(c.base?.con)||10)+(Number(c.origin?.con)||0)+(Number(c.advances?.con)||0);
+ const level=Math.max(1,Math.min(20,Number(c.level)||1));const pb=2+Math.floor((level-1)/4);const constitution=featScore012(c,'con');
  return {type,formula:(level>=17?4:level>=11?3:level>=5?2:1)+'d10',dc:8+pb+Math.floor((constitution-10)/2),uses:pb,shapeOptions:['Cone de 4,5 m','Linha de 9 m por 1,5 m']};}

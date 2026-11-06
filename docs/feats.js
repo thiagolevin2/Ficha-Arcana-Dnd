@@ -82,13 +82,21 @@ export function featEligibility(feat, context = {}) {
     reasons.push('Exige característica de Conjuração ou Magia de Pacto.');
   }
   // Somente pré-requisitos declarados explicitamente podem bloquear o talento; a descrição inclui benefícios.
-  const prerequisite = normalize(String(feat?.prerequisites || feat?.prerequisite || '').trim());
+  const prerequisite = normalize(featPrerequisiteText(feat));
   if (prerequisite.includes('treinamento com armadura leve') && Number(context.armorTraining || 0) < 1) reasons.push('Exige treinamento com armadura leve.');
   if (prerequisite.includes('treinamento com armadura media') && Number(context.armorTraining || 0) < 2) reasons.push('Exige treinamento com armadura média.');
   if (prerequisite.includes('treinamento com armadura pesada') && Number(context.armorTraining || 0) < 3) reasons.push('Exige treinamento com armadura pesada.');
   if (prerequisite.includes('treinamento com escudo') && !context.shieldTraining) reasons.push('Exige treinamento com escudo.');
+  const requiredArmor={
+    'especialista em armaduras medias':1,
+    'especialista em armaduras pesadas':2,
+    'mestre em armaduras medias':2,
+    'mestre em armaduras pesadas':3
+  }[normalize(feat?.name)];
+  if(requiredArmor&&Number(context.armorTraining||0)<requiredArmor&&!reasons.some(r=>r.includes('armadura')))reasons.push('Exige treinamento com armadura '+['','leve','média','pesada'][requiredArmor]+'.');
+  if(normalize(feat?.name)==='mestre em escudos'&&!context.shieldTraining&&!reasons.some(r=>r.includes('escudo')))reasons.push('Exige treinamento com escudos.');
 
-  const repeatable = text.includes('repetivel');
+  const repeatable = text.includes('repetivel') || ['adepto elemental','habilidoso','iniciado em magia','aumento no valor de atributo'].includes(normalize(feat?.name));
   const owned = (context.ownedFeats || []).map(normalize);
   if (!repeatable && owned.includes(normalize(feat?.name))) reasons.push('Você já possui este talento.');
 

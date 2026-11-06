@@ -1,3 +1,4 @@
+import {featScore012} from './feat-rules012.js';
 // Ficha Arcana 0.9.6 — escolhas e poderes de espécies assistidos.
 // O módulo não decide duração, alvos, posicionamento ou resultado de salvaguardas dos NPCs.
 import {SPECIES,SKILLS,BACKGROUNDS} from './data.js';
@@ -60,8 +61,8 @@ const C=(id,name,description,action=null)=>({id,name,description,action});
 const supplement=(c,part)=>String(c.speciesId||'').includes(part);
 const level=c=>Math.max(1,Math.min(20,Number(c.level)||1));
 const pb=c=>2+Math.floor((level(c)-1)/4);
-const con=c=>Math.floor(((Number(c.base?.con)||10)+(Number(c.origin?.con)||0)+(Number(c.advances?.con)||0)-10)/2);
-const str=c=>Math.floor(((Number(c.base?.str)||10)+(Number(c.origin?.str)||0)+(Number(c.advances?.str)||0)-10)/2);
+const con=c=>Math.floor((featScore012(c,'con')-10)/2);
+const str=c=>Math.floor((featScore012(c,'str')-10)/2);
 const pow=(id,name,description,{kind='use',formula='',max=0,recovery='long',attackBonus=null,dc=null}={})=>C(id,name,description,{kind,formula,max,recovery,attackBonus,dc});
 export function speciesCards096(c){
  const id=c.speciesId||'',v=c.speciesChoices||{},p=pb(c),n=level(c),is=(s)=>id===s;
