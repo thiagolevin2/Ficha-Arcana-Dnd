@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {newCharacter,derive,attackStats,normalizeImported,normalizeWeapon,normalizeCustomArmor,normalizeCustomShield} from '../dist/core.js';
+import {newCharacter,derive,attackStats,normalizeImported,normalizeWeapon,normalizeCustomArmor,normalizeCustomShield} from '../docs/core.js';
 
 test('custom armor CA bonus and custom shield bonus/weight are applied while equipped',()=>{
   const armor=normalizeCustomArmor({id:'armor-rune',name:'Couraça rúnica',base:14,dex:2,category:'Média',weight:8,bonus:1,effects:'Resistência ígnea'});

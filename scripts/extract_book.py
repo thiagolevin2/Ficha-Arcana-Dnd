@@ -1,7 +1,7 @@
 import fitz,json,re,os
 from pathlib import Path
 D=fitz.open('/workspace/scratch/553e7fcdb637/upload/dampd-5e---livro-do-jogador-2024.pdf')
-out=Path('dist/assets');out.mkdir(parents=True,exist_ok=True)
+out=Path('docs/assets');out.mkdir(parents=True,exist_ok=True)
 # Extract the artwork separately from the printed title and page frame.
 for name,page in [('barbaro',55),('bardo',63),('bruxo',73),('clerigo',85),('druida',95),('feiticeiro',107),('guardiao',121),('guerreiro',131),('ladino',141),('mago',151),('monge',163),('paladino',171)]:
  p=D[page]
@@ -25,7 +25,7 @@ while i<len(lines)-1:
   lines[i]['text']+=' '+lines[i+1]['text'];lines.pop(i+1)
  else:i+=1
 starts=[i for i,l in enumerate(lines) if l['heading'] and i+1<len(lines) and re.match(r'(?:Truque|[1-9][º°] Círculo)',lines[i+1]['text'])]
-oldIds={s['name']:s['id'] for s in json.loads(Path('dist/spells.json').read_text())} if Path('dist/spells.json').exists() else {}
+oldIds={s['name']:s['id'] for s in json.loads(Path('docs/spells.json').read_text())} if Path('docs/spells.json').exists() else {}
 nextId=max([int(v) for v in oldIds.values()]+[0])+1
 spells=[]
 def clean(t):return re.sub(r'\s+',' ',re.sub(r'(\w)-\s+(\w)',r'\1\2',t)).strip()
@@ -52,7 +52,7 @@ for n,start in enumerate(starts):
  if not spellId:
   spellId=str(nextId);nextId+=1
  spells.append({'id':spellId,'name':name,'level':level,'school':school,'classes':classes,'page':seg[0]['page'],**fields,'concentration':'Concentração' in fields['duration'],'ritual':'Ritual' in fields['time'],'text':body})
-Path('dist/spells.json').write_text(json.dumps(spells,ensure_ascii=False))
+Path('docs/spells.json').write_text(json.dumps(spells,ensure_ascii=False))
 # Read-only chapter references preserve the user's supplied source inside this private tool.
 chapters=[('barbaro',56,64),('bardo',64,74),('bruxo',74,86),('clerigo',86,96),('druida',96,108),('feiticeiro',108,122),('guardiao',122,132),('guerreiro',132,142),('ladino',142,152),('mago',152,164),('monge',164,172),('paladino',172,181)]
 refs={}
@@ -61,7 +61,7 @@ for key,a,b in chapters:
 refs['origens']=[{'page':i-5,'text':D[i].get_text()} for i in range(183,203)]
 refs['talentos']=[{'page':i-5,'text':D[i].get_text()} for i in range(204,217)]
 refs['regras']=[{'page':i-5,'text':D[i].get_text()} for i in list(range(15,35))+list(range(366,391))]
-Path('dist/references.json').write_text(json.dumps(refs,ensure_ascii=False))
+Path('docs/references.json').write_text(json.dumps(refs,ensure_ascii=False))
 print('Spells:',len(spells),'classes:',sorted(set(c for s in spells for c in s['classes'])))
 print('First/last:',spells[0]['name'],spells[-1]['name'])
 print('Art:',[(p.name,p.stat().st_size) for p in out.glob('*.jpg')])

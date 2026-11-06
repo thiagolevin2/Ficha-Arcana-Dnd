@@ -1,3 +1,6 @@
-Arcana 0.8 — estilos de luta integrados às rolagens, catálogo de armas em cartões, inventário unificado, navegação responsiva e progressão por XP.
+Ficha Arcana — 0.9.6 Beta
+Base: 0.9.5 Beta
+Foco: espécies, linhagens, escolhas e benefícios raciais acionáveis.
+Regras D&D 2024 priorizadas; tempo, áreas, alvos e duração manuais.
 
-Inclui interface de estilos ativos e requisitos, adição de armas/armaduras/escudos pela mochila, acesso aos talentos dentro da Biblioteca e XP oficial para níveis 1–20. Preserva as fichas da versão anterior e IDs de equipamentos antigos.
+Pacote para GitHub com estrutura original, sem duplicacao docs/dist.

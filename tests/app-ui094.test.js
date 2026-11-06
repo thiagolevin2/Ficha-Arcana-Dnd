@@ -1,0 +1,35 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import {newCharacter,attackStats} from '../docs/core.js';
+
+test('0.9.4 UI: Combat > Macros builds, persists, rolls and deletes an attack without a clock',async()=>{
+ const c=newCharacter({classId:'guerreiro',level:4,name:'Teste de macros'});
+ const storage={'arcana2024':JSON.stringify({version:3,characters:[c],activeId:c.id,history:[]}), 'arcana-dice3d':'off'};
+ const els={},events={};
+ globalThis.localStorage={getItem:k=>storage[k]??null,setItem:(k,v)=>storage[k]=v};
+ globalThis.document={documentElement:{dataset:{}},body:{style:{}},activeElement:{isConnected:false},querySelector:key=>els[key]??={innerHTML:'',value:'',checked:false,focus(){},setSelectionRange(){},firstChild:null},querySelectorAll:()=>[],addEventListener:(kind,fn)=>(events[kind]??=[]).push(fn)};
+ globalThis.window={scrollTo(){},print(){}};globalThis.requestAnimationFrame=()=>{};
+ globalThis.fetch=async url=>({ok:true,json:async()=>JSON.parse(await fs.readFile(new URL('../docs/'+url,import.meta.url),'utf8'))});
+ await import('../docs/app.js?ui094');
+ const click=async(action,data={})=>{const ev={target:{closest:()=>({disabled:false,dataset:{action,...data}})},preventDefault(){}};for(const fn of events.click||[])await fn(ev);};
+ const changed=async(id,value,checked)=>{const target={id,value,checked,dataset:{}};for(const fn of events.change||[])await fn({target});};
+ const ch=()=>JSON.parse(storage.arcana2024).characters[0];
+ await click('navigate',{view:'sheet'});await click('sheet-tab',{tab:'combat'});assert.match(els['#app'].innerHTML,/data-tab="macros"/);
+ await click('combat-tab',{tab:'macros'});assert.match(els['#app'].innerHTML,/Macros de combate/);
+ await click('macro-new');assert.match(els['#modal-root'].innerHTML,/Editor de macros/);
+ document.querySelector('#macro-name').value='Ataque relâmpago';document.querySelector('#macro-base').value='weapon:'+ch().weapons[0].id;
+ await click('macro-add-part');
+ document.querySelector('#macro-name').value='Ataque relâmpago';document.querySelector('#macro-base').value='weapon:'+ch().weapons[0].id;
+ document.querySelector('[data-macro-kind="0"]').value='custom';document.querySelector('[data-macro-name="0"]').value='Runa';document.querySelector('[data-macro-formula="0"]').value='2d6';document.querySelector('[data-macro-type="0"]').value='Ígneo';
+ await click('macro-save');assert.equal(ch().combatMacros.length,1);assert.equal(ch().combatMacros[0].parts[0].formula,'2d6');
+ assert.match(els['#app'].innerHTML,/Ataque relâmpago/);assert.match(els['#app'].innerHTML,/2d6 Ígneo/);
+ const id=ch().combatMacros[0].id;
+ await click('macro-run',{id});assert.match(els['#modal-root'].innerHTML,/Ataque relâmpago/);
+ await click('attack-damage');assert.match(els['#modal-root'].innerHTML,/Runa/);assert.match(els['#modal-root'].innerHTML,/Ígneo/);
+ await click('macro-duplicate',{id});assert.equal(ch().combatMacros.length,2);
+ await click('macro-delete-dialog',{id});await click('macro-delete',{id});assert.equal(ch().combatMacros.length,1);
+ assert.doesNotMatch(els['#app'].innerHTML,/Avançar rodada/);
+ await changed('macro-mark-check','on',true);assert.equal(ch().mark,true);
+ const raw=JSON.parse(storage.arcana2024);assert.equal(raw.characters[0].combatMacros.length,1);
+});

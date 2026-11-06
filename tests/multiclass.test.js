@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {newCharacter,derive,resources,slotInfo,preparedLimit,attackStats,advanceCharacter,updateClassPlan,finishRest,normalizeImported,normalizeWeapon,normalizeItem,roll,validPortrait} from '../dist/core.js';
-import {classEntries,classLevel,totalLevel,castingSources,slotPools,multiclassEligibility,hitDicePools,cantripLimitFor,preparationClassIds} from '../dist/progression.js';
-import {validatePortraitFile,portraitDimensions} from '../dist/portrait.js';
+import {newCharacter,derive,resources,slotInfo,preparedLimit,attackStats,advanceCharacter,updateClassPlan,finishRest,normalizeImported,normalizeWeapon,normalizeItem,roll,validPortrait} from '../docs/core.js';
+import {classEntries,classLevel,totalLevel,castingSources,slotPools,multiclassEligibility,hitDicePools,cantripLimitFor,preparationClassIds} from '../docs/progression.js';
+import {validatePortraitFile,portraitDimensions} from '../docs/portrait.js';
 const stats={str:14,dex:14,con:14,int:16,wis:14,cha:16};
 function multi(entries,part={}){return newCharacter({classId:entries[0].classId,classes:entries,base:{...stats},origin:{},armor:'none',...part});}
 

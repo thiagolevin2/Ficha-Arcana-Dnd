@@ -61,8 +61,8 @@ def maneuver_entries():
  return [{'id':'phb2024-maneuver-'+str(n+1),'kind':'maneuver','name':e['name'],'source':'phb2024','page':e['page'],'originalText':clean('\n'.join(e['lines'])),'adaptedText':clean('\n'.join(e['lines'])),'status':'2024','summary':re.sub(r'\s+',' ',' '.join(e['lines']))[:230],'features':[]} for n,e in enumerate(result)]
 canonical=entries_in_pages(205,218,'feat')+entries_in_pages(76,79,'invocation')+maneuver_entries()+entries_in_pages(110,112,'metamagic')
 if args.canonical_only:
- old=json.loads(Path('data/expansion-sources.json').read_text());sources=old['sources'];duplicates=old['duplicates'];allpages=json.loads(Path('dist/supplement-pages.json').read_text())
-Path('dist/supplement-pages.json').write_text(json.dumps(allpages,ensure_ascii=False,separators=(',',':')))
+ old=json.loads(Path('data/expansion-sources.json').read_text());sources=old['sources'];duplicates=old['duplicates'];allpages=json.loads(Path('docs/supplement-pages.json').read_text())
+Path('docs/supplement-pages.json').write_text(json.dumps(allpages,ensure_ascii=False,separators=(',',':')))
 Path('data/expansion-sources.json').write_text(json.dumps({'sources':sources,'duplicates':duplicates,'physicalPageCount':sum(x['pageCount'] for x in sources),'indexedPageCount':sum(x['extractedPages'] for x in sources)},ensure_ascii=False,indent=2))
 Path('data/phb2024-options.json').write_text(json.dumps(canonical,ensure_ascii=False,indent=2))
 print(json.dumps({'sources':len(sources),'pages':len(allpages),'duplicates':len(duplicates),'canonicalFeats':sum(x['kind']=='feat' for x in canonical),'canonicalInvocations':sum(x['kind']=='invocation' for x in canonical)},ensure_ascii=False))

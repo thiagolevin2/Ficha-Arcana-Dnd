@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {dieModel,resultDirection,landingOrientation,rotate,dot,diceFromRoll,diceFromValues,faceLabel} from '../dist/dice-geometry.js';
+import {dieModel,resultDirection,landingOrientation,rotate,dot,diceFromRoll,diceFromValues,faceLabel} from '../docs/dice-geometry.js';
 for(const sides of [4,6,8,10,12,20]){
  test(`d${sides} has a closed convex mesh with ${sides} valid faces`,()=>{const m=dieModel(sides),edges=new Map();assert.equal(m.faces.length,sides);for(const f of m.faces){assert.ok(Math.abs(Math.hypot(...f.normal)-1)<1e-6);for(const v of m.vertices)assert.ok(dot(f.normal,v)-f.distance<1e-5);for(let i=0;i<f.indices.length;i++){const a=f.indices[i],b=f.indices[(i+1)%f.indices.length],key=[a,b].sort((x,y)=>x-y).join(',');edges.set(key,(edges.get(key)||0)+1)}}assert.ok([...edges.values()].every(n=>n===2));assert.equal(m.vertices.length-edges.size+m.faces.length,2);assert.equal(new Set(m.faces.map(f=>f.value)).size,sides)});
  test(`d${sides} lands on the provided value for every possible roll`,()=>{const m=dieModel(sides);for(let value=1;value<=sides;value++){const q=landingOrientation(m,value),direction=rotate(resultDirection(m,value),q);assert.ok(direction[1]>.999999);const heights=m.vertices.map(v=>rotate(v,q)[1]);const bottom=Math.min(...heights);assert.ok(heights.filter(h=>Math.abs(h-bottom)<1e-5).length>=3,'At least one full face must rest on the table')}});

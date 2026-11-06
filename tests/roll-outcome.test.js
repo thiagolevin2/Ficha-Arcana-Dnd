@@ -1,4 +1,4 @@
-import test from 'node:test';import assert from 'node:assert/strict';import {rollOutcome} from '../dist/roll-outcome.js';import {dieModel,landingOrientation,rotate,presentationCamera,dot} from '../dist/dice-geometry.js';
+import test from 'node:test';import assert from 'node:assert/strict';import {rollOutcome} from '../docs/roll-outcome.js';import {dieModel,landingOrientation,rotate,presentationCamera,dot} from '../docs/dice-geometry.js';
 test('free roll does not declare success or failure without a DC',()=>{for(const natural of [1,8,20]){const r=rollOutcome({natural,total:natural+4,kind:'free'});assert.equal(r.success,null);assert.equal(r.compared,false)}});
 test('checks compare totals: natural 1 and 20 are not automatic outcomes',()=>{assert.equal(rollOutcome({natural:1,total:31,dc:10,kind:'check'}).success,true);assert.equal(rollOutcome({natural:20,total:20,dc:30,kind:'check'}).success,false)});
 test('attack criticals and natural 1 override armor class',()=>{assert.equal(rollOutcome({natural:20,total:20,dc:40,kind:'attack'}).tone,'critical');assert.equal(rollOutcome({natural:1,total:40,dc:10,kind:'attack'}).success,false)});

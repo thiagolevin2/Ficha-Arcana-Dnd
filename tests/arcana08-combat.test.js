@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {newCharacter,derive,attackStats,rollWeaponDamage,weaponAllowedAtCreation,hasOtherLightWeapon} from '../dist/core.js';
-import {WEAPONS} from '../dist/data.js';
+import {newCharacter,derive,attackStats,rollWeaponDamage,weaponAllowedAtCreation,hasOtherLightWeapon} from '../docs/core.js';
+import {WEAPONS} from '../docs/data.js';
 
 const base={str:15,dex:14,con:13,int:10,wis:10,cha:10};
 const origin={};
@@ -71,5 +71,5 @@ test('Espada Grande consta no catálogo 2024 com dano 2d6 e propriedade de duas 
  assert.equal(WEAPONS.espadagrande.name,'Espada Grande (Greatsword)');
  assert.equal(WEAPONS.espadagrande.dice,'2d6');
  assert.equal(WEAPONS.espadagrande.twoHanded,true);
- assert.equal(WEAPONS.picareta.two,undefined);
+ assert.equal(WEAPONS.picareta.two,'1d10'); // propriedade Versátil oficial 2024
 });

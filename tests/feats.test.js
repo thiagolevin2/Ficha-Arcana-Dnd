@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { featCategory, featEligibility, grantsFightingStyle, hasFightingStyleFeature, FIGHTING_STYLE_FEATS } from '../dist/feats.js';
+import { featCategory, featEligibility, grantsFightingStyle, hasFightingStyleFeature, FIGHTING_STYLE_FEATS } from '../docs/feats.js';
 
 test('categoriza as quatro categorias de talentos de 2024', () => {
   assert.equal(featCategory({ summary: 'Talento de Origem. Você recebe...' }), 'Origem');
@@ -31,7 +31,7 @@ test('mostra os dez talentos de Estilo de Luta do livro de 2024', () => {
 });
 
 test('permite registrar talento de Estilo de Luta no nível de classe que concede a característica', async () => {
-  const { newCharacter, advanceCharacter, derive } = await import('../dist/core.js');
+  const { newCharacter, advanceCharacter, derive } = await import('../docs/core.js');
   const paladin = newCharacter({ classId: 'paladino', level: 1, xp: 300, armor: 'malha' });
   const advanced = advanceCharacter(paladin, 'paladino', { fightingStyle: 'Defensivo' });
   assert.equal(advanced.level, 2);
@@ -41,7 +41,7 @@ test('permite registrar talento de Estilo de Luta no nível de classe que conced
 });
 
 test('não permite escolher estilo de luta como concessão de nível de classe incorreto', async () => {
-  const { newCharacter, advanceCharacter } = await import('../dist/core.js');
+  const { newCharacter, advanceCharacter } = await import('../docs/core.js');
   const fighter = newCharacter({ classId: 'guerreiro', level: 1, xp: 300 });
   assert.throws(() => advanceCharacter(fighter, 'guerreiro', { fightingStyle: 'Arquearia' }), /nível não concede/i);
 });

@@ -84,6 +84,11 @@ export function training(c){
  if(hasClass(c,'bardo',3)&&subclassFor(c,'bardo')==='Colégio da Bravura'){armor=Math.max(armor,2);shield=true;martial=true;}
  if(hasClass(c,'artifice',3)&&subclassFor(c,'artifice')==='Armeiro')armor=3;
  if(hasClass(c,'artifice',3)&&subclassFor(c,'artifice')==='Ferreiro de Batalha')martial=true;
+ // Talentos concedem treinamento; não são pré-requisitos do próprio talento.
+ const feats=new Set(c.feats||[]);
+ if(feats.has('Especialista em Armaduras Leves')){armor=Math.max(armor,1);shield=true;}
+ if(feats.has('Especialista em Armaduras Médias'))armor=Math.max(armor,2);
+ if(feats.has('Especialista em Armaduras Pesadas'))armor=Math.max(armor,3);
  return {armor,shield,martial};
 }
 export function attackCount(c){const fighter=classLevel(c,'guerreiro');let count=fighter>=20?4:fighter>=11?3:fighter>=5?2:1;
@@ -94,4 +99,4 @@ export function attackCount(c){const fighter=classLevel(c,'guerreiro');let count
 }
 export const abilityImprovementAt=(id,n)=>[4,8,12,16,19,...(id==='guerreiro'?[6,14]:id==='ladino'?[10]:[])].includes(n);
 
-export function cantripLimitFor(c,id){const source=castingSources(c).find(e=>e.classId===id);if(!source)return 0;const key=source.caster==='third'?(id==='guerreiro'?'cavaleiro_mistico':'trapaceiro_arcano'):id;return CLASS_SPELL_PROGRESSION[key]?.cantrips?.[source.level-1]||0;}
+export function cantripLimitFor(c,id){const source=castingSources(c).find(e=>e.classId===id);if(!source)return 0;if(id==='paladino'&&source.level>=2&&c.fightingStyleAlternative==='Guerreiro Abençoado')return 2;if(id==='guardiao'&&source.level>=2&&c.fightingStyleAlternative==='Guerreiro Druídico')return 2;const key=source.caster==='third'?(id==='guerreiro'?'cavaleiro_mistico':'trapaceiro_arcano'):id;return CLASS_SPELL_PROGRESSION[key]?.cantrips?.[source.level-1]||0;}

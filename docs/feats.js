@@ -73,10 +73,12 @@ export function featEligibility(feat, context = {}) {
   if ((text.includes('conjuracao ou magia de pacto') || text.includes('caracteristica de conjuracao')) && !context.spellcasting) {
     reasons.push('Exige característica de Conjuração ou Magia de Pacto.');
   }
-  if (text.includes('treinamento com armadura leve') && Number(context.armorTraining || 0) < 1) reasons.push('Exige treinamento com armadura leve.');
-  if (text.includes('treinamento com armadura media') && Number(context.armorTraining || 0) < 2) reasons.push('Exige treinamento com armadura média.');
-  if (text.includes('treinamento com armadura pesada') && Number(context.armorTraining || 0) < 3) reasons.push('Exige treinamento com armadura pesada.');
-  if (text.includes('treinamento com escudo') && !context.shieldTraining) reasons.push('Exige treinamento com escudo.');
+  // Somente pré-requisitos declarados explicitamente podem bloquear o talento; a descrição inclui benefícios.
+  const prerequisite = normalize(String(feat?.prerequisites || feat?.prerequisite || '').trim());
+  if (prerequisite.includes('treinamento com armadura leve') && Number(context.armorTraining || 0) < 1) reasons.push('Exige treinamento com armadura leve.');
+  if (prerequisite.includes('treinamento com armadura media') && Number(context.armorTraining || 0) < 2) reasons.push('Exige treinamento com armadura média.');
+  if (prerequisite.includes('treinamento com armadura pesada') && Number(context.armorTraining || 0) < 3) reasons.push('Exige treinamento com armadura pesada.');
+  if (prerequisite.includes('treinamento com escudo') && !context.shieldTraining) reasons.push('Exige treinamento com escudo.');
 
   const repeatable = text.includes('repetivel');
   const owned = (context.ownedFeats || []).map(normalize);

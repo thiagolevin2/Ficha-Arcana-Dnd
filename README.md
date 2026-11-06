@@ -1,6 +1,74 @@
 # Arcana — fichas e dados para D&D 2024
 
+## Organização para GitHub (0.9.6)
+
+Esta edição conserva **data/**, **dist/**, **docs/**, **scripts/** e **tests/**, como no projeto original. Para caber em uma única seleção de arquivos no GitHub, o site completo fica apenas em **docs/**, sem a cópia duplicada de arquivos em **dist/**. O diretório **dist/** contém um redirecionamento; quem precisar da cópia completa pode executar `python scripts/gerar_dist.py` no computador após baixar o projeto.
+
+- **Publicar no GitHub Pages:** `Settings > Pages > Deploy from a branch > main > /docs`.
+- **Executar localmente no Windows:** execute `INICIAR_WINDOWS.bat` (agora serve `docs/`).
+- **Executar os testes:** `npm test` (requer Node.js, sem instalações de dependências).
+- **Histórico de alterações:** `data/historico/` (mantido integralmente).
+- **Edição:** altere os arquivos em `docs/`; `data/` guarda os dados-fonte e `scripts/` os geradores.
+
+Não envie um ZIP fechado para a interface de upload de arquivos do GitHub. Extraia-o e envie seu conteúdo, preservando as pastas.
+
+
 Site completo em português, com criação de personagens, ficha interativa, dados 3D e referências dos PDFs fornecidos. Funciona sem dependências de compilação.
+
+## Arcana 0.9.6 — revisão de espécies e linhagens (beta)
+
+A versão **0.9.6** reorganiza a apresentação de benefícios de espécies e corrige escolhas/concessões. Elfo e Humano agora têm escolhas obrigatórias de perícias e truques/talentos na criação; Aasimar usa Revelação Celestial ativável e dano opcional nos ataques; caixas de Gnomo, Tiferino, Draconato, Anão e Pequenino mostram poderes, resistências e rolagens aplicáveis. Suplementos como Dhampiro, Forjado Bélico, Híbrido Simic, Transmorfo, Genasi, Tortle, Tabaxi, Centauro, Aarakocra, Tritão e Draconato de Gemas receberam controles e correções compatíveis com a regra da fonte adotada.
+
+**Tempo, turnos, alvos, áreas e efeitos situacionais continuam a cargo da mesa.** As habilidades configuráveis da 0.9.5 foram mantidas e os dados de personagens anteriores continuam importáveis. Confira **`data/historico/ALTERACOES_0.9.6.md`** para a lista completa e os limites; faça backup JSON antes de atualizar.
+
+## Arcana 0.9.5 — uso simplificado e controle assistido (beta)
+
+A versão 0.9.5 reorganiza as ações de jogo: **magias** apenas para registrar uso e fazer rolagens, **Companheiros** como página independente, **Transformações** somente quando há habilidade correspondente, **itens mágicos** e **infusões** diretamente no Inventário, e **Habilidades** com traços de espécies/linhagens/talentos/subclasses, rolagens e custos configuráveis.
+
+**Sem automação de turnos, rodadas, áreas e alvos.** O jogador/Mestre administra a duração e consequências. Efeitos de antigas fichas continuam visíveis para encerramento manual. A prioridade mecânica é D&D 2024; características suplementares não estruturadas são editáveis, não inventadas.
+
+Veja `data/historico/ALTERACOES_0.9.5.md` para todos os detalhes, status de testes e limitações. Faça backup JSON antes de atualizar.
+
+## Arcana 0.9.4 — macros de combate (beta)
+
+Nova subaba **Ficha > Combate > Macros**: combine armas, ataque desarmado, habilidades, magias, poderes de itens com cargas e dano personalizado em uma única rolagem composta, recalculada a partir da ficha atual. Os gastos de recursos só são aplicados após confirmar. Duração de efeitos, turnos e rodadas ficam a cargo do jogador/Mestre. **145 testes automatizados aprovados.**
+
+Leia `data/historico/ALTERACOES_0.9.4.md` e `data/historico/PRIORIDADES_E_CONTROLES_MANUAIS.md` para entender as regras, limites, prioridades e o que foi delegado à mesa. A execução visual no navegador do ambiente estava bloqueada.
+
+## Arcana 0.9.3 — cena, subclasses e criaturas (beta)
+
+A versão 0.9.3 adiciona um acompanhamento de características para as **88 subclasses**, gerenciamento de duração, concentração, condições e alvos de magias, fichas vinculadas de companheiros e Forma Selvagem, poderes ativáveis de itens, algumas reações de infusões e controles de escolhas de espécies e talentos. **131 testes automatizados aprovados.**
+
+**A automação de todas as características não está concluída**: os recursos de subclasses que não possuem regras estruturadas são configuráveis, mas não recebem efeitos inventados. Leia `data/historico/ALTERACOES_0.9.3.md` para a matriz de cobertura e as limitações.
+
+## Arcana 0.9.2 — integração de regras e efeitos (beta)
+
+A 0.9.2 acrescenta **infusões do Artífice vinculadas ao inventário**, bônus editáveis de itens equipados/sintonizados, concessões de magias por fontes especiais (incluindo linhagens de Elfo/Tiferino 2024), seleção de maestrias de armas, Sopro do Draconato, habilidades de Orc e Golias e novos requisitos de invocações. **109 testes automatizados foram aprovados.**
+
+**Leia `data/historico/ALTERACOES_0.9.2.md` antes de utilizar.** O documento indica as regras com efeito real e os poderes que continuam manuais. Esta não é uma implementação exaustiva de todas as 88 subclasses ou das 424 magias.
+
+## Arcana 0.9.1 — revisão ampliada (beta)
+
+A versão 0.9.1 acrescenta Arcanos Místicos, seleção limitada de Invocações/Metamagias/Manobras, dados de Superioridade, regras de espécies, sintonização e backup completo. **Veja `data/historico/ALTERACOES_0.9.1.md` para capacidades e limites atuais.**
+
+## Arcana 0.9 — revisão de mecânicas e segurança (beta)
+
+Atualização incremental da versão 0.8, preservando o catálogo existente, os dados 3D, a estrutura de armazenamento local e a publicação estática. **Não é uma revisão exaustiva de todas as subclasses, espécies, suplementos e poderes de itens.** As opções sem efeito automático continuam marcadas para conferência manual.
+
+- Novas regras isoladas para dano, morte, estabilização, PV temporários e cura (`rules09.js`), integradas à ficha.
+- Benefícios e pendências visíveis no novo **Painel de Verificação da Ficha** na seção **Habilidades** (`benefits09.js`).
+- Regras corrigidas: equipamento/proficiência de Ladino, Artes Marciais de Monge, Fúria e armas de arremesso com Força, estilos de luta, ataque secundário com modificadores negativos, proteção de Descanso Curto, repetição de concentração com Inspiração e condições incapacitantes.
+- Conjuração revista para preparação por classe, Marca do Predador/Destruição Divina como magias sempre disponíveis, rituais de Mago, Segredos Mágicos de Bardo e validação de círculo nas fontes multiclasse.
+- Treinamento de armaduras por talentos e elegibilidade que não confunde benefícios com pré-requisitos.
+- Erratas de texto/catálogo: escola de **Esfera Flamejante = Evocação**, **Picareta de Guerra** versátil 1d10, Dardo com propriedade de arremesso e correções em referências de Clérigo.
+- Edição de Estilos de Luta sem bônus residuais, impressão com nomes escapados, histórico de aumentos preservado, importação de inventários grandes e painel de recuperação de dados de importação local inválidos.
+- Ajustes de responsividade, acessibilidade dos controles de exportação e foco de janelas.
+
+**Backup:** antes de atualizar, exporte seus personagens JSON na versão antiga. As fichas locais usam o mesmo endereço/origem do navegador (`localhost:8000` ou o domínio publicado). Se houver ficha antiga inválida, aparece um aviso para **baixar os dados originais**, sem apagá-los silenciosamente; prosseguir com fichas recuperáveis exige confirmação.
+
+**Testes:** execute `npm test` com Node.js (suíte automatizada atualizada). Nesta entrega a execução dos testes de código passou, mas o navegador automatizado do ambiente de desenvolvimento bloqueou a abertura de páginas, por isso a inspeção visual e todos os percursos interativos devem ser revalidados em um navegador comum.
+
+Veja `data/historico/ALTERACOES_0.9.md` para os detalhes e os limites conhecidos.
 
 ## Abrir no computador
 
@@ -8,12 +76,12 @@ Site completo em português, com criação de personagens, ficha interativa, dad
 2. Com Python 3 instalado, abra `INICIAR_WINDOWS.bat` no Windows. Em outros sistemas, execute na pasta do projeto:
 
 ```sh
-python3 -m http.server 8000 --bind 127.0.0.1 --directory dist
+python3 -m http.server 8000 --bind 127.0.0.1 --directory docs
 ```
 
 3. Abra `http://localhost:8000` no navegador. Mantenha o terminal aberto enquanto usa o site.
 
-Use um servidor HTTP: abrir `dist/index.html` diretamente por duplo clique impede o carregamento dos módulos e catálogos em alguns navegadores. Qualquer hospedagem estática pode publicar o conteúdo de `dist/`. Para GitHub Pages, a pasta `docs/` já contém uma cópia pronta do site; em **Settings → Pages**, selecione **Deploy from a branch**, a branch principal e a pasta **/docs**. Ao alterar o aplicativo, atualize também a cópia em `docs/` a partir de `dist/` antes de publicar.
+Use um servidor HTTP: abrir `docs/index.html` diretamente por duplo clique impede o carregamento dos módulos e catálogos em alguns navegadores. Qualquer hospedagem estática pode publicar o conteúdo de `docs/`. Para GitHub Pages, a pasta `docs/` já contém uma cópia pronta do site; em **Settings → Pages**, selecione **Deploy from a branch**, a branch principal e a pasta **/docs**. Ao alterar o aplicativo, atualize também a cópia em `docs/` a partir de `docs/` antes de publicar.
 
 ## Atualização de equipamentos e ficha
 
@@ -23,7 +91,7 @@ Use um servidor HTTP: abrir `dist/index.html` diretamente por duplo clique imped
 - Armas personalizadas podem usar qualquer arma do catálogo como base e configurar dano como dado, dado + valor fixo, dado + dado, dado + atributo ou dado + valor fixo + dado.
 - Alinhamento opcional na criação e guia própria em Minha ficha, com os nove alinhamentos.
 - A barra “O destino está nos dados” pode ser escondida e restaurada pelo botão flutuante; a preferência fica salva no navegador.
-- Cópia de `dist/` sincronizada com `docs/` para GitHub Pages.
+- Cópia de `docs/` sincronizada com `docs/` para GitHub Pages.
 
 ## Arcana 0.8 — combate, equipamentos e progressão por XP
 
@@ -68,7 +136,7 @@ O livro de 2024 fornecido prevalece sobre reimpressões e conflitos. Versões an
 
 As correspondências consideram o efeito, além do nome: por exemplo, a tradução de Tasha chama a magia de 5º círculo de `Invocar Celestial`; a base de 2024 enviada a chama de `Convocar Celestial`. A magia de 7º círculo chamada `Invocar Celestial` nessa base continua distinta.
 
-Consulte `ADAPTACOES_2024.md` e `dist/supplement-compatibility.json` para a auditoria de precedência. Estas são adaptações editoriais de compatibilidade, não uma atualização oficial integral dos suplementos.
+Consulte `ADAPTACOES_2024.md` e `docs/supplement-compatibility.json` para a auditoria de precedência. Estas são adaptações editoriais de compatibilidade, não uma atualização oficial integral dos suplementos.
 
 ## Novas opções da ficha
 
@@ -99,21 +167,21 @@ O índice de livros mantém capítulos históricos, bestiário, tabelas e encont
 
 ## Arquivos e desenvolvimento
 
-- `dist/app.js`: interface e fluxos. A seção **Tesouro** inclui conversão de moedas (PC, PP, PE, PO e PL); a guia **Economias** registra ganhos e gastos e atualiza o saldo do Tesouro.
+- `docs/app.js`: interface e fluxos. A seção **Tesouro** inclui conversão de moedas (PC, PP, PE, PO e PL); a guia **Economias** registra ganhos e gastos e atualiza o saldo do Tesouro.
 - `docs/`: cópia estática pronta para publicação pelo GitHub Pages; o `index.html` fica diretamente nesta pasta. A abertura do site leva ao hub **Minhas fichas**; o tema noturno pode ser alternado pelo botão de lua/sol no cabeçalho.
-- `dist/core.js`: cálculos, avanço, descansos, equipamentos e sanitização de importação.
-- `dist/progression.js` e `dist/class-progression-data.js`: níveis, pré-requisitos, proficiências e progressão de conjuração por classe.
-- `dist/portrait.js`: validação dos arquivos e dimensões do retrato.
-- `dist/dice3d.js` e `dist/dice-geometry.js`: animação e geometria dos dados.
-- `dist/roll-outcome.js`: resultado com ou sem dificuldade.
-- `dist/data.js`, `dist/compatibility.js` e `dist/expansion-data.js`: base e opções adicionais.
-- `dist/spells.json`, `dist/supplement-catalog.json` e `dist/supplement-pages.json`: descrições e referências.
+- `docs/core.js`: cálculos, avanço, descansos, equipamentos e sanitização de importação.
+- `docs/progression.js` e `docs/class-progression-data.js`: níveis, pré-requisitos, proficiências e progressão de conjuração por classe.
+- `docs/portrait.js`: validação dos arquivos e dimensões do retrato.
+- `docs/dice3d.js` e `docs/dice-geometry.js`: animação e geometria dos dados.
+- `docs/roll-outcome.js`: resultado com ou sem dificuldade.
+- `docs/data.js`, `docs/compatibility.js` e `docs/expansion-data.js`: base e opções adicionais.
+- `docs/spells.json`, `docs/supplement-catalog.json` e `docs/supplement-pages.json`: descrições e referências.
 - `data/`: dados editáveis e base canônica usada para resolver repetições.
 - `scripts/build_expansions.py`: reconstrói os catálogos a partir de `data/` com Python 3, sem dependências externas.
 - `scripts/index_supplements.py`: reindexação dos PDFs originais; requer PyMuPDF e os arquivos de origem. Os PDFs não acompanham o ZIP.
 - `tests/`: testes com Node.js. Execute `npm test`.
 
-No ambiente de edição Sites, a prévia usa `sites-preview start /workspace/sites/arcana-dnd`. A raiz publicada é `dist/`.
+No ambiente de edição Sites, a prévia usa `sites-preview start /workspace/sites/arcana-dnd`. A raiz publicada é `docs/`.
 
 ## Persistência e fontes
 

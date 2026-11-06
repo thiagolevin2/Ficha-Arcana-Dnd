@@ -1,11 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,existsSync} from 'node:fs';
-import {CLASSES,SPECIES,BACKGROUNDS} from '../dist/data.js';
-import {SUPPLEMENT_OPTIONS,SOURCE_META,EXPANSION_SUMMARY} from '../dist/compatibility.js';
-import {newCharacter,normalizeImported,derive,preparedLimit,slotInfo} from '../dist/core.js';
+import {CLASSES,SPECIES,BACKGROUNDS} from '../docs/data.js';
+import {SUPPLEMENT_OPTIONS,SOURCE_META,EXPANSION_SUMMARY} from '../docs/compatibility.js';
+import {newCharacter,normalizeImported,derive,preparedLimit,slotInfo} from '../docs/core.js';
 const read=p=>JSON.parse(readFileSync(new URL(p,import.meta.url),'utf8'));
-const catalog=read('../dist/supplement-catalog.json');
+const catalog=read('../docs/supplement-catalog.json');
 
 test('2024 class and species rules remain authoritative after supplements are applied',()=>{
  const base=read('../data/phb2024-data.json');
@@ -17,7 +17,7 @@ test('2024 class and species rules remain authoritative after supplements are ap
  assert.deepEqual(BACKGROUNDS,base.backgrounds);
  assert.equal(Object.keys(CLASSES).length,13);
  assert.equal(Object.keys(SPECIES).length,110);
- for(const cl of Object.values(CLASSES))assert.ok(existsSync(new URL('../dist/assets/'+cl.art+'.jpg',import.meta.url)));
+ for(const cl of Object.values(CLASSES))assert.ok(existsSync(new URL('../docs/assets/'+cl.art+'.jpg',import.meta.url)));
 });
 
 test('catalog identities are unique, superseded options cannot be selected, and text is renderable',()=>{
@@ -33,7 +33,7 @@ test('catalog identities are unique, superseded options cannot be selected, and 
 });
 
 test('canonical spell descriptions are immutable and summon families stay distinct',()=>{
- const original=read('../data/phb2024-spells.json'),current=read('../dist/spells.json');
+ const original=read('../data/phb2024-spells.json'),current=read('../docs/spells.json');
  assert.equal(original.length,391);assert.equal(current.length,424);
  for(const old of original){const now=current.find(s=>s.id===old.id);for(const [key,value]of Object.entries(old))if(key!=='classes')assert.deepEqual(now[key],value,old.name+' '+key);assert.ok(old.classes.every(c=>now.classes.includes(c)));}
  for(const name of ['Invocar Celestial','Convocar Celestial'])assert.ok(current.find(s=>s.name===name),name);
@@ -51,7 +51,7 @@ test('supplement origin never adds racial ability bonuses and importing retains 
 });
 
 test('all provided source pages are indexed once with experimental provenance',()=>{
- const pages=read('../dist/supplement-pages.json');
+ const pages=read('../docs/supplement-pages.json');
  assert.equal(SOURCE_META.length,10);assert.equal(pages.length,509);assert.equal(EXPANSION_SUMMARY.indexedPageCount,490);assert.equal(EXPANSION_SUMMARY.duplicates.length,1);
  assert.equal(new Set(pages.map(p=>p.id)).size,pages.length);
  for(const p of pages)assert.ok(SOURCE_META.some(s=>s.id===p.source));
