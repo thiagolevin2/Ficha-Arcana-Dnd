@@ -1,6 +1,0 @@
-Ficha Arcana 0.13 Beta
-Base: Ficha_Arcana_0.12_GitHub.zip (versão corrigida)
-Revisão: subclasses, com prioridade às regras de 2024
-Publicação: docs/ — 52 arquivos no pacote completo
-Validação: 315 testes aprovados
-Data: 2026-11-06
