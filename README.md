@@ -1,26 +1,36 @@
-# Ficha Arcana 0.13 Beta
+# Ficha Arcana 0.16 Beta
 
-Revisão de subclasses aplicada diretamente à **versão corrigida 0.12**, com as melhorias dos talentos preservadas.
+Atualização incremental da **0.15 fornecida**, preservando `docs/`, a identidade visual e as fichas existentes. A ampliação desta versão está na **Área do Mestre**.
 
-O Livro do Jogador de 2024 prevalece em conflitos. Deslocamento, voo, alcance, posições, alvos e duração ficam descritos; bônus numéricos pertinentes usam os campos existentes.
+## Conteúdo e cobertura
 
-O catálogo tem 88 subclasses com características individuais. A revisão acrescenta escolhas, recursos, magias concedidas, rolagens, armas e fichas vinculadas onde indicado em [ALTERACOES_0.13.md](ALTERACOES_0.13.md). As demais características continuam disponíveis na descrição e nos ajustes manuais. Não há automação completa de todas as características.
+- **503 nomes e páginas** do índice do PDF fornecido.
+- **80 blocos conferidos**: 9 preservados e 71 revisados nesta versão.
+- **286 extrações provisórias**, identificadas e com confirmação antes de adicionar.
+- **137 referências incompletas**, bloqueadas para uso até revisão/preenchimento.
 
-## Publicar no GitHub
+**Não é o livro inteiro conferido/automatizado.** Selecione **Conferidos / personalizados** no catálogo para usar apenas o lote revisado. Consulte [ALTERACOES_0.16.md](ALTERACOES_0.16.md) para a lista dos 80 e das 137 pendências, regras manuais e limites da verificação.
 
-Extraia o ZIP e envie seu conteúdo à raiz do mesmo repositório: `docs/`, `README.md`, `VERSAO.txt` e `ALTERACOES_0.13.md`. Mantenha a publicação atual em `/docs`. Não envie somente o ZIP e não crie outra pasta envolvendo o site.
+## Área do Mestre
 
-São **52 arquivos**, apenas dois a mais que a 0.12. Todo o código e os recursos necessários à publicação estão em `docs/`. O site não precisa de compilação nem dependências instaladas.
+Na tela inicial, abra **Área do Mestre**. Pesquise por nome e filtre origem, tipo, tamanho, ND e conferência. Adicione 1–50 cópias, com PV, iniciativa, notas e usos independentes.
 
-## Usar as melhorias
+O editor permite ações comuns, bônus, reações e lendárias; fórmulas, parcelas de dano, CDs, usos, recarga e recursos. Ataque, dano e crítico usam botões separados. Recarga e recuperação são confirmadas pela mesa.
 
-- **Minha ficha → Classes:** escolha a subclasse.
-- **Habilidades → Escolhas da subclasse:** complete as seleções disponíveis e use os recursos.
-- **Magias:** as magias concedidas mostram a própria origem e permitem escolher o custo ao conjurar.
-- **Companheiros:** vincule os modelos disponíveis; o dano sofrido é preservado na progressão.
+**Rolagem livre** aceita fórmulas sem CD, sem gastar recursos. **Dados 3D** liga/desliga a animação das rolagens do Mestre. Alvos, rodadas, duração, movimento e consequências continuam manuais.
 
-As fichas continuam no navegador e mantêm o formato anterior de exportação/importação. Configurações manuais anteriores são preservadas; confira ajustes gerais se já tiver somado manualmente um benefício agora calculado.
+## Publicação no GitHub Pages
 
-## Testes
+Extraia o ZIP e envie o conteúdo à raiz do repositório; mantenha `docs/`. Configure Pages para `main` → `/docs`. O pacote público tem 58 arquivos, sem testes, dependências ou pasta `dist/` duplicada. Não envie apenas o ZIP fechado.
 
-**315 testes aprovados, zero falhas.** O complemento opcional `Ficha_Arcana_0.13_Testes.zip` contém testes, dados e instruções. Extraia-o junto ao pacote de publicação e execute `npm test` com Node.js 20 ou superior. Não é necessário instalar pacotes.
+Personagens e Mestre ficam salvos neste navegador, em áreas separadas. **Exporte os dois backups JSON antes da atualização.** O backup do Mestre importa com confirmação, mesclando por padrão; a substituição é uma escolha explícita. Não limpe os dados do navegador para atualizar o site.
+
+## Desenvolvimento e testes
+
+Extraia `Ficha_Arcana_0.16_Testes.zip` ao lado de `docs/`. Requer Node.js 20+ e não precisa instalar dependências. Execute `npm test`.
+
+**365 testes aprovados, zero falhas e zero ignorados.** Houve verificação em navegador desktop de encontros, rolagens, edição, backup, importação de ficha antiga, magia e macro. Celular físico, matriz completa de navegadores e a publicação real no Pages não foram homologados.
+
+## Continuidade
+
+Leia [LEIA_PRIMEIRO_CONTINUIDADE.md](LEIA_PRIMEIRO_CONTINUIDADE.md). P04 continua sem alteração; redução de nível não foi reintroduzida; infusões e descansos/curas dos personagens não foram alterados nesta versão.
