@@ -1,3 +1,4 @@
+import {featScore012} from './feat-rules012.js';
 // Mestre da Batalha, PHB 2024 fornecido, pp. 133–135.
 // Recursos e dados são calculados; gatilhos, alvos e o limite por turno são manuais.
 import {CLASSES} from './data.js';
@@ -28,7 +29,7 @@ export function battleMasterSkill(c){return isBattleMaster(c)&&CLASSES.guerreiro
 export function battleMasterInfo(c){
  if(!isBattleMaster(c))return null;
  const level=classLevel(c,'guerreiro'),pool=superiorityPool(c),ability=c.battleMaster?.ability==='dex'?'dex':'str';
- const value=Math.min(30,Math.max(1,(Number(c.base?.[ability])||10)+(Number(c.origin?.[ability])||0)+(Number(c.advances?.[ability])||0))),modifier=Math.floor((value-10)/2),pb=2+Math.floor((totalLevel(c)-1)/4);
+ const value=featScore012(c,ability),modifier=Math.floor((value-10)/2),pb=2+Math.floor((totalLevel(c)-1)/4);
  const knownIds=new Set(c.advancedChoices?.maneuver||[]),maneuvers=SUPPLEMENT_OPTIONS.filter(o=>o.kind==='maneuver'&&o.source==='phb2024'&&o.selectable!==false&&knownIds.has(o.id)).slice(0,choiceLimit(c,'maneuver'));
  return {level,pool,remaining:Math.max(0,pool.max-(c.resourceUsed?.superiority||0)),ability,modifier,dc:8+modifier+pb,maneuvers,limit:choiceLimit(c,'maneuver'),features:BATTLE_MASTER_FEATURES.filter(f=>f.level<=level),relentless:level>=15,enemyReady:level>=7&&!(c.resourceUsed?.knowyourenemy||0)};
 }

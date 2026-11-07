@@ -1,5 +1,7 @@
+import {subclassPassives013} from './subclass-rules013.js';
 import {ABILITIES,CLASSES,FULL_SLOTS} from './data.js';
 import {CLASS_SPELL_PROGRESSION} from './class-progression-data.js';
+import {hasFeat012,featSaves012,featScore012} from './feat-rules012.js';
 
 const bounded=(n,min,max)=>Math.max(min,Math.min(max,Math.floor(Number(n)||0)));
 export const XP_THRESHOLDS=Object.freeze([0,300,900,2700,6500,14000,23000,34000,48000,64000,85000,100000,120000,140000,165000,195000,225000,265000,305000,355000]);
@@ -40,7 +42,7 @@ export function validateClassPlan(c,entries,{checkRequirements=true}={}){
 }
 export function multiclassEligibility(c,target){
  const ids=Array.isArray(target)?target:[...new Set([...classEntries(c).map(e=>e.classId),target])];
- const sc=Object.fromEntries(ABILITIES.map(([k])=>[k,(Number(c.base?.[k])||0)+(Number(c.origin?.[k])||0)+(Number(c.advances?.[k])||0)]));
+ const sc=Object.fromEntries(ABILITIES.map(([k])=>[k,featScore012(c,k)]));
  const errors=[];
  for(const id of ids){if(!Object.hasOwn(CLASSES,id)){errors.push('Classe inválida.');continue;}for(const group of MULTICLASS_REQUIREMENTS[id]||[])if(!group.some(k=>sc[k]>=13))errors.push(CLASSES[id].name+' exige '+group.map(k=>ABILITIES.find(a=>a[0]===k)[2]).join(' ou ')+' 13.');}
  return {valid:errors.length===0,errors};
@@ -66,7 +68,7 @@ export function preparationClassIds(c,spell){
  return source?[source.classId]:[];
 }
 export function preparedLimitFor(c,id){const source=castingSources(c).find(e=>e.classId===id);if(!source)return 0;const n=source.level;
- if(id==='artifice')return Math.max(1,Math.floor(((Number(c.base.int)||0)+(Number(c.origin.int)||0)+(Number(c.advances?.int)||0)-10)/2)+Math.floor(n/2));
+ if(id==='artifice')return Math.max(1,Math.floor((featScore012(c,'int')-10)/2)+Math.floor(n/2));
  const key=source.caster==='third'?(id==='guerreiro'?'cavaleiro_mistico':'trapaceiro_arcano'):id;const table=CLASS_SPELL_PROGRESSION[key];return table?.prepared?.[n-1]||0;
 }
 export function hitDicePools(c){const totals={};for(const e of classEntries(c)){const sides=CLASSES[e.classId].hd;totals[sides]=(totals[sides]||0)+e.level;}
@@ -76,7 +78,7 @@ export function hitDicePools(c){const totals={};for(const e of classEntries(c)){
 export function hitPointBase(c,constitutionModifier){let hp=0;for(const [i,e]of classEntries(c).entries())for(let level=1;level<=e.level;level++){
  const hd=CLASSES[e.classId].hd,initial=i===0&&level===1,record=(c.hpRolls||[]).find(r=>r.classId===e.classId&&r.level===level),value=initial?hd:record?bounded(record.roll,1,hd):hd/2+1;hp+=Math.max(1,value+constitutionModifier);
  }return hp;}
-export function savingThrows(c){const prof=new Set(CLASSES[c.classId].saves);if(hasClass(c,'monge',14))for(const [k]of ABILITIES)prof.add(k);for(const k of c.extraSaves||[])if(ABILITIES.some(a=>a[0]===k))prof.add(k);return [...prof];}
+export function savingThrows(c){const prof=new Set(CLASSES[c.classId].saves);if(hasClass(c,'monge',14))for(const [k]of ABILITIES)prof.add(k);for(const k of [...(c.extraSaves||[]),...featSaves012(c),...subclassPassives013(c).saves])if(ABILITIES.some(a=>a[0]===k))prof.add(k);return [...prof];}
 export function training(c){
  const initial=CLASSES[c.classId],armorRank=['Nenhuma','Leve','Média','Pesada'].indexOf(initial.armor);let armor=Math.max(0,armorRank),shield=['barbaro','clerigo','druida','guerreiro','paladino','guardiao','artifice'].includes(c.classId),martial=initial.weapons==='Marciais';
  for(const e of classEntries(c).slice(1)){const t=MULTICLASS_TRAINING[e.classId]||{};armor=Math.max(armor,t.armor||0);shield||=!!t.shield;martial||=!!t.martial;}
@@ -90,11 +92,13 @@ export function training(c){
  if(feats.has('Especialista em Armaduras Leves')){armor=Math.max(armor,1);shield=true;}
  if(feats.has('Especialista em Armaduras Médias'))armor=Math.max(armor,2);
  if(feats.has('Especialista em Armaduras Pesadas'))armor=Math.max(armor,3);
- return {armor,shield,martial};
+ if(hasFeat012(c,'Treinamento com Armas Marciais'))martial=true;
+ const sub=subclassPassives013(c);armor=Math.max(armor,sub.armor);shield||=sub.shield;martial||=sub.martial;return {armor,shield,martial};
 }
 export function attackCount(c){const fighter=classLevel(c,'guerreiro');let count=fighter>=20?4:fighter>=11?3:fighter>=5?2:1;
  if(['barbaro','monge','paladino','guardiao'].some(id=>hasClass(c,id,5)))count=Math.max(count,2);
- if(hasClass(c,'bardo',6)&&['Colégio da Bravura','Colégio das Espadas'].includes(subclassFor(c,'bardo')))count=Math.max(count,2);
+ if(hasClass(c,'bardo',6)&&subclassFor(c,'bardo')==='Colégio da Bravura')count=Math.max(count,2);
+ if(hasClass(c,'mago',6)&&subclassFor(c,'mago')==='Lâmina Cantante')count=Math.max(count,2);
  if(hasClass(c,'artifice',5)&&['Armeiro','Ferreiro de Batalha'].includes(subclassFor(c,'artifice')))count=Math.max(count,2);
  return count;
 }

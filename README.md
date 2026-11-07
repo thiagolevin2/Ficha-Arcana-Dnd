@@ -1,21 +1,26 @@
-# Ficha Arcana 0.11
+# Ficha Arcana 0.13 Beta
 
-Versão de publicação do site Ficha Arcana, preparada para GitHub Pages.
+Revisão de subclasses aplicada diretamente à **versão corrigida 0.12**, com as melhorias dos talentos preservadas.
 
-## Publicação
+O Livro do Jogador de 2024 prevalece em conflitos. Deslocamento, voo, alcance, posições, alvos e duração ficam descritos; bônus numéricos pertinentes usam os campos existentes.
 
-1. Envie o conteúdo desta pasta para a raiz do repositório.
-2. Em **Settings → Pages**, selecione a branch `main` e a pasta `/docs`.
-3. Os arquivos efetivamente publicados estão em `docs/`.
+O catálogo tem 88 subclasses com características individuais. A revisão acrescenta escolhas, recursos, magias concedidas, rolagens, armas e fichas vinculadas onde indicado em [ALTERACOES_0.13.md](ALTERACOES_0.13.md). As demais características continuam disponíveis na descrição e nos ajustes manuais. Não há automação completa de todas as características.
 
-## Alterações 0.11
+## Publicar no GitHub
 
-- Painéis separados para Poderes de espécie, Poderes de linhagem, Talentos e Habilidades de subclasses.
-- Remoção de entradas de espécie duplicadas no catálogo genérico.
-- Ativação com contador para poderes de espécie que possuem usos, incluindo Mãos Curativas e Sopro Dracônico.
-- Filtros de espécie por arquétipo e recomendações de atributos por classe.
-- Transformações organizadas em janela própria; habilidades de voo permanecem apenas descritivas.
-- Ajustes de deslocamento exibidos somente na janela **Deslocamento**.
-- Cartões individuais para magias de dano no combate.
+Extraia o ZIP e envie seu conteúdo à raiz do mesmo repositório: `docs/`, `README.md`, `VERSAO.txt` e `ALTERACOES_0.13.md`. Mantenha a publicação atual em `/docs`. Não envie somente o ZIP e não crie outra pasta envolvendo o site.
 
-Os dados dos personagens permanecem no armazenamento local do navegador. Exporte as fichas JSON antes de limpar os dados do navegador ou trocar de dispositivo.
+São **52 arquivos**, apenas dois a mais que a 0.12. Todo o código e os recursos necessários à publicação estão em `docs/`. O site não precisa de compilação nem dependências instaladas.
+
+## Usar as melhorias
+
+- **Minha ficha → Classes:** escolha a subclasse.
+- **Habilidades → Escolhas da subclasse:** complete as seleções disponíveis e use os recursos.
+- **Magias:** as magias concedidas mostram a própria origem e permitem escolher o custo ao conjurar.
+- **Companheiros:** vincule os modelos disponíveis; o dano sofrido é preservado na progressão.
+
+As fichas continuam no navegador e mantêm o formato anterior de exportação/importação. Configurações manuais anteriores são preservadas; confira ajustes gerais se já tiver somado manualmente um benefício agora calculado.
+
+## Testes
+
+**315 testes aprovados, zero falhas.** O complemento opcional `Ficha_Arcana_0.13_Testes.zip` contém testes, dados e instruções. Extraia-o junto ao pacote de publicação e execute `npm test` com Node.js 20 ou superior. Não é necessário instalar pacotes.

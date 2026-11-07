@@ -1,3 +1,4 @@
+import {ward013,alterWard013} from './subclass-rules013.js';
 import {conditionsFor,breakConcentration} from './rules093.js';
 // Regras compartilhadas de combate. Sem acesso à interface, para testes determinísticos.
 export const DISABLING_CONDITIONS = ['Incapacitado','Inconsciente','Paralisado','Atordoado','Petrificado'];
@@ -9,8 +10,9 @@ export function syncEffects(c, armorCategory='') {
  return c;
 }
 export function receiveDamage(c, amount, maxHp, {critical=false}={}){
- const damage=Math.max(0,Math.floor(Number(amount)||0));
+ let damage=Math.max(0,Math.floor(Number(amount)||0));let wardAbsorbed=0;
  if(c.lifeState==='morto'||damage===0)return {damage:0,absorbed:0,remaining:0,instantDeath:false};
+ const protection=ward013(c);if(protection?.created&&protection.hp>0){const w=alterWard013(c,{damage});wardAbsorbed=w.absorbed;damage=w.overflow;if(damage===0)return {damage:0,absorbed:0,wardAbsorbed,remaining:0,instantDeath:false};}
  const priorHp=c.hp,absorbed=Math.min(c.tempHp||0,damage),remaining=damage-absorbed;
  c.tempHp=(c.tempHp||0)-absorbed;
  if(priorHp===0){
@@ -24,7 +26,7 @@ export function receiveDamage(c, amount, maxHp, {critical=false}={}){
  const instantDeath=priorHp>0 && remaining-priorHp>=maxHp;
  if(instantDeath)c.lifeState='morto';
  if(c.hp===0){c.conditions=[...new Set([...(c.conditions||[]),'Inconsciente'])];breakConcentration(c);c.raging=false;}
- return {damage,absorbed,remaining,instantDeath};
+ return {damage,absorbed,wardAbsorbed,remaining,instantDeath};
 }
 export function receiveHealing(c,amount,maxHp){
  if(c.lifeState==='morto')return 0;
