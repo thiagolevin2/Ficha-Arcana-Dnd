@@ -181,6 +181,37 @@ Object.assign(MOTM_SPECIES,{
    {text:'Dialeto Silencioso: fala telepaticamente com uma criatura por vez a até 9 m. Ela só entende se vocês compartilharem um idioma.'}]}
 });
 
+
+// Eberron: Forge of the Artificer (2025) — Forjado Bélico nas regras de 2024.
+export const EFA_SOURCE='Eberron: Forge of the Artificer (2025)';
+const WARFORGED={src:EFA_SOURCE,size:'Médio ou Pequeno',speed:9,movement:{walk:9},type:'Constructo',
+ choices:[{key:'skill',label:'Design Especializado · perícia',options:SKILLS_ALL,count:1,skill:true}],
+ traits:[{text:'Resiliência Construída: resistência a dano venenoso e vantagem em salvaguardas para evitar ou encerrar a condição Envenenado.'},
+  {text:'Proteção Integrada: +1 na CA (aplicado na ficha). Armaduras vestidas se integram ao corpo e não podem ser removidas contra a sua vontade enquanto estiver vivo.'},
+  {text:'Descanso da Sentinela: não precisa dormir e magia não pode fazê-lo dormir. Faz o descanso longo em pelo menos 6 horas em estado inativo e imóvel, mas consciente (vê e ouve normalmente).'},
+  {text:'Design Especializado: proficiência em uma perícia e com uma ferramenta à sua escolha (anote a ferramenta na ficha).'},
+  {text:'Incansável: não sofre Exaustão por desidratação, desnutrição ou sufocamento; não precisa comer, beber nem respirar.'}]};
+for(const id of ['supp-races-large-species-forjado-belico','supp-races-large-species-forjado-belico-emissario','supp-races-large-species-forjado-belico-colosso','supp-races-large-species-forjado-belico-escaramucador'])
+ MOTM_SPECIES[id]={...WARFORGED,...(id.endsWith('-belico')?{}:{note:'Os subtipos Emissário, Colosso e Escaramuçador vinham da versão de playtest e não existem na versão oficial; este personagem usa as regras de 2025.'})};
+
+// Raças do Mordenkainen 2022 que não existiam no site (versão mais recente publicada).
+Object.assign(MOTM_SPECIES,{
+ 'supp-motm-species-fada':{name:'Fada',size:'Pequeno',speed:9,movement:{walk:9},type:'Feérico',
+  traits:[{text:`Magia das Fadas: conhece o truque Arte Druídica. A partir do 3º nível conjura Fogo das Fadas e, a partir do 5º, Aumentar/Reduzir. ${SPELL_RULE} ${CAST}`},
+   {text:'Voo: asas concedem deslocamento de voo igual ao de caminhada. Não pode usá-lo vestindo armadura média ou pesada.'}],
+  spells:[[1,'Arte Druídica'],[3,'Fogo das Fadas'],[5,'Aumentar/Reduzir']]},
+ 'supp-motm-species-laparlonj':{name:'Laparlonj',aliases:['Harengon'],size:'Médio ou Pequeno',speed:9,movement:{walk:9},type:'Humanoide',skills:['Percepção'],initiativePB:true,
+  traits:[{text:'Disparo da Lebre: soma o bônus de proficiência à iniciativa (aplicado na ficha).'},
+   {text:'Orelhas Compridas: proficiência em Percepção (aplicada na ficha).'},
+   {name:'Salto do Coelho',text:'Salto do Coelho: como Ação Bônus, salta um número de metros igual a 1,5 × bônus de proficiência, sem provocar ataques de oportunidade. Só funciona se o deslocamento for maior que 0.',power:{kind:'use',max:'pb'}},
+   {name:'Sorte nos Pés',text:'Sorte nos Pés: ao falhar em uma salvaguarda de Destreza, usa a Reação para rolar 1d4 e somar ao resultado. Não funciona caído ou com deslocamento 0.',power:{kind:'damage',formula:'1d4',max:0}}]},
+ 'supp-motm-species-satiro':{name:'Sátiro',size:'Médio',speed:10.5,movement:{walk:10.5},type:'Feérico',skills:['Atuação','Persuasão'],
+  traits:[nat('Aríete','contundente','Cabeça e chifres.'),
+   {text:'Farrista: proficiência em Atuação e Persuasão (aplicadas na ficha) e em um instrumento musical à escolha.'},
+   {text:'Resistência a Magia: vantagem em salvaguardas contra magias.'},
+   {text:'Saltos de Alegria: ao fazer um salto em distância ou em altura, rola 1d8 e soma o resultado × 0,3 m, mesmo saltando parado. A distância extra custa deslocamento normalmente.'}]}
+});
+
 // Morfo (Transmorfo): Mordenkainen 2022. As opções Caminhar no Penhasco e Garra de Navalha vêm de fonte anterior e mantêm a descrição antiga.
 const SHIFT_OPTIONS={
  'couro-de-besta':['Pele de Fera','Enquanto morfado, ganha 1d6 PV temporários adicionais a cada vez que morfa e +1 na CA (aplicado na ficha).'],
@@ -220,14 +251,16 @@ export function motmChoiceNeeds(c){const m=MOTM_SPECIES[motmId(c)];if(!m)return 
   if(vals.some(x=>!x))out.push(`Escolha: ${ch.label}${ch.count>1?` (${ch.count})`:''}.`);else if(new Set(vals).size<vals.length)out.push(`${ch.label}: escolha opções diferentes.`);}
  return out;}
 export function motmSpellPlan(c){const m=MOTM_SPECIES[motmId(c)];return m?.spells||[];}
+export function motmInitiative(c,pb){return MOTM_SPECIES[motmId(c)]?.initiativePB?pb:0;}
 export function motmNaturalAC(c,dexMod){const m=MOTM_SPECIES[motmId(c)];if(!m?.naturalAC)return null;const n=m.naturalAC;return {value:n.base+(n.dex?dexMod:0),label:`${n.label}: ${n.base}${n.dex?' + DES':' (sem DES)'}`,shell:!!n.shell};}
 
 // Cartões do painel "Poderes de espécie". helpers: {C,pow,pb,str,level,cha}
 export function motmCards(c,h){const m=MOTM_SPECIES[motmId(c)];if(!m)return null;const p=h.pb(c),n=h.level(c),s=h.str(c),fm=`1d6${s>=0?'+':''}${s}`;
  const slug=x=>String(x||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-');
  const cards=[];const body=t=>{const x=String(t);const i=x.indexOf(': ');const r=i>0&&i<45?x.slice(i+2):x;return r.charAt(0).toUpperCase()+r.slice(1);};
- const head=`${m.type?'Tipo de criatura: '+m.type+'. ':''}Tamanho: ${m.size}. Fonte: ${m.adapted?ADAPT_SOURCE:MOTM_SOURCE}.`;
+ const head=`${m.type?'Tipo de criatura: '+m.type+'. ':''}Tamanho: ${m.size}. Fonte: ${m.src||(m.adapted?ADAPT_SOURCE:MOTM_SOURCE)}.`;
  cards.push(h.C('motm-origin',m.adapted?'Adaptação 2024':'Origem da raça',head+' Aumentos de atributo vêm do antecedente (regra 2024).'));
+ if(m.note)cards.push(h.C('motm-note','Versão oficial',m.note));
  if(m.keepTraits)cards.push(h.C('motm-legacy-option','Opção de fonte anterior','Esta opção de Transmorfo não existe no Mordenkainen 2022. O Morfismo segue a regra de 2022; o benefício específico desta opção continua descrito nos traços originais da Biblioteca.'));
  for(const t of m.traits){
   const name=t.name||String(t.text).split(':')[0];const id='motm-'+slug(name);
