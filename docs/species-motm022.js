@@ -9,7 +9,9 @@ const SPELL_RULE='Cada magia concedida por este traço pode ser conjurada assim 
 const DV18='Visão no Escuro: enxerga até 18 m na meia-luz como se fosse luz plena e, na escuridão, como meia-luz (apenas tons de cinza).';
 const DV36='Visão no Escuro: enxerga até 36 m na meia-luz como se fosse luz plena e, na escuridão, como meia-luz (apenas tons de cinza).';
 const FEY='Ancestralidade Feérica: vantagem em salvaguardas para evitar ou encerrar a condição Enfeitiçado.';
-const TRANCE='Transe: não precisa dormir e magia não pode fazê-lo dormir. Conclui um descanso longo em 4 horas de meditação consciente. Ao terminar o transe, ganha proficiência com duas armas ou ferramentas à escolha até o próximo descanso longo.';
+const TRANCE='Transe: não precisa dormir e magia não pode fazê-lo dormir. Conclui um descanso longo em 4 horas de meditação consciente (regra do Elfo 2024).';
+const KEEN={key:'skill',label:'Sentidos Aguçados · perícia',options:['Intuição','Percepção','Sobrevivência'],count:1,skill:true};
+const KEEN_TXT='Sentidos Aguçados: proficiência em Intuição, Percepção ou Sobrevivência, à escolha (regra do Elfo 2024).';
 const POWERFUL='Porte Poderoso: conta como uma categoria de tamanho acima para capacidade de carga e para empurrar, arrastar ou levantar.';
 const nat=(name,type,text)=>({name,text:`${name}: ${text} Golpe desarmado que causa 1d6 + modificador de Força de dano ${type}, em vez do dano normal.`,natural:type});
 
@@ -21,7 +23,7 @@ export const MOTM_SPECIES={
   spells:[[3,'Lufada de Vento']]},
  'supp-races-large-species-bugbear':{name:'Bugurso',aliases:['Bugbear'],size:'Médio',speed:9,movement:{walk:9},type:'Humanoide (goblinoide)',skills:['Furtividade'],
   traits:[{text:DV18},{text:FEY},
-   {name:'Ataque Surpresa',text:'Ataque Surpresa: ao acertar uma criatura com uma jogada de ataque, ela sofre 2d6 de dano extra se ainda não tiver agido em um turno no combate atual.',power:{kind:'damage',formula:'2d6',max:0}},
+   {name:'Ataque Surpresa',text:'Ataque Surpresa: ao acertar uma criatura com uma jogada de ataque, ela sofre 2d6 de dano extra se ainda não tiver jogado um turno no combate atual (não depende da regra de Surpresa de 2024, que só dá desvantagem na iniciativa).',power:{kind:'damage',formula:'2d6',max:0}},
    {text:'Membros Longos: ao fazer um ataque corpo a corpo no seu turno, seu alcance é 1,5 m maior.'},
    {text:POWERFUL},
    {text:'Sorrateiro: proficiência em Furtividade (aplicada na ficha). Pode se mover e parar em um espaço grande o bastante para uma criatura Pequena, sem se espremer.'}]},
@@ -41,17 +43,17 @@ export const MOTM_SPECIES={
   choices:[{key:'skill',label:'Instinto Duplicante · perícia',options:['Atuação','Enganação','Intimidação','Intuição','Persuasão'],count:2,skill:true}],
   traits:[{text:'Instinto Duplicante: proficiência em duas perícias à escolha entre Atuação, Enganação, Intimidação, Intuição ou Persuasão.'},
    {text:'Metamorfo: como Ação, altera aparência e voz (coloração, cabelo, sexo, altura, peso; pode alternar entre Médio e Pequeno). Pode se passar por outra raça, sem mudar estatísticas. Não copia quem nunca viu, mantém a mesma disposição de membros e não altera roupas. Dura até usar uma Ação para voltar ou morrer.'}]},
- 'supp-races-large-species-eladrin':{name:'Eladrin',size:'Médio',speed:9,movement:{walk:9},type:'Humanoide (elfo)',skills:['Percepção'],
+ 'supp-races-large-species-eladrin':{name:'Eladrin',size:'Médio',speed:9,movement:{walk:9},type:'Humanoide (elfo)',choices:[KEEN],
   traits:[{text:DV18},{text:FEY},
    {name:'Passo Feérico',text:'Passo Feérico: como Ação Bônus, teleporta-se até 9 m para um espaço desocupado que possa ver.',power:{kind:'use',max:'pb'}},
    {name:'Estação',season:true},
-   {text:'Sentidos Aguçados: proficiência em Percepção (aplicada na ficha).'},
-   {text:TRANCE+' Ao terminar o transe, também pode mudar de estação.'}]},
- 'supp-races-large-species-elfo-do-mar':{name:'Elfo Marinho',aliases:['Elfo do Mar'],size:'Médio',speed:9,movement:{walk:9,swim:9},type:'Humanoide (elfo)',skills:['Percepção'],
+   {text:KEEN_TXT},
+   {text:TRANCE+' Ao terminar um descanso longo, também pode mudar de estação.'}]},
+ 'supp-races-large-species-elfo-do-mar':{name:'Elfo Marinho',aliases:['Elfo do Mar'],size:'Médio',speed:9,movement:{walk:9,swim:9},type:'Humanoide (elfo)',choices:[KEEN],
   traits:[{text:DV18},{text:FEY},
    {text:'Amigo do Mar: comunica ideias simples a qualquer fera com deslocamento de natação; elas entendem suas palavras, mas você não as entende.'},
    {text:'Criança do Mar: respira ar e água, deslocamento de natação igual ao de caminhada e resistência a dano gélido.'},
-   {text:'Sentidos Aguçados: proficiência em Percepção (aplicada na ficha).'},{text:TRANCE}]},
+   {text:KEEN_TXT},{text:TRANCE}]},
  'supp-races-large-species-firbolg':{name:'Firbolg',size:'Médio',speed:9,movement:{walk:9},type:'Humanoide',
   traits:[{text:'Fala da Fera e da Folha: comunica-se de forma limitada com feras e plantas (elas entendem você, mas você não as entende) e tem vantagem em testes de Carisma para influenciá-las.'},
    {text:`Magia dos Firbolg: conjura Detectar Magia e Disfarçar-se (nesta versão pode parecer até 1 m mais alto ou mais baixo). ${SPELL_RULE} ${CAST}`},
@@ -92,7 +94,7 @@ export const MOTM_SPECIES={
   traits:[{text:DV36},
    {name:'Camuflagem Svirfneblin',text:'Camuflagem Svirfneblin: ao fazer um teste de Destreza (Furtividade), pode fazê-lo com vantagem.',power:{kind:'use',max:'pb'}},
    {text:`Dádiva dos Svirfneblin: a partir do 3º nível conjura Disfarçar-se e, a partir do 5º, Indetectável (sem componente material). ${SPELL_RULE} ${CAST}`},
-   {text:'Resistência dos Gnomos a Magia: vantagem em salvaguardas de Inteligência, Sabedoria e Carisma contra magias.'}],
+   {text:'Astúcia Gnômica: vantagem em salvaguardas de Inteligência, Sabedoria e Carisma (regra do Gnomo 2024, no lugar da antiga Resistência dos Gnomos a Magia).'}],
   spells:[[3,'Disfarçar-se'],[5,'Indetectável']]},
  'supp-races-large-species-goblin':{name:'Goblin',size:'Pequeno',speed:9,movement:{walk:9},type:'Humanoide (goblinoide)',
   traits:[{text:DV18},{text:FEY},
@@ -100,7 +102,7 @@ export const MOTM_SPECIES={
    {name:'Fúria dos Pequenos',text:'Fúria dos Pequenos: ao causar dano com ataque ou magia a uma criatura de tamanho maior que o seu, causa dano extra igual ao seu bônus de proficiência. No máximo uma vez por turno.',power:{kind:'use',max:'pb'}}]},
  'supp-races-large-species-hobgoblin':{name:'Hobgoblin',size:'Médio',speed:9,movement:{walk:9},type:'Humanoide (goblinoide)',
   traits:[{text:DV18},{text:FEY},
-   {name:'Presente Feérico',text:'Presente Feérico: usa a ação Ajudar como Ação Bônus. A partir do 3º nível, escolha um efeito extra ao ajudar: Despeito (o alvo atingido pelo aliado tem desvantagem na próxima jogada de ataque em 1 minuto), Hospitalidade (você e o aliado ganham 1d6 + bônus de proficiência PV temporários) ou Passagem (você e o aliado ganham +3 m de deslocamento até o início do seu próximo turno).',power:{kind:'use',max:'pb'}},
+   {name:'Presente Feérico',text:'Presente Feérico: usa a ação Ajudar (regra 2024: auxiliar um teste de atributo ou dar vantagem na próxima jogada de ataque de um aliado contra um inimigo a até 1,5 m de você) como Ação Bônus. A partir do 3º nível, escolha um efeito extra ao ajudar: Despeito (o alvo atingido pelo aliado tem desvantagem na próxima jogada de ataque em 1 minuto), Hospitalidade (você e o aliado ganham 1d6 + bônus de proficiência PV temporários) ou Passagem (você e o aliado ganham +3 m de deslocamento até o início do seu próximo turno).',power:{kind:'use',max:'pb'}},
    {name:'Sorte dos Muitos',text:'Sorte dos Muitos: ao errar uma jogada de ataque ou falhar em teste de atributo ou salvaguarda, ganha um bônus igual ao número de aliados que possa ver a até 9 m (máximo +3).',power:{kind:'use',max:'pb'}}]},
  'supp-races-large-species-kenku':{name:'Kenku',size:'Médio ou Pequeno',speed:9,movement:{walk:9},type:'Humanoide',
   choices:[{key:'skill',label:'Lembrança Kenku · perícia',options:SKILLS_ALL,count:2,skill:true}],
@@ -121,11 +123,11 @@ export const MOTM_SPECIES={
    {name:'Mandíbula Faminta',text:'Mandíbula Faminta: como Ação Bônus, faz um ataque especial de Mordida. Se acertar, causa o dano normal e você ganha PV temporários iguais ao bônus de proficiência.',power:{kind:'use',max:'pb'}},
    nat('Mordida','cortante','Boca com presas.'),
    {text:'Prender a Respiração: pode prender a respiração por até 15 minutos. Deslocamento de natação igual ao de caminhada.'}]},
- 'supp-races-large-species-shadar-kai':{name:'Shadar-kai',size:'Médio',speed:9,movement:{walk:9},type:'Humanoide (elfo)',skills:['Percepção'],
+ 'supp-races-large-species-shadar-kai':{name:'Shadar-kai',size:'Médio',speed:9,movement:{walk:9},type:'Humanoide (elfo)',choices:[KEEN],
   traits:[{text:DV18},{text:FEY},
    {name:'Bênção da Rainha Corvo',text:'Bênção da Rainha Corvo: como Ação Bônus, teleporta-se até 9 m para um espaço desocupado que possa ver. A partir do 3º nível, também ganha resistência a todo dano até o início do seu próximo turno ao se teleportar assim.',power:{kind:'use',max:'pb'}},
    {text:'Resistência Necrótica: resistência a dano necrótico.'},
-   {text:'Sentidos Aguçados: proficiência em Percepção (aplicada na ficha).'},{text:TRANCE}]},
+   {text:KEEN_TXT},{text:TRANCE}]},
  'supp-races-large-species-tabaxi':{name:'Tabaxi',size:'Médio ou Pequeno',speed:9,movement:{walk:9,climb:9},type:'Humanoide',skills:['Furtividade','Percepção'],
   traits:[{text:DV18},
    {text:'Agilidade Felina: ao se mover no seu turno em combate, pode dobrar o deslocamento até o fim do turno. Só pode usar de novo após um turno em que se mova 0 m.'},
