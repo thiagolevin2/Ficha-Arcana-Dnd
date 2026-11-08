@@ -7,6 +7,7 @@ import {classEntries,totalLevel,classLevel,hasClass,subclassFor,orderFor,syncCla
 import {FIGHTING_STYLE_FEATS,grantsFightingStyle,hasFightingStyleFeature} from './feats.js';
 import {XP_THRESHOLDS,xpForLevel} from './progression.js';
 import {speciesRule,speciesMovements,superiorityPool,normalizeAdvanced} from './rules091.js';
+import {motmInitiative} from './species-motm022.js';
 import {infusionEffects,itemEffects,ensureEquipmentIds,normalizeInfusions,normalizeEquipmentBonuses,spellGrantInfo,restoreGrants,normalizeMasteries} from './rules092.js';
 import {normalizeCombatMacros} from './macros094-data.js';
 import {ensure093,normalize093,selfTimedBonuses,subclassBonuses,conditionsFor,rest093,tickRound,normalizeItemPower} from './rules093.js';
@@ -82,7 +83,7 @@ export function derive(c){
  const tough=hasFeat012(c,'Vigoroso')?2:0,hpMax=Math.max(n,hitPointBase(c,m.con)+n*((c.speciesId==='anao'?1:0)+tough)+(Number(adj.hp)||0)+(hasFeat012(c,'Dádiva da Fortitude')?40:0)+(hasClass(c,'feiticeiro',3)&&subclassFor(c,'feiticeiro')==='Feitiçaria Dracônica'?classLevel(c,'feiticeiro'):0));
  const armorFormula=a.base+(a.dex===true?m.dex:a.dex===false?0:Math.min(a.category==='Média'&&hasFeat012(c,'Mestre em Armaduras Médias')&&sc.dex>=16?Math.max(3,a.dex):a.dex,m.dex)),acOptions=[{id:'armor',value:armorFormula,label:a.name}];
  if(c.armor==='none'){
-  const natural=speciesRule(c);if(natural.naturalAC!==null)acOptions.push({id:'natural',value:natural.naturalAC,label:'Carapaça natural: '+natural.naturalAC+' (sem DES)'});
+  const natural=speciesRule(c,m.dex);if(natural.naturalAC!==null)acOptions.push({id:'natural',value:natural.naturalAC,label:(natural.naturalLabel||'Armadura natural')+' = '+natural.naturalAC});
   if(hasClass(c,'barbaro'))acOptions.push({id:'barbaro',value:10+m.dex+m.con,label:'10 + DES + CON (Bárbaro)'});
   if(hasClass(c,'monge')&&!c.shield)acOptions.push({id:'monge',value:10+m.dex+m.wis,label:'10 + DES + SAB (Monge)'});
   if(adj.mageArmor)acOptions.push({id:'mageArmor',value:13+m.dex,label:'Armadura Arcana: 13 + DES'});
@@ -97,7 +98,7 @@ export function derive(c){
  if(a.str&&sc.str<a.str&&!arcaneArmor)speed-=3;speed=Math.max(0,speed-1.5*(c.exhaustion||0)+(Number(adj.speed)||0)+itemBonus.speed+timed.speed+subclassExtra.speed+subclass013.speed);if(speciesRule(c).shell)speed=0;if(conditionsFor(c).some(x=>['Agarrado','Contido','Paralisado','Petrificado','Inconsciente'].includes(x)))speed=0;
  const sources=castingSources(c).map(s=>({...s,spellAttack:pb+m[s.ability]+(Number(adj.spellAttack)||0)+infusion.spellAttack+itemBonus.spellAttack,spellDC:8+pb+m[s.ability]+(Number(adj.spellDC)||0)+itemBonus.spellDC+(adj.innate&&s.classId==='feiticeiro'?1:0),preparedLimit:preparedLimitFor(c,s.classId)}));
  const selected=sources.find(s=>s.classId===c.castingClassId)||sources[0],cast=selected?.ability||null,spellAtk=selected?.spellAttack??null,spellDC=selected?.spellDC??null;
- const initiative=m.dex+(hasFeat012(c,'Alerta')?pb:0)+(Number(adj.initiative)||0)+itemBonus.initiative+timed.initiative+subclassExtra.initiative+subclass013.initiative,aura=hasClass(c,'paladino',6)&&!c.conditions.some(x=>['Incapacitado','Inconsciente','Paralisado','Atordoado','Petrificado'].includes(x))?Math.max(1,m.cha):0;
+ const initiative=m.dex+(hasFeat012(c,'Alerta')?pb:0)+motmInitiative(c,pb)+(Number(adj.initiative)||0)+itemBonus.initiative+timed.initiative+subclassExtra.initiative+subclass013.initiative,aura=hasClass(c,'paladino',6)&&!c.conditions.some(x=>['Incapacitado','Inconsciente','Paralisado','Atordoado','Petrificado'].includes(x))?Math.max(1,m.cha):0;
  let skills=Object.fromEntries(c.skills.map(x=>[x,1]));for(const k of speciesRule(c).skills)skills[k]=Math.max(1,skills[k]||0);for(const k of bg.skills)skills[k]=Math.max(1,skills[k]||0);const battleSkill=battleMasterSkill(c);if(battleSkill)skills[battleSkill]=Math.max(1,skills[battleSkill]||0);for(const k of speciesSkills(c))skills[k]=Math.max(1,skills[k]||0);for(const k of c.expertise||[])skills[k]=2;skills=featSkills012(c,skills);for(const k of subclass013.skills)skills[k]=Math.max(1,skills[k]||0);
  const skillBonus=(name,key)=>m[key]+(skills[name]?pb*skills[name]:hasClass(c,'bardo',2)?Math.floor(pb/2):0)+(Number(adj.skills)||0)+subclass013.skillExtra(name,key);
  const capacity=sc.str*7.5*(c.speciesId==='golias'?2:1)*speciesRule(c).capacityFactor,weight=c.items.reduce((t,i)=>t+Number(i.weight||0)*Number(i.qty||0),0)+a.weight+(c.shield?(shieldData?.weight??3):0)+c.weapons.reduce((t,w)=>t+(weaponDefinition(w)?.weight||0),0)+(c.customArmors||[]).filter(x=>c.armor!=='custom:'+x.id).reduce((t,x)=>t+Number(x.weight||0),0)+(c.customShields||[]).filter(x=>!c.shield||c.shieldId!==x.id).reduce((t,x)=>t+Number(x.weight||0),0);
