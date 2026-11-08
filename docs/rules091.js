@@ -1,6 +1,7 @@
 import {subclassAllowsSpell013} from './subclass-rules013.js';
 // Recursos adicionais testáveis sem dependência de DOM.
 import {classLevel,subclassFor} from './progression.js';
+import {motmNaturalAC} from './species-motm022.js';
 
 export const ARCANUM_THRESHOLDS=Object.freeze({6:11,7:13,8:15,9:17});
 export function arcanumCircles(c){const level=classLevel(c,'bruxo');return Object.entries(ARCANUM_THRESHOLDS).filter(([,min])=>level>=min).map(([circle])=>Number(circle));}
@@ -20,7 +21,7 @@ export function invocationRequirement(c,option,catalog=[]){if(!option||option.ki
 export function toggleChoice(c,kind,option,catalog){if(!CHOICE_KINDS.includes(kind)||!catalog.includes(option)||option.kind!==kind||option.selectable===false)throw Error('Opção inválida.');const existing=[...(c.advancedChoices?.[kind]||[])];if(existing.includes(option.id)){c.advancedChoices[kind]=existing.filter(id=>id!==option.id);return false;}if(kind==='invocation'){const req=invocationRequirement(c,option,catalog);if(!req.allowed)throw Error(req.reason);}if(existing.length>=choiceLimit(c,kind))throw Error('O limite de escolhas deste nível já foi atingido.');c.advancedChoices??={};c.advancedChoices[kind]=[...existing,option.id];return true;}
 export function canUseStyleCantrip(c,sourceId,spell){if(Number(spell?.level)!==0||!Array.isArray(spell?.classes))return false;
  return sourceId==='paladino'&&classLevel(c,'paladino')>=2&&c.fightingStyleAlternative==='Guerreiro Abençoado'&&spell.classes.includes('Clérigo')||sourceId==='guardiao'&&classLevel(c,'guardiao')>=2&&c.fightingStyleAlternative==='Guerreiro Druídico'&&spell.classes.includes('Druida');}
-export function speciesRule(c){const id=String(c.speciesId||'');const tortle=id.endsWith('-tortle'),tabaxi=id.endsWith('-tabaxi'),centaur=id.endsWith('-centauro');return {naturalAC:tortle?17:null,shell:tortle&&!!c.shellDefense,capacityFactor:centaur?2:1,skills:tabaxi?['Percepção','Furtividade']:tortle?['Sobrevivência']:[],tag:tortle?'Carapaça natural':tabaxi?'Agilidade felina':centaur?'Construção equina':null};}
+export function speciesRule(c,dexMod=0){const id=String(c.speciesId||'');const tortle=id.endsWith('-tortle'),tabaxi=id.endsWith('-tabaxi'),centaur=id.endsWith('-centauro');const nat=motmNaturalAC(c,Number(dexMod)||0);return {naturalAC:nat?nat.value:null,naturalLabel:nat?.label||'',shellCapable:!!nat?.shell,shell:!!nat?.shell&&!!c.shellDefense,capacityFactor:centaur?2:1,skills:[],tag:tortle?'Carapaça natural':nat?nat.label:tabaxi?'Agilidade felina':centaur?'Porte equino':null};}
 export function speciesMovements(c,species){const move=species?.movement||{};return Object.fromEntries(Object.entries(move).filter(([k,v])=>k!=='walk'&&Number.isFinite(Number(v))&&Number(v)>0).map(([k,v])=>[k,Number(v)]));}
 export function superiorityPool(c){const n=classLevel(c,'guerreiro');return subclassFor(c,'guerreiro')==='Mestre da Batalha'&&n>=3?{max:n>=15?6:n>=7?5:4,sides:n>=18?12:n>=10?10:8}:null;}
 export function metamagicCost(option,spell){if(!option||option.kind!=='metamagic')throw Error('Metamagia inválida.');const m=String(option.summary||'').match(/Custo:\s*(\d+)\s+Pontos? de Feitiçaria/i);if(m)return Number(m[1]);return null;}

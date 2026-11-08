@@ -82,7 +82,7 @@ export function derive(c){
  const tough=hasFeat012(c,'Vigoroso')?2:0,hpMax=Math.max(n,hitPointBase(c,m.con)+n*((c.speciesId==='anao'?1:0)+tough)+(Number(adj.hp)||0)+(hasFeat012(c,'Dádiva da Fortitude')?40:0)+(hasClass(c,'feiticeiro',3)&&subclassFor(c,'feiticeiro')==='Feitiçaria Dracônica'?classLevel(c,'feiticeiro'):0));
  const armorFormula=a.base+(a.dex===true?m.dex:a.dex===false?0:Math.min(a.category==='Média'&&hasFeat012(c,'Mestre em Armaduras Médias')&&sc.dex>=16?Math.max(3,a.dex):a.dex,m.dex)),acOptions=[{id:'armor',value:armorFormula,label:a.name}];
  if(c.armor==='none'){
-  const natural=speciesRule(c);if(natural.naturalAC!==null)acOptions.push({id:'natural',value:natural.naturalAC,label:'Carapaça natural: '+natural.naturalAC+' (sem DES)'});
+  const natural=speciesRule(c,m.dex);if(natural.naturalAC!==null)acOptions.push({id:'natural',value:natural.naturalAC,label:(natural.naturalLabel||'Armadura natural')+' = '+natural.naturalAC});
   if(hasClass(c,'barbaro'))acOptions.push({id:'barbaro',value:10+m.dex+m.con,label:'10 + DES + CON (Bárbaro)'});
   if(hasClass(c,'monge')&&!c.shield)acOptions.push({id:'monge',value:10+m.dex+m.wis,label:'10 + DES + SAB (Monge)'});
   if(adj.mageArmor)acOptions.push({id:'mageArmor',value:13+m.dex,label:'Armadura Arcana: 13 + DES'});

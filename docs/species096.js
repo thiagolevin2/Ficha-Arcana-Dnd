@@ -2,6 +2,7 @@ import {featScore012} from './feat-rules012.js';
 // Ficha Arcana 0.9.6 — escolhas e poderes de espécies assistidos.
 // O módulo não decide duração, alvos, posicionamento ou resultado de salvaguardas dos NPCs.
 import {SPECIES,SKILLS,BACKGROUNDS} from './data.js';
+import {motmCards,motmSkills,motmChoiceNeeds,shifterOption} from './species-motm022.js';
 
 export const ORIGIN_FEATS_2024=['Alerta','Artifista','Atacante Selvagem','Curandeiro','Habilidoso','Iniciado em Magia (Clérigo)','Iniciado em Magia (Druida)','Iniciado em Magia (Mago)','Músico','Sortudo','Valentão de Taverna','Vigoroso'];
 // A seleção do Alto Elfo é baseada nos truques de Mago presentes no acervo do aplicativo.
@@ -30,7 +31,8 @@ export function normalizeSpecies096(c){
   dhampirSkill1:validSkill(v.dhampirSkill1)?v.dhampirSkill1:'',
   dhampirSkill2:validSkill(v.dhampirSkill2)&&v.dhampirSkill2!==v.dhampirSkill1?v.dhampirSkill2:'',
   aasimarForm:AASIMAR_FORMS.includes(v.aasimarForm)?v.aasimarForm:AASIMAR_FORMS[0],
-  gemAncestry:Object.hasOwn(GEM_ANCESTRIES,v.gemAncestry)?v.gemAncestry:''
+  gemAncestry:Object.hasOwn(GEM_ANCESTRIES,v.gemAncestry)?v.gemAncestry:'',
+  motm:Object.fromEntries(Object.entries(v.motm&&typeof v.motm==='object'&&!Array.isArray(v.motm)?v.motm:{}).filter(([k,x])=>/^[a-z]{1,12}[1-4]$/.test(k)&&typeof x==='string').slice(0,12).map(([k,x])=>[k,clean(x,80)]))
  };
  c.species096Used=Object.fromEntries(Object.entries(usedRaw).filter(([id,n])=>/^[a-z0-9-]{1,80}$/.test(id)&&Number.isInteger(Number(n))).slice(0,45).map(([id,n])=>[id,Math.max(0,Math.min(30,Number(n)))]));
  c.aasimarRevelationActive=!!c.aasimarRevelationActive&&c.speciesId==='aasimar'&&c.level>=3;
@@ -38,9 +40,9 @@ export function normalizeSpecies096(c){
  c.shiftingActive=!!c.shiftingActive&&/transmorfo/.test(c.speciesId);
  return c;
 }
-export function speciesSkills(c){const v=c.speciesChoices||{};return [...(c.speciesId==='elfo'&&v.elfSkill?[v.elfSkill]:[]),...(c.speciesId==='humano'&&validSkill(v.humanSkill)?[v.humanSkill]:[]),...(c.speciesId==='supp-ravenloft-species-dhampiro'&&v.dhampirLegacy==='Duas perícias'?[v.dhampirSkill1,v.dhampirSkill2].filter(validSkill):[])];}
+export function speciesSkills(c){const v=c.speciesChoices||{};return [...motmSkills(c),...(c.speciesId==='elfo'&&v.elfSkill?[v.elfSkill]:[]),...(c.speciesId==='humano'&&validSkill(v.humanSkill)?[v.humanSkill]:[]),...(c.speciesId==='supp-ravenloft-species-dhampiro'&&v.dhampirLegacy==='Duas perícias'?[v.dhampirSkill1,v.dhampirSkill2].filter(validSkill):[])];}
 export function speciesFeats(c){return c.speciesId==='humano'&&ORIGIN_FEATS_2024.includes(c.speciesChoices?.humanFeat)?[c.speciesChoices.humanFeat]:[];}
-export function speciesChoiceNeeds(c){const p=[];if(c.speciesId==='elfo'){if(!c.speciesChoices?.elfSkill)p.push('Escolha uma perícia élfica.');if(c.variant==='Alto Elfo'&&!c.speciesChoices?.highElfCantrip)p.push('Escolha um truque de Mago do Alto Elfo.');}
+export function speciesChoiceNeeds(c){const p=[...motmChoiceNeeds(c)];if(c.speciesId==='elfo'){if(!c.speciesChoices?.elfSkill)p.push('Escolha uma perícia élfica.');if(c.variant==='Alto Elfo'&&!c.speciesChoices?.highElfCantrip)p.push('Escolha um truque de Mago do Alto Elfo.');}
  if(c.speciesId==='humano'){if(!c.speciesChoices?.humanSkill)p.push('Escolha a perícia adicional do Humano.');if(!c.speciesChoices?.humanFeat)p.push('Escolha o talento de Origem adicional do Humano.');}
  if(c.speciesId==='supp-ravenloft-species-dhampiro'&&c.speciesChoices?.dhampirLegacy==='Duas perícias'&&(!c.speciesChoices.dhampirSkill1||!c.speciesChoices.dhampirSkill2))p.push('Escolha duas perícias diferentes para o legado do Dhampiro.');
  if(String(c.speciesId||'').includes('draconato-de-gemas')&&!c.speciesChoices?.gemAncestry)p.push('Escolha a ancestralidade do Draconato de Gemas.');
@@ -49,7 +51,7 @@ export function speciesChoiceNeeds(c){const p=[];if(c.speciesId==='elfo'){if(!c.
 }
 export function speciesPassiveBonuses(c,armorCategory='Nenhuma'){
  const id=String(c.speciesId||''),v=c.speciesChoices||{};
- return {ac:id.includes('forjado-belico')?1:id.includes('hibrido-simic')&&Number(c.level)>=5&&v.simicLater==='Carapaça'&&armorCategory!=='Pesada'?1:id.includes('transmorfo-couro-de-besta')&&c.shiftingActive?1:0, speed:0};
+ return {ac:id.includes('forjado-belico')?1:id.includes('hibrido-simic')&&Number(c.level)>=5&&v.simicLater==='Carapaça'&&armorCategory!=='Pesada'?1:shifterOption(c)==='couro-de-besta'&&c.shiftingActive?1:0, speed:0};
 }
 export function speciesMovements096(c,raw,armorCategory='Nenhuma'){const out={...raw};const id=c.speciesId||'',v=c.speciesChoices||{};
  // Voo permanece apenas na descrição do traço. Não é exibido nem calculado como deslocamento.
@@ -63,6 +65,7 @@ const level=c=>Math.max(1,Math.min(20,Number(c.level)||1));
 const pb=c=>2+Math.floor((level(c)-1)/4);
 const con=c=>Math.floor((featScore012(c,'con')-10)/2);
 const str=c=>Math.floor((featScore012(c,'str')-10)/2);
+const cha=c=>Math.floor((featScore012(c,'cha')-10)/2);
 const pow=(id,name,description,{kind='use',formula='',max=0,recovery='long',attackBonus=null,dc=null}={})=>C(id,name,description,{kind,formula,max,recovery,attackBonus,dc});
 export function speciesCards096(c){
  const id=c.speciesId||'',v=c.speciesChoices||{},p=pb(c),n=level(c),is=(s)=>id===s;
@@ -76,6 +79,7 @@ export function speciesCards096(c){
  if(is('draconato'))return [C('dragon-flight','Voo Dracônico','A partir do nível 5, você manifesta asas espectrais por até 10 minutos, uma vez por descanso longo. Esta característica fica registrada apenas como descrição: o aplicativo não calcula deslocamento de voo nem cria um controle de ativação.'),C('dragon-resistance','Resistência Dracônica','Você tem resistência ao tipo de dano associado à ancestralidade dracônica escolhida.'),C('dragon-breath','Sopro Dracônico',`Substitui um ataque. Salvaguarda de Destreza CD ${8+p+con(c)}; dano ${n>=17?4:n>=11?3:n>=5?2:1}d10 do tipo associado à ancestralidade. ${p} uso(s) por descanso longo. O contador e a rolagem ficam em Combate.`)];
  if(is('golias'))return [C('goliath-ancestry','Ancestralidade Gigante',`Sua ancestralidade (${c.variant||'pendente'}) define um poder com ${p} usos por descanso longo. O botão abre a resolução de teleporte, dano, lentidão, condição Caído ou redução de dano da opção escolhida.`,{kind:'goliath',max:p,recovery:'long'}),C('goliath-large','Forma Grande','No nível 5, você pode adquirir tamanho Grande e bônus de deslocamento enquanto estiver transformado. Use a aba Transformações quando disponível.'),C('goliath-powerful','Compleição Poderosa','A capacidade de carga é dobrada; você tem vantagem em testes para encerrar a condição Agarrado.')];
  if(is('orc'))return [C('orc-adrenaline','Adrenalina','Use a Ação Bônus para Disparar e receber PV temporários iguais à proficiência, com usos por descanso. O painel de recursos controla isso.'),C('orc-endurance','Resistência Implacável','Quando for reduzido a 0 PV sem morrer imediatamente, pode ficar com 1 PV. O painel de recursos controla o uso.')];
+ {const motm=motmCards(c,{C,pow,pb,str,level,cha});if(motm)return motm;}
  if(supplement(c,'dhampiro'))return [C('dhampir-legacy','Legado Ancestral','Escolha preservar proficiências/deslocamentos elegíveis da espécie substituída ou receber duas perícias. Se escolher duas perícias, elas entram no cálculo da ficha. Para preservar deslocamentos anteriores, registre-os manualmente na origem e confira com o Mestre; não os some automaticamente aos traços de outra espécie 2024.'),pow('dhampir-bite-attack','Mordida Vampírica','Ataque de arma natural baseado em Constituição. A rolagem não decide se o alvo foi atingido. Em acerto, use o botão de dano. A mordida só cura ou fortalece um teste quando o jogador ativa o benefício.',{kind:'attack',formula:'1d20+'+(p+con(c)),attackBonus:p+con(c)}),pow('dhampir-bite-damage','Dano da Mordida',`Dano perfurante 1d4 + ${con(c)} (Constituição). Após um acerto, pode gastar um dos ${p} usos para escolher o benefício de cura ou teste, com resultado igual ao dano perfurante causado.`,{kind:'damage',formula:`1d4${con(c)>=0?'+':''}${con(c)}`}),pow('dhampir-empower','Fortalecer Mordida','Depois de acertar uma mordida, escolha curar-se ou acrescentar bônus ao próximo teste de habilidade/ataque, conforme a regra. Use o resultado do dano já rolado; sem aplicação automática ao inimigo.',{max:p})];
  if(supplement(c,'forjado-belico'))return [C('warforged-protection','Proteção Integrada — adaptação 2024','Adaptação: +1 de CA passiva à armadura equipada, sem usar as antigas tabelas de armadura integrada. Não acumule outra fórmula base de armadura racial. O +1 é aplicado no cálculo.'),C('warforged-resilience','Resiliência do Forjado Bélico','Registre as resistências/vantagens contra veneno e doenças, a ausência de necessidade de respirar, comer ou beber, e as condições do descanso descritas no suplemento.'),C('warforged-variant','Variante antiga / experimental','As variantes Emissário, Colosso e Escaramuçador são conteúdo legado. Seus benefícios de deslocamento e outras características devem ser validados pelo Mestre para a campanha 2024.')];
  if(supplement(c,'hibrido-simic'))return [C('simic-adaptations','Melhorias Animais',`Escolha inicial: ${v.simicInitial||'pendente'}. Escolha do nível 5: ${n>=5?v.simicLater||'pendente':'ainda bloqueada'}. Planar e adaptações de movimento são controladas pelo jogador. Carapaça concede +1 de CA quando não usa armadura pesada.`),...(n>=5&&v.simicLater==='Cuspe Ácido'?[pow('simic-acid','Cuspe Ácido',`Ação: alvo faz salvaguarda de Destreza, CD ${8+p+con(c)}. Dano ácido ${n>=17?4:n>=11?3:2}d10, com ${p} usos por descanso longo. Alcance/área e efeitos ficam com a mesa.`,{kind:'damage',formula:(n>=17?4:n>=11?3:2)+'d10',max:p,dc:8+p+con(c)})]:[]),...(n>=5&&v.simicLater==='Apêndices de Agarrar'?[pow('simic-appendages','Apêndices de Agarrar','Ataque natural com apêndices, 1d6 + Força de dano contundente. Agarrar depende de decisão da mesa.',{kind:'damage',formula:`1d6${str(c)>=0?'+':''}${str(c)}`})]:[])];

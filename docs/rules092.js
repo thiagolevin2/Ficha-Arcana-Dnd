@@ -48,7 +48,8 @@ export function restoreGrants(c,long=false){for(const [id,g] of Object.entries(c
 
 // Maestria com armas: controla quais propriedades o personagem conhece.
 // A execução de efeitos em alvos depende de uma mesa/turno, por isso não altera automaticamente ataques.
-import {WEAPONS} from './data.js';
+import {WEAPONS,SPECIES} from './data.js';
+import {motmSpellPlan} from './species-motm022.js';
 import {training} from './progression.js';
 export function masteryLimit(c){const fighter=classLevel(c,'guerreiro'),barbarian=classLevel(c,'barbaro'),other=['paladino','guardiao','ladino'].filter(k=>classLevel(c,k)>=1).length;
  const f=fighter>=16?6:fighter>=10?5:fighter>=4?4:fighter>=1?3:0;
@@ -76,15 +77,11 @@ export function ancestrySpellPlan(c,catalog){const key=String(c.speciesId||'')+'
  if(c.speciesId==='tiferino')preset.push([1,'Taumaturgia']);
  // Magias dos suplementos: preservam as condições de acesso dos traços publicados.
  const legacy=String(c.speciesId||'');
- if(legacy==='supp-races-small-species-genasi-do-fogo')preset.push([1,'Criar Chamas'],[3,'Mãos Flamejantes']);
- if(legacy==='supp-races-small-species-genasi-do-ar')preset.push([1,'Levitação']);
- if(legacy==='supp-races-small-species-genasi-da-terra')preset.push([1,'Passo Sem Rastro']);
- if(legacy==='supp-races-small-species-genasi-da-agua')preset.push([3,'Criar ou Destruir Água']);
- if(legacy==='supp-races-large-species-tritao')preset.push([1,'Névoa Obscurecente'],[3,'Lufada de Vento']);
+ // Mordenkainen 2022: magias raciais com atributo à escolha (Int/Sab/Car), uma vez por descanso longo cada.
+ const motm=motmSpellPlan(c);const motmAtwill=new Set(motm.filter(x=>x[2]?.atwill).map(x=>x[1]));for(const [lvl,name] of motm)preset.push([lvl,name]);
  return preset.filter(([lvl])=>Number(c.level)>=lvl).flatMap(([lvl,name])=>{const sp=catalog.find(x=>x.name===name);if(!sp)return [];const forest=c.speciesId==='gnomo'&&c.variant==='Gnomo do Bosque'&&name==='Falar com Animais';
- const genasi=String(c.speciesId||'').startsWith('supp-races-small-species-genasi-');
- const triton=c.speciesId==='supp-races-large-species-tritao';
- return [{spellId:sp.id,source:'Espécie: '+(genasi?'Genasi':triton?'Tritão':key),ability:genasi?'con':triton?'cha':c.speciesId==='aasimar'?'cha':ability,group:triton?'triton-water-magic':'',mode:sp.level===0?'atwill':'free',uses:sp.level===0?0:forest?2+Math.floor((Number(c.level)-1)/4):1,recovery:'long',minimumLevel:lvl}];});}
+ const isMotmSpecies=motm.length>0;const atwill=sp.level===0||motmAtwill.has(name);
+ return [{spellId:sp.id,source:'Espécie: '+(isMotmSpecies?(SPECIES[c.speciesId]?.name||'Mordenkainen'):key),ability:c.speciesId==='aasimar'?'cha':ability,group:'',mode:atwill?'atwill':'free',uses:atwill?0:forest?2+Math.floor((Number(c.level)-1)/4):1,recovery:'long',minimumLevel:lvl}];});}
 
 export function syncAncestrySpellAccess(c,catalog){c.spellAccess??={};const plan=ancestrySpellPlan(c,catalog),desired=new Set(plan.map(x=>x.spellId));for(const [id,g] of Object.entries(c.spellAccess))if(g?.automatic&&!desired.has(id))delete c.spellAccess[id];
  for(const grant of plan){const current=c.spellAccess[grant.spellId];if(current&&!current.automatic)continue;c.spellAccess[grant.spellId]={...spellGrantInfo({...grant,used:current?.automatic?current.used:0}),automatic:true};}
