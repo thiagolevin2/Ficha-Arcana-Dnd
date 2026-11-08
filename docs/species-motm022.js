@@ -153,6 +153,34 @@ export const MOTM_SPECIES={
   spells:[[1,'Rajada de Veneno'],[1,'Amizade Animal',{atwill:true}],[3,'Sugestão']]}
 };
 
+
+// Variantes antigas (2014–2016) adaptadas ao formato de 2024, mantidas por escolha do usuário.
+export const ADAPT_SOURCE='Variante de suplemento antigo adaptada às regras de 2024';
+const TIEF_BASE=[{text:DV18},{text:'Resistência Infernal: resistência a dano ígneo.'},{text:'Presença Sobrenatural: conhece o truque Taumaturgia.'}];
+const LEGACY_NOTE='Adaptação 2024: as magias usam o círculo normal (sem a regra antiga de "conjurar como magia de 2º círculo"); cada uma pode ser conjurada uma vez por descanso longo por este traço ou com espaços de magia do círculo apropriado. '+CAST;
+const tiefling=(legacyName,spells,desc,extra=[])=>({adapted:true,size:'Médio ou Pequeno',speed:9,movement:{walk:9},type:'Humanoide',
+ traits:[...TIEF_BASE,...(spells.length?[{text:`${legacyName}: ${desc} ${LEGACY_NOTE}`}]:[]),...extra],spells:[[1,'Taumaturgia'],...spells]});
+Object.assign(MOTM_SPECIES,{
+ 'supp-races-large-species-tiferino-baalzebul':tiefling('Legado de Maladomini',[[3,'Raio Nauseante'],[5,'Coroa da Loucura']],'Taumaturgia; no 3º nível, Raio Nauseante; no 5º nível, Coroa da Loucura.'),
+ 'supp-races-large-species-tiferino-dispater':tiefling('Legado de Dis',[[3,'Disfarçar-se'],[5,'Detectar Pensamentos']],'Taumaturgia; no 3º nível, Disfarçar-se; no 5º nível, Detectar Pensamentos.'),
+ 'supp-races-large-species-tiferino-fierna':tiefling('Legado de Phlegethos',[[3,'Enfeitiçar Pessoa'],[5,'Sugestão']],'Truque Amizade (não existe nas regras de 2024; combine com o Mestre ou use Taumaturgia); no 3º nível, Enfeitiçar Pessoa; no 5º nível, Sugestão.'),
+ 'supp-races-large-species-tiferino-glasya':tiefling('Legado de Malbolge',[[1,'Ilusão Menor'],[3,'Disfarçar-se'],[5,'Invisibilidade']],'Ilusão Menor; no 3º nível, Disfarçar-se; no 5º nível, Invisibilidade.'),
+ 'supp-races-large-species-tiferino-levistus':tiefling('Legado de Stygia',[[1,'Raio de Gelo'],[3,'Armadura de Agathys'],[5,'Escuridão']],'Raio de Gelo; no 3º nível, Armadura de Agathys; no 5º nível, Escuridão.'),
+ 'supp-races-large-species-tiferino-mammon':tiefling('Legado de Minauros',[[1,'Mãos Mágicas'],[3,'Disco Flutuante de Tenser'],[5,'Tranca Arcana']],'Mãos Mágicas; no 3º nível, Disco Flutuante de Tenser; no 5º nível, Tranca Arcana (sem componente material).'),
+ 'supp-races-large-species-tiferino-mefistofeles':tiefling('Legado de Cania',[[1,'Mãos Mágicas'],[3,'Mãos Flamejantes'],[5,'Lâmina Flamejante']],'Mãos Mágicas; no 3º nível, Mãos Flamejantes; no 5º nível, Lâmina Flamejante.'),
+ 'supp-races-large-species-tiferino-zariel':tiefling('Legado de Avernus',[[3,'Destruição Cauterizante'],[5,'Destruição Radiante']],'Taumaturgia; no 3º nível, Destruição Cauterizante; no 5º nível, Destruição Radiante (antiga Marca da Punição).'),
+ 'supp-races-large-species-tiferino-variante':tiefling('Legado Infernal',[[1,'Raio de Fogo'],[3,'Repreensão Diabólica'],[5,'Escuridão']],'Raio de Fogo; no 3º nível, Repreensão Diabólica; no 5º nível, Escuridão (igual ao legado Infernal de 2024).',[{text:'Aparência: em vez da aparência comum dos tiferinos, escolha 1d4+1 traços (chifres pequenos, presas, língua bifurcada, olhos de gato, seis dedos, pernas de cabra, cascos, cauda bifurcada, pele escamosa, pele vermelha ou azul, sem sombra ou reflexo, cheiro de enxofre).'}]),
+ 'supp-races-small-species-tiferino-alado':tiefling('',[],'',[{text:'Alado: asas de morcego concedem deslocamento de voo igual ao de caminhada. Substitui as magias de legado (mantém Taumaturgia). O voo fica só na descrição, como as demais raças com voo.'}]),
+ 'supp-races-small-species-tiferino-fogo-infernal':tiefling('Legado do Fogo Infernal',[[1,'Raio de Fogo'],[3,'Mãos Flamejantes'],[5,'Escuridão']],'Raio de Fogo; no 3º nível, Mãos Flamejantes (no lugar de Repreensão Diabólica); no 5º nível, Escuridão.'),
+ 'supp-races-small-species-tiferino-lingua-do-diabo':tiefling('Língua do Diabo',[[1,'Zombaria Perversa'],[3,'Enfeitiçar Pessoa'],[5,'Cativar']],'Zombaria Perversa; no 3º nível, Enfeitiçar Pessoa; no 5º nível, Cativar.'),
+ 'supp-races-small-species-pequenino-fantasma':{adapted:true,size:'Pequeno',speed:9,movement:{walk:9},type:'Humanoide',
+  traits:[{text:'Bravura: vantagem em salvaguardas para evitar ou encerrar a condição Amedrontado.'},
+   {text:'Agilidade Pequenina: pode atravessar o espaço de criaturas de tamanho maior que o seu, sem parar ali.'},
+   {text:'Sortudo: ao tirar 1 natural em um teste de d20, rola de novo e usa o novo resultado (automático na ficha).'},
+   {text:'Furtividade Natural: pode usar Esconder-se mesmo quando obscurecido apenas por uma criatura pelo menos um tamanho maior.'},
+   {text:'Dialeto Silencioso: fala telepaticamente com uma criatura por vez a até 9 m. Ela só entende se vocês compartilharem um idioma.'}]}
+});
+
 // Morfo (Transmorfo): Mordenkainen 2022. As opções Caminhar no Penhasco e Garra de Navalha vêm de fonte anterior e mantêm a descrição antiga.
 const SHIFT_OPTIONS={
  'couro-de-besta':['Pele de Fera','Enquanto morfado, ganha 1d6 PV temporários adicionais a cada vez que morfa e +1 na CA (aplicado na ficha).'],
@@ -198,8 +226,8 @@ export function motmNaturalAC(c,dexMod){const m=MOTM_SPECIES[motmId(c)];if(!m?.n
 export function motmCards(c,h){const m=MOTM_SPECIES[motmId(c)];if(!m)return null;const p=h.pb(c),n=h.level(c),s=h.str(c),fm=`1d6${s>=0?'+':''}${s}`;
  const slug=x=>String(x||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-');
  const cards=[];const body=t=>{const x=String(t);const i=x.indexOf(': ');const r=i>0&&i<45?x.slice(i+2):x;return r.charAt(0).toUpperCase()+r.slice(1);};
- const head=`${m.type?'Tipo de criatura: '+m.type+'. ':''}Tamanho: ${m.size}. Fonte: ${MOTM_SOURCE}.`;
- cards.push(h.C('motm-origin','Origem da raça',head+' Aumentos de atributo vêm do antecedente (regra 2024).'));
+ const head=`${m.type?'Tipo de criatura: '+m.type+'. ':''}Tamanho: ${m.size}. Fonte: ${m.adapted?ADAPT_SOURCE:MOTM_SOURCE}.`;
+ cards.push(h.C('motm-origin',m.adapted?'Adaptação 2024':'Origem da raça',head+' Aumentos de atributo vêm do antecedente (regra 2024).'));
  if(m.keepTraits)cards.push(h.C('motm-legacy-option','Opção de fonte anterior','Esta opção de Transmorfo não existe no Mordenkainen 2022. O Morfismo segue a regra de 2022; o benefício específico desta opção continua descrito nos traços originais da Biblioteca.'));
  for(const t of m.traits){
   const name=t.name||String(t.text).split(':')[0];const id='motm-'+slug(name);
